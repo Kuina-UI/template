@@ -2,10 +2,10 @@
 
 ## Structure
 
-Arborescence et conventions détaillées : `README.md`. Règles à respecter :
+Arborescence et conventions détaillées : `CONTRIBUTING.md`. Règles à respecter :
 
 - Une page intégrée = `src/pages/<nom>.html`, à plat (pas de sous-dossier), nommée comme son libellé dans la sidebar, en kebab-case anglais.
-- Les pages sont assemblées par Eleventy + Nunjucks. Une page ne contient que son propre contenu, avec un front matter `layout:` (`dashboard.html` avec sidebar, `base.html` sans). Une nouvelle page part d'une copie d'une page existante.
+- Les pages sont assemblées par Eleventy + Nunjucks. Une page ne contient que son propre contenu, avec un front matter `layout:` (`dashboard.html` avec sidebar, `auth.html` pour les pages de connexion, `base.html` pour toute autre page sans sidebar). Une nouvelle page part d'une copie d'une page existante.
 - Le balisage partagé va dans `src/layouts/` (squelettes de page) ou `src/partials/` (fragments inclus via `{% include %}`), jamais copié d'une page à l'autre. Tous ces fichiers restent en `.html`.
 - Les chemins d'assets dans les layouts et partials sont relatifs à `dist/` (`images/logo.svg`), car toutes les pages sortent à plat dans `dist/`.
 - `src/styles/` ne contient que le design system : tokens dans `theme.css`, une `@utility` par fichier dans `utilities/`, nommé comme la classe, une `@custom-variant` par fichier dans `variants/`, nommé comme la variante.
