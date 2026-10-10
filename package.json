@@ -1,7 +1,7 @@
 {
   "name": "kuina-ui-html",
   "version": "1.0.0",
-  "description": "Kuina UI pages built with HTML and Tailwind CSS",
+  "description": "Free, open-source template built with HTML and Tailwind CSS v4, in light and dark themes",
   "scripts": {
     "dev": "run-p dev:*",
     "dev:pages": "eleventy --serve",
@@ -21,8 +21,32 @@
   "lint-staged": {
     "*": "prettier --write --ignore-unknown"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "kuina-ui",
+    "dashboard",
+    "dashboard-template",
+    "admin-template",
+    "ui-kit",
+    "html-template",
+    "tailwindcss",
+    "tailwindcss-v4",
+    "eleventy",
+    "dark-mode"
+  ],
+  "homepage": "https://github.com/Kuina-UI/template#readme",
+  "bugs": {
+    "url": "https://github.com/Kuina-UI/template/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kuina-UI/template.git"
+  },
+  "funding": [
+    "https://github.com/sponsors/mgcodeur",
+    "https://opencollective.com/mgcodeur",
+    "https://ko-fi.com/mgcodeur"
+  ],
+  "author": "Kuina",
   "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
