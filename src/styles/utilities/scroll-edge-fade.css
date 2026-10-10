@@ -1,0 +1,48 @@
+@property --scroll-edge-fade-top-size {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@property --scroll-edge-fade-bottom-size {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+@keyframes scroll-edge-fade-reveal-top {
+  to {
+    --scroll-edge-fade-top-size: var(--scroll-edge-fade-size);
+  }
+}
+
+@keyframes scroll-edge-fade-hide-bottom {
+  from {
+    --scroll-edge-fade-bottom-size: var(--scroll-edge-fade-size);
+  }
+  to {
+    --scroll-edge-fade-bottom-size: 0px;
+  }
+}
+
+/** Fades the edges where content overflows. No fade without animation-timeline support (Firefox). */
+@utility scroll-edge-fade {
+  --scroll-edge-fade-size: 2.5rem;
+
+  @supports (animation-timeline: scroll()) {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      #000 var(--scroll-edge-fade-top-size),
+      #000 calc(100% - var(--scroll-edge-fade-bottom-size)),
+      transparent
+    );
+    animation:
+      scroll-edge-fade-reveal-top linear both,
+      scroll-edge-fade-hide-bottom linear both;
+    animation-timeline: scroll(self), scroll(self);
+    animation-range:
+      0 var(--scroll-edge-fade-size),
+      calc(100% - var(--scroll-edge-fade-size)) 100%;
+  }
+}

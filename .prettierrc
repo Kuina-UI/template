@@ -1,0 +1,14 @@
+{
+  "printWidth": 120,
+  "tabWidth": 2,
+  "htmlWhitespaceSensitivity": "ignore",
+  "bracketSameLine": false,
+  "plugins": ["prettier-plugin-jinja-template", "prettier-plugin-tailwindcss"],
+  "tailwindStylesheet": "./src/styles/main.css",
+  "overrides": [
+    {
+      "files": "src/**/*.html",
+      "options": { "parser": "jinja-template" }
+    }
+  ]
+}

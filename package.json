@@ -1,0 +1,45 @@
+{
+  "name": "kuina-ui-html",
+  "version": "1.0.0",
+  "description": "Kuina UI pages built with HTML and Tailwind CSS",
+  "scripts": {
+    "dev": "run-p dev:*",
+    "dev:pages": "eleventy --serve",
+    "dev:styles": "tailwindcss -i ./src/styles/main.css -o ./dist/css/kuina.css --watch",
+    "build": "run-p build:*",
+    "build:pages": "eleventy",
+    "build:styles": "tailwindcss -i ./src/styles/main.css -o ./dist/css/kuina.css --minify",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
+    "@tailwindcss/cli": "^4.3.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
+    "npm-run-all2": "^9.0.3",
+    "prettier": "3.9.10",
+    "prettier-plugin-jinja-template": "2.2.0",
+    "prettier-plugin-tailwindcss": "0.8.1",
+    "tailwindcss": "^4.3.3"
+  },
+  "private": true,
+  "dependencies": {
+    "lucide": "^1.55.0"
+  }
+}

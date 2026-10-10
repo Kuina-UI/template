@@ -1,0 +1,2 @@
+/** Follows data-theme, not the OS setting like Tailwind's default dark variant. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
