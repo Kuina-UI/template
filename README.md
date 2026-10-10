@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="src/images/kuina-logo-dark.svg" />
+  <img src="src/images/kuina-logo-light.svg" alt="Kuina UI logo" height="64" />
+</picture>
+
 # Kuina UI — HTML
 
 Kuina UI pages built with HTML and Tailwind CSS v4. This repo is the visual reference: the Vue and React repos split these pages into components.
