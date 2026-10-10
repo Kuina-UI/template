@@ -59,7 +59,7 @@ layout: dashboard.html
 <body class="dark:bg-stone-800 dark:text-white light:bg-stone-100 light:text-stone-950"></body>
 ```
 
-A color class without a theme variant would show in every theme. Images that change with the theme come as one `<img>` per theme, hidden outside it: `class="hidden light:block"`.
+A color class without a theme variant would show in every theme. Brand colors are the exception: they are `@theme` tokens in `theme.css` declared with `light-dark()` (`--color-primary: light-dark(#1f6b59, #48b89a)`), which follows the `color-scheme` set on `<html>`, so their class needs no variant: `ring-primary`. Images that change with the theme come as one `<img>` per theme, hidden outside it: `class="hidden light:block"`.
 
 To preview a page in the other theme, change `data-theme` in `base.html`. To add a theme (sepia…), add its variant in `src/styles/variants/`, import it in `main.css`, then add its class next to each `light:`/`dark:` pair.
 

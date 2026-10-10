@@ -1,3 +1,73 @@
 ---
-layout: base.html
+layout: auth.html
 ---
+
+<div
+  class="mx-auto flex min-h-[calc(100dvh-2*var(--spacing-page-gutter))] max-w-lg flex-col items-center justify-center px-4"
+>
+  <a href="#">
+    <img src="images/kuina-logo-light.svg" alt="Logo" class="hidden h-16 w-16 light:inline-block" />
+    <img src="images/kuina-logo-dark.svg" alt="Logo" class="hidden h-16 w-16 dark:inline-block" />
+  </a>
+
+  <h2 class="mt-5 text-2xl font-semibold tracking-tight">Login or create an account</h2>
+
+  <p class="mt-2 mb-5 text-center text-sm dark:text-stone-200/55 light:text-stone-500">
+    Welcome to Kuina. Please log in or create an account to continue.
+  </p>
+
+  <form action="#" class="w-full">
+    <input
+      type="email"
+      placeholder="Enter your email..."
+      class="h-14 w-full rounded-full px-4 outline-hidden focus:ring-2 focus:ring-primary dark:bg-stone-200/5 light:bg-neutral-900/5"
+    />
+
+    <button
+      class="mt-6 flex h-14 w-full cursor-pointer items-center justify-center rounded-full text-center dark:bg-stone-200 dark:text-stone-950 light:bg-neutral-900 light:text-white"
+    >
+      Continue
+    </button>
+  </form>
+
+  <div
+    class="my-6 flex w-full items-center gap-x-3 text-[12px] uppercase before:h-px before:flex-1 after:h-px after:flex-1 dark:before:bg-white/12 dark:after:bg-white/12 light:before:bg-stone-950/10 light:after:bg-stone-950/10"
+  >
+    or
+  </div>
+
+  <button
+    class="flex h-14 w-full cursor-pointer items-center justify-center gap-x-3 rounded-full text-center dark:bg-stone-200/5 light:bg-neutral-900/5"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="block h-8 w-8" fill="currentColor">
+      <path
+        d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"
+      ></path>
+    </svg>
+    <span>Continue with Apple</span>
+  </button>
+
+  <button
+    class="mt-4 flex h-14 w-full cursor-pointer items-center justify-center gap-x-3 rounded-full text-center dark:bg-stone-200/5 light:bg-neutral-900/5"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="block h-5.5 w-5.5" aria-hidden="true">
+      <path
+        fill="#EA4335"
+        d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3C17.782 1.145 15.055 0 12 0 7.27 0 3.198 2.698 1.24 6.65l4.026 3.115Z"
+      ></path>
+      <path
+        fill="#34A853"
+        d="M16.04 18.013c-1.09.703-2.474 1.078-4.04 1.078a7.077 7.077 0 0 1-6.723-4.823l-4.04 3.067A11.965 11.965 0 0 0 12 24c2.933 0 5.735-1.043 7.834-3l-3.793-2.987Z"
+      ></path>
+      <path
+        fill="#4285F4"
+        d="M19.834 21c2.195-2.048 3.62-5.096 3.62-9 0-.71-.109-1.473-.272-2.182H12v4.637h6.436c-.317 1.559-1.17 2.766-2.395 3.558L19.834 21Z"
+      ></path>
+      <path
+        fill="#FBBC05"
+        d="M5.277 14.268A7.12 7.12 0 0 1 4.909 12c0-.782.125-1.533.357-2.235L1.24 6.65A11.934 11.934 0 0 0 0 12c0 1.92.445 3.73 1.237 5.335l4.04-3.067Z"
+      ></path>
+    </svg>
+    <span>Continue with Google</span>
+  </button>
+</div>
