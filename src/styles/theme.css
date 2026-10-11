@@ -3,4 +3,10 @@
   --spacing-sidebar-collapsed-width: 4rem;
 
   --color-primary: light-dark(#1f6b59, #48b89a);
+  --color-canvas: light-dark(var(--color-stone-100), var(--color-stone-900));
+  --color-widget: light-dark(var(--color-white), var(--color-stone-800));
+  --color-line: light-dark(
+    color-mix(in oklab, var(--color-stone-950) 10%, transparent),
+    color-mix(in oklab, var(--color-white) 12%, transparent)
+  );
 }

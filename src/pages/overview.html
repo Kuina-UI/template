@@ -2,4 +2,103 @@
 layout: dashboard.html
 ---
 
-content
+<div class="grid grid-cols-1 gap-3 xl:grid-cols-6">
+  <div class="xl:col-span-2">
+    <div class="grid grid-cols-1 gap-3 sm:auto-rows-fr sm:grid-cols-2">
+      <div class="flex flex-col overflow-hidden rounded-3xl border border-line bg-widget">
+        <!-- content -->
+        <div class="px-4 pt-4">
+          <div class="inline-flex items-center gap-x-2 text-xs uppercase dark:text-stone-200/55 light:text-stone-500">
+            <i data-lucide="wallet" class="size-4"></i>
+            <span>Total Balance</span>
+          </div>
+          <h2 class="text-2xl font-medium">15,209.13 USD</h2>
+        </div>
+        <!-- chart -->
+
+        <div
+          id="total-balance-chart"
+          class="mt-auto h-25 text-primary"
+          role="img"
+          aria-label="Total balance over the last 30 days"
+        ></div>
+      </div>
+
+      <div class="flex flex-col overflow-hidden rounded-3xl border border-line bg-widget">
+        <!-- content -->
+        <div class="px-4 pt-4">
+          <div class="inline-flex items-center gap-x-2 text-xs uppercase dark:text-stone-200/55 light:text-stone-500">
+            <i data-lucide="chart-pie" class="size-4"></i>
+            <span>Monthly budget</span>
+          </div>
+          <h2 class="text-2xl font-medium dark:text-red-500 light:text-red-600">679.44 USD</h2>
+          <p class="mt-0.5 text-xs dark:text-stone-200/55 light:text-stone-500">Over after plans</p>
+        </div>
+        <!-- chart -->
+
+        <div class="mt-auto px-4 pt-6 pb-4">
+          <div
+            id="monthly-budget-chart"
+            class="h-3.5"
+            role="img"
+            aria-label="4,150.00 USD spent, 710.00 USD planned within budget, 679.44 USD planned over budget"
+          ></div>
+          <p class="mt-2 text-xs dark:text-stone-200/55 light:text-stone-500">4,860.00 USD total</p>
+        </div>
+      </div>
+
+      <div class="overflow-hidden rounded-3xl border border-line bg-widget p-4">
+        <!-- content -->
+        <div>
+          <div class="inline-flex items-center gap-x-2 text-xs uppercase dark:text-stone-200/55 light:text-stone-500">
+            <i data-lucide="calendar-minus" class="size-4"></i>
+            <span>Obligations</span>
+          </div>
+          <h2 class="text-2xl font-medium">1327.52 USD</h2>
+        </div>
+        <!-- chart -->
+
+        <div class="flex h-25 flex-col justify-end">
+          <div>
+            <p class="mt-0.5 text-xs dark:text-stone-200/55 light:text-stone-500">Expenses left this month</p>
+            <div class="mt-0.5 inline-flex w-full items-center justify-between text-xs">
+              <span class="dark:text-stone-200/55 light:text-stone-500">Scheduled:</span>
+              <span class="font-medium">250</span>
+            </div>
+            <div class="mt-0.5 inline-flex w-full items-center justify-between text-xs">
+              <span class="dark:text-stone-200/55 light:text-stone-500">Restocks:</span>
+              <span class="font-medium">1.1k</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col overflow-hidden rounded-3xl border border-line bg-widget">
+        <!-- content -->
+        <div class="px-4 pt-4">
+          <div class="inline-flex items-center gap-x-2 text-xs uppercase dark:text-stone-200/55 light:text-stone-500">
+            <i data-lucide="clock" class="size-4"></i>
+            <span>Runway</span>
+          </div>
+          <h2 class="text-2xl font-medium">186 days</h2>
+        </div>
+        <!-- chart -->
+
+        <div class="mt-auto px-4 pt-6 pb-4">
+          <div
+            id="runway-chart"
+            class="h-3.5 [&_svg]:overflow-visible"
+            role="img"
+            aria-label="186 days of runway, past the 180-day healthy mark"
+          ></div>
+          <p class="mt-2 text-xs dark:text-stone-200/55 light:text-stone-500">
+            Obligations covered until April 15, 2027
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="xl:col-span-4">Column 2</div>
+</div>
+
+<script src="js/overview.js" defer></script>
