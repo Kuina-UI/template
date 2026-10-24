@@ -1,6 +1,7 @@
 const totalBalanceChartElement = document.querySelector("#total-balance-chart");
 const monthlyBudgetChartElement = document.querySelector("#monthly-budget-chart");
 const runwayChartElement = document.querySelector("#runway-chart");
+const expenseDistributionChartElement = document.querySelector("#expense-distribution-chart");
 
 const totalBalanceByDay = [
   { x: "Sep 11", y: 14312.4 },
@@ -51,6 +52,14 @@ const monthlyBudgetSegments = [
   },
 ];
 
+const expenseDistributionCategories = [
+  { name: "Housing", amountInUsd: 2360.0, colorClasses: "dark:text-orange-400 light:text-orange-500" },
+  { name: "Other", amountInUsd: 833.1, colorClasses: "dark:text-violet-400 light:text-violet-500" },
+  { name: "Health & wellness", amountInUsd: 435.0, colorClasses: "dark:text-blue-400 light:text-blue-500" },
+  { name: "Transport & fuel", amountInUsd: 261.75, colorClasses: "dark:text-green-400 light:text-green-500" },
+  { name: "Restaurants & going out", amountInUsd: 242.25, colorClasses: "dark:text-yellow-400 light:text-yellow-500" },
+];
+
 const runwayInDays = 186;
 const healthyRunwayInDays = 180;
 const runwayMarkerPositionInDays = Math.min(runwayInDays, healthyRunwayInDays);
@@ -87,6 +96,25 @@ function readTotalBalanceThemeOptions() {
 
 function readMonthlyBudgetThemeOptions() {
   return { colors: monthlyBudgetSegments.map((budgetSegment) => readColorClasses(budgetSegment.colorClasses)) };
+}
+
+function readExpenseDistributionThemeOptions() {
+  const mutedColor = readColorClasses("text-muted");
+  return {
+    colors: expenseDistributionCategories.map((category) => readColorClasses(category.colorClasses)),
+    stroke: { width: 3, colors: [readColorClasses("text-widget")] },
+    plotOptions: {
+      pie: {
+        donut: {
+          labels: {
+            name: { color: mutedColor },
+            value: { color: mutedColor },
+            total: { color: mutedColor },
+          },
+        },
+      },
+    },
+  };
 }
 
 function readRunwayThemeOptions() {
@@ -176,12 +204,63 @@ const runwayChart = new ApexCharts(runwayChartElement, {
   ...readRunwayThemeOptions(),
 });
 
+const expenseDistributionChart = new ApexCharts(expenseDistributionChartElement, {
+  chart: {
+    type: "donut",
+    height: 220,
+    animations: { enabled: false },
+    selection: { enabled: false },
+    events: {
+      dataPointSelection: (event) => event.preventDefault(),
+    },
+  },
+  series: expenseDistributionCategories.map((category) => category.amountInUsd),
+  labels: expenseDistributionCategories.map((category) => category.name),
+  plotOptions: {
+    pie: {
+      expandOnClick: false,
+      donut: {
+        size: "75%",
+        labels: {
+          show: true,
+          name: { fontSize: "11px", fontWeight: 400, offsetY: -8 },
+          value: {
+            fontSize: "16px",
+            fontWeight: 500,
+            offsetY: 0,
+            formatter: (value) =>
+              parseFloat(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) +
+              " USD",
+          },
+          total: {
+            show: true,
+            showAlways: true,
+            label: "TOTAL",
+            fontSize: "10px",
+            formatter: () => {
+              const total = expenseDistributionCategories.reduce((sum, category) => sum + category.amountInUsd, 0);
+              return total.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " USD";
+            },
+          },
+        },
+      },
+    },
+  },
+  dataLabels: { enabled: false },
+  legend: { show: false },
+  states: { hover: { filter: { type: "none" } }, active: { filter: { type: "none" } } },
+  tooltip: { enabled: false },
+});
+
 totalBalanceChart.render();
 monthlyBudgetChart.render();
 runwayChart.render();
+expenseDistributionChart.render();
+expenseDistributionChart.updateOptions(readExpenseDistributionThemeOptions());
 
 new MutationObserver(() => {
   totalBalanceChart.updateOptions(readTotalBalanceThemeOptions());
   monthlyBudgetChart.updateOptions(readMonthlyBudgetThemeOptions());
   runwayChart.updateOptions(readRunwayThemeOptions());
+  expenseDistributionChart.updateOptions(readExpenseDistributionThemeOptions());
 }).observe(document.documentElement, { attributeFilter: ["data-theme"] });
