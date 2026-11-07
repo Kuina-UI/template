@@ -4,6 +4,7 @@ const runwayChartElement = document.querySelector("#runway-chart");
 const expenseDistributionChartElement = document.querySelector("#expense-distribution-chart");
 const balanceForecastChartElement = document.querySelector("#balance-forecast-chart");
 const plannedVsUnplannedChartElement = document.querySelector("#planned-vs-unplanned-chart");
+const moneyFlowChartElement = document.querySelector("#money-flow-chart");
 
 const totalBalanceByDay = [
   { x: "Sep 11", y: 14312.4 },
@@ -133,6 +134,24 @@ const plannedVsUnplannedSeriesColorClasses = [
 ];
 const plannedVsUnplannedGridLineColorClasses = "dark:text-white/6 light:text-stone-950/6";
 
+const moneyFlowIncome = { name: "Income", amountInUsd: 5500, colorClasses: "dark:text-blue-500 light:text-blue-600" };
+const moneyFlowDestinations = [
+  { name: "Housing", amountInUsd: 2360, colorClasses: "dark:text-orange-400 light:text-orange-500" },
+  { name: "Health & wellness", amountInUsd: 435, colorClasses: "dark:text-blue-400 light:text-blue-500" },
+  { name: "Transport & fuel", amountInUsd: 261.75, colorClasses: "dark:text-green-500 light:text-green-600" },
+  { name: "Restaurants & going out", amountInUsd: 247, colorClasses: "dark:text-yellow-400 light:text-yellow-500" },
+  { name: "Clothes & shoes", amountInUsd: 243, colorClasses: "dark:text-fuchsia-400 light:text-fuchsia-500" },
+  { name: "Groceries & food", amountInUsd: 193.1, colorClasses: "dark:text-rose-400 light:text-rose-500" },
+  { name: "Internet & phone", amountInUsd: 135, colorClasses: "dark:text-indigo-400 light:text-indigo-500" },
+  { name: "Utilities", amountInUsd: 133, colorClasses: "dark:text-teal-400 light:text-teal-500" },
+  { name: "Others", amountInUsd: 159, colorClasses: "dark:text-stone-500 light:text-stone-500" },
+  { name: "Unspent", amountInUsd: 1333.15, colorClasses: "dark:text-stone-200 light:text-stone-800" },
+];
+const moneyFlowIncomeBarHeightInPixels = 240;
+const moneyFlowDestinationBarGapInPixels = 9;
+const moneyFlowDestinationRowMinHeightInPixels = 46;
+const moneyFlowTooltipCursorGapInPixels = 12;
+
 /**
  * Converts any CSS color to rgb(), or rgba() when translucent: ApexCharts parses neither light-dark() tokens nor
  * Tailwind's oklch() palette, and an opaque rgba() would override its fill opacity.
@@ -235,6 +254,165 @@ function readRunwayThemeOptions() {
       ],
     },
   };
+}
+
+function buildMoneyFlowLabel(moneyFlowNode) {
+  const formattedAmount = moneyFlowNode.amountInUsd.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+  const shareOfIncome = ((moneyFlowNode.amountInUsd / moneyFlowIncome.amountInUsd) * 100).toFixed(1);
+  return `
+    <p class="font-medium">${moneyFlowNode.name}</p>
+    <p class="font-medium">${formattedAmount} USD <span class="font-normal text-muted">· ${shareOfIncome}%</span></p>
+  `;
+}
+
+function buildMoneyFlowTooltipContent(moneyFlowRibbon) {
+  return `
+    <div class="flex gap-1.5">
+      <span class="mt-0.5 size-2.5 shrink-0 rounded-full bg-current ${moneyFlowRibbon.colorClasses}"></span>
+      <div>${buildMoneyFlowLabel(moneyFlowRibbon)}</div>
+    </div>
+  `;
+}
+
+/** Places the tooltip above the cursor, below it near the chart's top edge, and always within the chart's width. */
+function moveMoneyFlowTooltip(tooltipElement, mouseEvent) {
+  const chartBox = moneyFlowChartElement.getBoundingClientRect();
+  const cursorLeftInPixels = mouseEvent.clientX - chartBox.left;
+  const cursorTopInPixels = mouseEvent.clientY - chartBox.top;
+  const leftBesideCursorInPixels = cursorLeftInPixels + moneyFlowTooltipCursorGapInPixels;
+  const topAboveCursorInPixels = cursorTopInPixels - tooltipElement.offsetHeight - moneyFlowTooltipCursorGapInPixels;
+  const topBelowCursorInPixels = cursorTopInPixels + moneyFlowTooltipCursorGapInPixels;
+  tooltipElement.style.left = `${Math.min(leftBesideCursorInPixels, chartBox.width - tooltipElement.offsetWidth)}px`;
+  tooltipElement.style.top = `${topAboveCursorInPixels < 0 ? topBelowCursorInPixels : topAboveCursorInPixels}px`;
+}
+
+/** Traces a filled shape rather than a thick stroke, so a ribbon keeps its full height on steep curves. */
+function buildMoneyFlowRibbonPath({ sourceTopInPixels, destinationTopInPixels, ribbonHeightInPixels }) {
+  const sourceBottomInPixels = sourceTopInPixels + ribbonHeightInPixels;
+  const destinationBottomInPixels = destinationTopInPixels + ribbonHeightInPixels;
+  return [
+    `M 0 ${sourceTopInPixels}`,
+    `C 50 ${sourceTopInPixels} 50 ${destinationTopInPixels} 100 ${destinationTopInPixels}`,
+    `L 100 ${destinationBottomInPixels}`,
+    `C 50 ${destinationBottomInPixels} 50 ${sourceBottomInPixels} 0 ${sourceBottomInPixels}`,
+    "Z",
+  ].join(" ");
+}
+
+/**
+ * ApexCharts has no Sankey type. The ribbons stretch with the card through a 0-100 wide viewBox, and their gradient
+ * stops read the theme from color classes, so neither a resize nor a theme change needs a redraw.
+ */
+function renderMoneyFlowChart() {
+  const pixelsPerUsd = moneyFlowIncomeBarHeightInPixels / moneyFlowIncome.amountInUsd;
+  let sourceTopInPixels = 0;
+  let destinationTopInPixels = 0;
+  const moneyFlowRibbons = moneyFlowDestinations.map((destination) => {
+    const ribbonHeightInPixels = destination.amountInUsd * pixelsPerUsd;
+    const rowHeightInPixels = Math.max(
+      ribbonHeightInPixels + moneyFlowDestinationBarGapInPixels,
+      moneyFlowDestinationRowMinHeightInPixels,
+    );
+    const moneyFlowRibbon = {
+      ...destination,
+      ribbonHeightInPixels,
+      rowHeightInPixels,
+      sourceTopInPixels,
+      destinationTopInPixels,
+    };
+    sourceTopInPixels += ribbonHeightInPixels;
+    destinationTopInPixels += rowHeightInPixels;
+    return moneyFlowRibbon;
+  });
+  const lastMoneyFlowRibbon = moneyFlowRibbons.at(-1);
+  const chartHeightInPixels = lastMoneyFlowRibbon.destinationTopInPixels + lastMoneyFlowRibbon.ribbonHeightInPixels;
+
+  moneyFlowChartElement.innerHTML = `
+    <div class="relative text-xs">
+      <div
+        class="pointer-events-none mb-1.5 whitespace-nowrap sm:absolute sm:top-0 sm:left-3.5 sm:mb-0 sm:rounded-md sm:bg-widget/70 sm:px-1.5 sm:py-0.5"
+      >
+        ${buildMoneyFlowLabel(moneyFlowIncome)}
+      </div>
+      <div class="flex" style="height: ${chartHeightInPixels}px">
+        <span
+          class="w-2.5 shrink-0 self-start rounded-sm bg-current ${moneyFlowIncome.colorClasses}"
+          style="height: ${moneyFlowIncomeBarHeightInPixels}px"
+        ></span>
+        <svg
+          class="min-w-0 flex-1"
+          height="${chartHeightInPixels}"
+          viewBox="0 0 100 ${chartHeightInPixels}"
+          preserveAspectRatio="none"
+        >
+          ${moneyFlowRibbons
+            .map(
+              (moneyFlowRibbon, ribbonIndex) => `
+                <linearGradient
+                  id="money-flow-ribbon-gradient-${ribbonIndex}"
+                  gradientUnits="userSpaceOnUse"
+                  x1="0"
+                  x2="100"
+                  y1="0"
+                  y2="0"
+                >
+                  <stop offset="0" stop-color="currentColor" class="${moneyFlowIncome.colorClasses}"></stop>
+                  <stop offset="1" stop-color="currentColor" class="${moneyFlowRibbon.colorClasses}"></stop>
+                </linearGradient>
+                <path
+                  d="${buildMoneyFlowRibbonPath(moneyFlowRibbon)}"
+                  fill="url(#money-flow-ribbon-gradient-${ribbonIndex})"
+                  class="opacity-40 transition-opacity hover:opacity-70 data-highlighted:opacity-70"
+                ></path>
+              `,
+            )
+            .join("")}
+        </svg>
+        <ul class="shrink-0">
+          ${moneyFlowRibbons
+            .map(
+              (moneyFlowRibbon) => `
+                <li class="flex gap-1.5 whitespace-nowrap" style="height: ${moneyFlowRibbon.rowHeightInPixels}px">
+                  <span
+                    class="w-2.5 shrink-0 self-start rounded-sm bg-current ${moneyFlowRibbon.colorClasses}"
+                    style="height: ${moneyFlowRibbon.ribbonHeightInPixels}px"
+                  ></span>
+                  <div>${buildMoneyFlowLabel(moneyFlowRibbon)}</div>
+                </li>
+              `,
+            )
+            .join("")}
+        </ul>
+      </div>
+      <div
+        id="money-flow-tooltip"
+        class="pointer-events-none absolute z-10 rounded-lg border border-line bg-canvas px-2 py-1.5 whitespace-nowrap shadow-lg"
+        hidden
+      ></div>
+    </div>
+  `;
+
+  const moneyFlowTooltipElement = moneyFlowChartElement.querySelector("#money-flow-tooltip");
+  const moneyFlowRibbonPaths = moneyFlowChartElement.querySelectorAll("path");
+  moneyFlowChartElement.querySelectorAll("li").forEach((destinationRow, ribbonIndex) => {
+    const ribbonPath = moneyFlowRibbonPaths[ribbonIndex];
+    destinationRow.addEventListener("mouseenter", () => ribbonPath.toggleAttribute("data-highlighted", true));
+    destinationRow.addEventListener("mouseleave", () => ribbonPath.toggleAttribute("data-highlighted", false));
+  });
+  moneyFlowRibbonPaths.forEach((ribbonPath, ribbonIndex) => {
+    ribbonPath.addEventListener("mouseenter", (mouseEvent) => {
+      moneyFlowTooltipElement.innerHTML = buildMoneyFlowTooltipContent(moneyFlowRibbons[ribbonIndex]);
+      moneyFlowTooltipElement.hidden = false;
+      moveMoneyFlowTooltip(moneyFlowTooltipElement, mouseEvent);
+    });
+    ribbonPath.addEventListener("mousemove", (mouseEvent) => moveMoneyFlowTooltip(moneyFlowTooltipElement, mouseEvent));
+    ribbonPath.addEventListener("mouseleave", () => {
+      moneyFlowTooltipElement.hidden = true;
+    });
+  });
 }
 
 const totalBalanceChart = new ApexCharts(totalBalanceChartElement, {
@@ -453,6 +631,7 @@ balanceForecastChart.render();
 balanceForecastChart.updateOptions(readBalanceForecastThemeOptions());
 plannedVsUnplannedChart.render();
 plannedVsUnplannedChart.updateOptions(readPlannedVsUnplannedThemeOptions());
+renderMoneyFlowChart();
 
 new MutationObserver(() => {
   totalBalanceChart.updateOptions(readTotalBalanceThemeOptions());
