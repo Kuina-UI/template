@@ -358,7 +358,7 @@ layout: dashboard.html
 <dialog
   open
   aria-labelledby="notifications-dialog-title"
-  class="fixed inset-y-0 right-0 left-auto z-100 h-dvh w-full max-w-112.5 border-l border-line bg-canvas p-4 text-inherit"
+  class="@container fixed inset-y-0 right-0 left-auto z-100 h-dvh w-full max-w-112.5 flex-col border-l border-line bg-canvas p-4 text-inherit open:flex"
 >
   <div class="flex items-center justify-between">
     <button
@@ -376,26 +376,130 @@ layout: dashboard.html
 
   <!-- switch -->
   <div
-    class="my-6 inline-flex gap-1 rounded-full border border-line p-1 inset-shadow-2xs dark:bg-white/5 dark:inset-shadow-white/6 light:bg-stone-950/5 light:inset-shadow-stone-950/5"
+    class="my-6 inline-flex gap-1 self-start rounded-full border border-line p-1 inset-shadow-2xs dark:bg-white/5 dark:inset-shadow-white/6 light:bg-stone-950/5 light:inset-shadow-stone-950/5"
   >
     <button
       class="h-9 shrink-0 cursor-pointer rounded-full bg-linear-to-b px-4 text-sm font-medium shadow-sm inset-shadow-2xs dark:from-white/20 dark:to-white/12 dark:inset-shadow-white/20 light:from-white light:to-stone-50 light:inset-shadow-white"
     >
       All
     </button>
-    <button class="h-9 shrink-0 cursor-pointer rounded-full px-4 text-sm font-medium">Unread (1)</button>
+    <button class="h-9 shrink-0 cursor-pointer rounded-full px-4 text-sm font-medium">Unread (3)</button>
   </div>
 
-  <!-- notification item -->
-  <div class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
-    <i data-lucide="calendar-clock" class="size-5 text-amber-500"></i>
-    <div>
-      <div class="text-sm leading-5">Overdue Transactions</div>
-      <p class="text-[13px] leading-5 text-muted">You have 1 overdue transaction(s) to review.</p>
-      <p class="text-[13px] leading-5 text-muted">Less than a minute ago</p>
-    </div>
-    <div class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full bg-red-500"></div>
-  </div>
+  <ul
+    class="-mr-4 -mb-4 min-h-0 flex-1 scroll-edge-fade scrollbar-thin scrollbar-thumb-line space-y-4 overflow-x-hidden overflow-y-auto pb-4 *:w-[100cqw]"
+  >
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="calendar-clock" class="size-5 shrink-0 dark:text-amber-500 light:text-amber-600"></i>
+      <div>
+        <div class="text-sm leading-5">Overdue Transactions</div>
+        <p class="text-[13px] leading-5 text-muted">You have 1 overdue transaction(s) to review.</p>
+        <p class="text-[13px] leading-5 text-muted">Less than a minute ago</p>
+      </div>
+      <div class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"></div>
+    </li>
+
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="chart-pie" class="size-5 shrink-0 dark:text-red-500 light:text-red-600"></i>
+      <div>
+        <div class="text-sm leading-5">Monthly budget exceeded</div>
+        <p class="text-[13px] leading-5 text-muted">Your plans put you 679.44 USD over budget this month.</p>
+        <p class="text-[13px] leading-5 text-muted">12 minutes ago</p>
+      </div>
+      <div class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"></div>
+    </li>
+
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="banknote-arrow-down" class="size-5 shrink-0 dark:text-green-400 light:text-green-600"></i>
+      <div>
+        <div class="text-sm leading-5">Salary received</div>
+        <p class="text-[13px] leading-5 text-muted">5,500.00 USD was added to your main account.</p>
+        <p class="text-[13px] leading-5 text-muted">2 hours ago</p>
+      </div>
+      <div class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"></div>
+    </li>
+
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="repeat" class="size-5 shrink-0 dark:text-sky-400 light:text-sky-600"></i>
+      <div>
+        <div class="text-sm leading-5">Subscription renewal</div>
+        <p class="text-[13px] leading-5 text-muted">Your internet subscription of 49.99 USD renews tomorrow.</p>
+        <p class="text-[13px] leading-5 text-muted">5 hours ago</p>
+      </div>
+    </li>
+
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="trending-up" class="size-5 shrink-0 dark:text-orange-400 light:text-orange-600"></i>
+      <div>
+        <div class="text-sm leading-5">Unusual spending</div>
+        <p class="text-[13px] leading-5 text-muted">Restaurants & going out is 30% above your usual pace.</p>
+        <p class="text-[13px] leading-5 text-muted">Yesterday</p>
+      </div>
+    </li>
+
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="package" class="size-5 shrink-0 dark:text-violet-400 light:text-violet-600"></i>
+      <div>
+        <div class="text-sm leading-5">Restock reminder</div>
+        <p class="text-[13px] leading-5 text-muted">Groceries & food restocks are planned for this week.</p>
+        <p class="text-[13px] leading-5 text-muted">Yesterday</p>
+      </div>
+    </li>
+
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="file-chart-column" class="size-5 shrink-0 text-primary"></i>
+      <div>
+        <div class="text-sm leading-5">Your week in review is ready</div>
+        <p class="text-[13px] leading-5 text-muted">A quick pass through 13 transactions and your balances.</p>
+        <p class="text-[13px] leading-5 text-muted">2 days ago</p>
+      </div>
+    </li>
+
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="piggy-bank" class="size-5 shrink-0 dark:text-fuchsia-400 light:text-fuchsia-600"></i>
+      <div>
+        <div class="text-sm leading-5">Savings goal reached</div>
+        <p class="text-[13px] leading-5 text-muted">You reached 50% of your emergency fund goal.</p>
+        <p class="text-[13px] leading-5 text-muted">3 days ago</p>
+      </div>
+    </li>
+
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="landmark" class="size-5 shrink-0 dark:text-indigo-400 light:text-indigo-600"></i>
+      <div>
+        <div class="text-sm leading-5">Bank account synced</div>
+        <p class="text-[13px] leading-5 text-muted">4 new transactions were imported from your main account.</p>
+        <p class="text-[13px] leading-5 text-muted">4 days ago</p>
+      </div>
+    </li>
+
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="credit-card" class="size-5 shrink-0 dark:text-rose-400 light:text-rose-600"></i>
+      <div>
+        <div class="text-sm leading-5">Payment declined</div>
+        <p class="text-[13px] leading-5 text-muted">Your card was declined for a 62.00 USD payment.</p>
+        <p class="text-[13px] leading-5 text-muted">5 days ago</p>
+      </div>
+    </li>
+
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="clock" class="size-5 shrink-0 dark:text-teal-400 light:text-teal-600"></i>
+      <div>
+        <div class="text-sm leading-5">Runway updated</div>
+        <p class="text-[13px] leading-5 text-muted">Your obligations are now covered until April 15, 2027.</p>
+        <p class="text-[13px] leading-5 text-muted">1 week ago</p>
+      </div>
+    </li>
+
+    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+      <i data-lucide="shield-check" class="size-5 shrink-0 text-muted"></i>
+      <div>
+        <div class="text-sm leading-5">New sign-in</div>
+        <p class="text-[13px] leading-5 text-muted">Your account was accessed from a new device.</p>
+        <p class="text-[13px] leading-5 text-muted">2 weeks ago</p>
+      </div>
+    </li>
+  </ul>
 </dialog>
 
 <script src="js/overview.js" defer></script>
