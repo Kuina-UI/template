@@ -12,4 +12,8 @@
     color-mix(in oklab, var(--color-white) 12%, transparent)
   );
   --color-muted: light-dark(var(--color-stone-500), color-mix(in oklab, var(--color-stone-200) 55%, transparent));
+  --color-overlay: light-dark(
+    color-mix(in oklab, var(--color-stone-950) 40%, transparent),
+    color-mix(in oklab, var(--color-stone-950) 60%, transparent)
+  );
 }
