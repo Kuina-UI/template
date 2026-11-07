@@ -9,7 +9,7 @@ Arborescence et conventions détaillées : `CONTRIBUTING.md`. Règles à respect
 - Le balisage partagé va dans `src/layouts/` (squelettes de page) ou `src/partials/` (fragments inclus via `{% include %}`), jamais copié d'une page à l'autre. Tous ces fichiers restent en `.html`.
 - Les chemins d'assets dans les layouts et partials sont relatifs à `dist/` (`images/logo.svg`), car toutes les pages sortent à plat dans `dist/`.
 - `src/styles/` ne contient que le design system : tokens dans `theme.css`, une `@utility` par fichier dans `utilities/`, nommé comme la classe, une `@custom-variant` par fichier dans `variants/`, nommé comme la variante.
-- Thèmes : `data-theme="light"` ou `"dark"` sur `<html>` (dans `base.html`), qui fixe aussi `color-scheme`. Couleurs de marque : tokens `--color-*` dans `theme.css`, déclarés avec `light-dark(<clair>, <sombre>)`, dont la classe s'écrit sans variante (`ring-primary`). Toute autre couleur vient de la palette Tailwind et s'écrit en paire `light:…` + `dark:…`, jamais sans variante.
+- Thèmes : `data-theme="light"` ou `"dark"` sur `<html>` (dans `base.html`), qui fixe aussi `color-scheme`. Couleurs de marque et de surface : tokens `--color-*` dans `theme.css`, déclarés avec `light-dark(<clair>, <sombre>)`, dont la classe s'écrit sans variante (`ring-primary`, `bg-canvas` pour le fond de page, `bg-widget` pour les cartes, `border-line` pour les bordures et séparateurs). Toute autre couleur vient de la palette Tailwind et s'écrit en paire `light:…` + `dark:…`, jamais sans variante.
 - `dist/` est généré par Eleventy et Tailwind : ne jamais l'éditer.
 
 ## Langue

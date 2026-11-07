@@ -64,6 +64,7 @@
   },
   "private": true,
   "dependencies": {
+    "apexcharts": "^8.0.0",
     "lucide": "^1.55.0"
   }
 }

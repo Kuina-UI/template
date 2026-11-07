@@ -3,7 +3,9 @@ const prettier = require("prettier");
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/images": "images" });
   eleventyConfig.addPassthroughCopy({ "src/favicon": "favicon" });
+  eleventyConfig.addPassthroughCopy({ "src/scripts": "js" });
   eleventyConfig.addPassthroughCopy({ "node_modules/lucide/dist/umd/lucide.min.js": "js/lucide.min.js" });
+  eleventyConfig.addPassthroughCopy({ "node_modules/apexcharts/dist/apexcharts.min.js": "js/apexcharts.min.js" });
 
   eleventyConfig.addGlobalData("permalink", () => (pageData) => `${pageData.page.fileSlug}.html`);
 
