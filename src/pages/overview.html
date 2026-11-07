@@ -258,6 +258,85 @@ layout: dashboard.html
       </div>
     </div>
   </div>
+  <div class="flex flex-col gap-3 xl:col-span-2">
+    <div class="rounded-3xl border border-line bg-widget p-4">
+      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
+        <i data-lucide="chart-line" class="size-4"></i>
+        <span>Balance forecast</span>
+      </div>
+
+      <ul class="mt-3 space-y-2 text-sm">
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="size-2.5 rounded-full dark:bg-purple-500 light:bg-purple-600"></span>
+            <span>Actual</span>
+          </div>
+          <span class="font-medium">15,280.88 USD</span>
+        </li>
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="size-2.5 rounded-full dark:bg-indigo-500 light:bg-indigo-600"></span>
+            <span>Forecast</span>
+          </div>
+          <span class="font-medium dark:text-green-400 light:text-green-600">+5,650.00 USD</span>
+        </li>
+      </ul>
+
+      <div
+        id="balance-forecast-chart"
+        class="mt-2"
+        role="img"
+        aria-label="Balance in November: 15,280.88 USD on November 7, forecast to reach 20,930.88 USD by November 30"
+      ></div>
+
+      <div class="mt-3 flex items-center justify-between border-t border-line pt-3 text-sm">
+        <span class="text-muted">End of month balance</span>
+        <span class="font-medium">20,930.88 USD</span>
+      </div>
+    </div>
+
+    <div class="rounded-3xl border border-line bg-widget p-4">
+      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
+        <i data-lucide="bar-chart-4" class="size-4"></i>
+        <span>Planned vs Unplanned</span>
+      </div>
+
+      <ul class="mt-3 space-y-3 text-sm">
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="size-2.5 rounded-full dark:bg-blue-500 light:bg-blue-600"></span>
+            <span>Planned</span>
+          </div>
+          <span class="font-medium">
+            3,387.00 USD
+            <span class="ml-1 text-xs font-normal text-muted">81%</span>
+          </span>
+        </li>
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="size-2.5 rounded-full dark:bg-orange-400 light:bg-orange-600"></span>
+            <span>Unplanned</span>
+          </div>
+          <span class="font-medium">
+            779.85 USD
+            <span class="ml-1 text-xs font-normal text-muted">19%</span>
+          </span>
+        </li>
+      </ul>
+
+      <div
+        id="planned-vs-unplanned-chart"
+        class="mt-2"
+        role="img"
+        aria-label="Daily expenses in November: 3,387.00 USD planned (81%) and 779.85 USD unplanned (19%), 4,166.85 USD in total"
+      ></div>
+
+      <div class="mt-3 flex items-center justify-between border-t border-line pt-3 text-sm">
+        <span class="text-muted">Total Expenses</span>
+        <span class="font-medium">4,166.85 USD</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script src="js/overview.js" defer></script>

@@ -2,6 +2,8 @@ const totalBalanceChartElement = document.querySelector("#total-balance-chart");
 const monthlyBudgetChartElement = document.querySelector("#monthly-budget-chart");
 const runwayChartElement = document.querySelector("#runway-chart");
 const expenseDistributionChartElement = document.querySelector("#expense-distribution-chart");
+const balanceForecastChartElement = document.querySelector("#balance-forecast-chart");
+const plannedVsUnplannedChartElement = document.querySelector("#planned-vs-unplanned-chart");
 
 const totalBalanceByDay = [
   { x: "Sep 11", y: 14312.4 },
@@ -71,13 +73,76 @@ const runwayScaleColorClasses = [
 ];
 const runwayMarkerColorClasses = "dark:text-stone-950 light:text-stone-800";
 
-/** Converts any CSS color to rgb(): ApexCharts parses neither light-dark() tokens nor Tailwind's oklch() palette. */
+const actualBalanceByNovemberDay = [
+  { x: 1, y: 16742.6 },
+  { x: 2, y: 14628.15 },
+  { x: 3, y: 14571.4 },
+  { x: 4, y: 14412.72 },
+  { x: 5, y: 14356.08 },
+  { x: 6, y: 14298.35 },
+  { x: 7, y: 15280.88 },
+];
+
+const forecastBalanceByNovemberDay = [
+  { x: 7, y: 15280.88 },
+  { x: 8, y: 20430.88 },
+  { x: 9, y: 20430.88 },
+  { x: 10, y: 20430.88 },
+  { x: 11, y: 20430.88 },
+  { x: 12, y: 20430.88 },
+  { x: 13, y: 20430.88 },
+  { x: 14, y: 20430.88 },
+  { x: 15, y: 20430.88 },
+  { x: 16, y: 20430.88 },
+  { x: 17, y: 20430.88 },
+  { x: 18, y: 20430.88 },
+  { x: 19, y: 20430.88 },
+  { x: 20, y: 20430.88 },
+  { x: 21, y: 20430.88 },
+  { x: 22, y: 20430.88 },
+  { x: 23, y: 20430.88 },
+  { x: 24, y: 20430.88 },
+  { x: 25, y: 20430.88 },
+  { x: 26, y: 20430.88 },
+  { x: 27, y: 20430.88 },
+  { x: 28, y: 20930.88 },
+  { x: 29, y: 20930.88 },
+  { x: 30, y: 20930.88 },
+];
+
+const balanceForecastLabeledDays = [1, 15, 30];
+const balanceForecastSeriesColorClasses = [
+  "dark:text-purple-500 light:text-purple-600",
+  "dark:text-indigo-500 light:text-indigo-600",
+];
+const balanceForecastZeroLineColorClasses = "dark:text-red-500 light:text-red-600";
+
+const plannedExpensesByNovemberDay = [
+  30, 2270, 0, 170, 37, 0, 880, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+];
+const unplannedExpensesByNovemberDay = [
+  0, 0, 11.4, 34.6, 62.25, 7.6, 664, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+];
+
+const plannedVsUnplannedLabeledDays = [1, 2, 3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30];
+const plannedVsUnplannedCompactLabeledDays = [1, 5, 10, 15, 20, 25, 30];
+const plannedVsUnplannedCompactChartMaxWidthInPixels = 320;
+const plannedVsUnplannedSeriesColorClasses = [
+  "dark:text-blue-500 light:text-blue-600",
+  "dark:text-orange-400 light:text-orange-600",
+];
+const plannedVsUnplannedGridLineColorClasses = "dark:text-white/6 light:text-stone-950/6";
+
+/**
+ * Converts any CSS color to rgb(), or rgba() when translucent: ApexCharts parses neither light-dark() tokens nor
+ * Tailwind's oklch() palette, and an opaque rgba() would override its fill opacity.
+ */
 function toChartColor(cssColor) {
   const colorConversionCanvas = document.createElement("canvas").getContext("2d");
   colorConversionCanvas.fillStyle = cssColor;
   colorConversionCanvas.fillRect(0, 0, 1, 1);
-  const [red, green, blue] = colorConversionCanvas.getImageData(0, 0, 1, 1).data;
-  return `rgb(${red}, ${green}, ${blue})`;
+  const [red, green, blue, alpha] = colorConversionCanvas.getImageData(0, 0, 1, 1).data;
+  return alpha === 255 ? `rgb(${red}, ${green}, ${blue})` : `rgba(${red}, ${green}, ${blue}, ${alpha / 255})`;
 }
 
 /** Resolves Tailwind text color classes, theme variants included, by applying them to a temporary element. */
@@ -114,6 +179,31 @@ function readExpenseDistributionThemeOptions() {
         },
       },
     },
+  };
+}
+
+function readBalanceForecastThemeOptions() {
+  return {
+    chart: { foreColor: readColorClasses("text-muted") },
+    colors: balanceForecastSeriesColorClasses.map((seriesColorClasses) => readColorClasses(seriesColorClasses)),
+    annotations: {
+      yaxis: [{ y: 0, borderColor: readColorClasses(balanceForecastZeroLineColorClasses), strokeDashArray: 4 }],
+    },
+  };
+}
+
+/** Picks the x-axis days to label: a narrow chart cannot fit the full set without label collisions. */
+function readPlannedVsUnplannedLabeledDays() {
+  return plannedVsUnplannedChartElement.clientWidth < plannedVsUnplannedCompactChartMaxWidthInPixels
+    ? plannedVsUnplannedCompactLabeledDays
+    : plannedVsUnplannedLabeledDays;
+}
+
+function readPlannedVsUnplannedThemeOptions() {
+  return {
+    chart: { foreColor: readColorClasses("text-muted") },
+    colors: plannedVsUnplannedSeriesColorClasses.map((seriesColorClasses) => readColorClasses(seriesColorClasses)),
+    grid: { borderColor: readColorClasses(plannedVsUnplannedGridLineColorClasses) },
   };
 }
 
@@ -252,15 +342,123 @@ const expenseDistributionChart = new ApexCharts(expenseDistributionChartElement,
   tooltip: { enabled: false },
 });
 
+const balanceForecastChart = new ApexCharts(balanceForecastChartElement, {
+  chart: {
+    type: "line",
+    height: 200,
+    fontFamily: "inherit",
+    parentHeightOffset: 0,
+    toolbar: { show: false },
+    zoom: { enabled: false },
+    animations: { enabled: false },
+  },
+  series: [
+    { name: "Actual", type: "area", data: actualBalanceByNovemberDay },
+    { name: "Forecast", type: "line", data: forecastBalanceByNovemberDay },
+  ],
+  stroke: { curve: "monotoneCubic", width: 1.5, dashArray: [0, 4] },
+  fill: {
+    type: ["gradient", "solid"],
+    gradient: { type: "vertical", shadeIntensity: 0, opacityFrom: 0.35, opacityTo: 0, stops: [0, 100] },
+  },
+  xaxis: {
+    type: "numeric",
+    min: 1,
+    max: 30,
+    tickAmount: 29,
+    axisBorder: { show: false },
+    axisTicks: { show: false },
+    crosshairs: { show: false },
+    tooltip: { enabled: false },
+    labels: {
+      rotate: 0,
+      hideOverlappingLabels: false,
+      formatter: (dayOfMonth) =>
+        balanceForecastLabeledDays.includes(Number(dayOfMonth)) ? `Nov ${Number(dayOfMonth)}` : "",
+    },
+  },
+  yaxis: {
+    opposite: true,
+    min: 0,
+    max: 30000,
+    tickAmount: 3,
+    labels: {
+      align: "right",
+      offsetX: 8,
+      formatter: (balanceInUsd) => (balanceInUsd === 0 ? "0" : `${balanceInUsd / 1000}K`),
+    },
+  },
+  grid: { show: false, padding: { top: -16, right: 0 } },
+  dataLabels: { enabled: false },
+  legend: { show: false },
+  tooltip: { enabled: false },
+});
+
+const plannedVsUnplannedChart = new ApexCharts(plannedVsUnplannedChartElement, {
+  chart: {
+    type: "bar",
+    height: 178,
+    stacked: true,
+    fontFamily: "inherit",
+    parentHeightOffset: 0,
+    toolbar: { show: false },
+    zoom: { enabled: false },
+    animations: { enabled: false },
+  },
+  series: [
+    { name: "Planned", data: plannedExpensesByNovemberDay },
+    { name: "Unplanned", data: unplannedExpensesByNovemberDay },
+  ],
+  plotOptions: {
+    bar: { columnWidth: "55%", borderRadius: 2, borderRadiusApplication: "end", borderRadiusWhenStacked: "last" },
+  },
+  stroke: { width: 0 },
+  fill: { opacity: 1 },
+  xaxis: {
+    categories: Array.from({ length: 30 }, (emptySlot, dayIndex) => dayIndex + 1),
+    axisBorder: { show: false },
+    axisTicks: { show: false },
+    crosshairs: { show: false },
+    tooltip: { enabled: false },
+    labels: {
+      rotate: 0,
+      hideOverlappingLabels: false,
+      formatter: (dayOfMonth) => (readPlannedVsUnplannedLabeledDays().includes(Number(dayOfMonth)) ? dayOfMonth : ""),
+    },
+  },
+  yaxis: {
+    opposite: true,
+    min: 0,
+    max: 2400,
+    tickAmount: 4,
+    labels: {
+      align: "right",
+      offsetX: 8,
+      formatter: (amountInUsd) => (amountInUsd < 1000 ? `${amountInUsd}` : `${amountInUsd / 1000}K`),
+    },
+  },
+  grid: { padding: { top: -6, right: 0, bottom: -6 } },
+  dataLabels: { enabled: false },
+  legend: { show: false },
+  states: { hover: { filter: { type: "none" } }, active: { filter: { type: "none" } } },
+  tooltip: { enabled: false },
+});
+
 totalBalanceChart.render();
 monthlyBudgetChart.render();
 runwayChart.render();
 expenseDistributionChart.render();
 expenseDistributionChart.updateOptions(readExpenseDistributionThemeOptions());
+balanceForecastChart.render();
+balanceForecastChart.updateOptions(readBalanceForecastThemeOptions());
+plannedVsUnplannedChart.render();
+plannedVsUnplannedChart.updateOptions(readPlannedVsUnplannedThemeOptions());
 
 new MutationObserver(() => {
   totalBalanceChart.updateOptions(readTotalBalanceThemeOptions());
   monthlyBudgetChart.updateOptions(readMonthlyBudgetThemeOptions());
   runwayChart.updateOptions(readRunwayThemeOptions());
   expenseDistributionChart.updateOptions(readExpenseDistributionThemeOptions());
+  balanceForecastChart.updateOptions(readBalanceForecastThemeOptions());
+  plannedVsUnplannedChart.updateOptions(readPlannedVsUnplannedThemeOptions());
 }).observe(document.documentElement, { attributeFilter: ["data-theme"] });

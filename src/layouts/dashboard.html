@@ -4,4 +4,35 @@ layout: base.html
 
 {% include "sidebar.html" %}
 
-<main class="ml-sidebar-collapsed-width px-5">{{ content | safe }}</main>
+<main class="ml-sidebar-collapsed-width">
+  <nav
+    class="pointer-events-none sticky top-page-gutter z-90 flex h-15 items-start justify-between px-5 before:absolute before:inset-x-0 before:-top-page-gutter before:bottom-0 before:-z-10 before:bg-linear-to-b before:from-canvas before:from-20% before:to-transparent"
+  >
+    <div class="flex gap-2">
+      <button
+        class="pointer-events-auto hidden h-11.5 w-11.5 cursor-pointer items-center justify-center rounded-full border border-line backdrop-blur-xl md:flex dark:bg-stone-700/50 light:bg-white/70"
+      >
+        <i data-lucide="panel-left" class="size-5"></i>
+      </button>
+      <button
+        class="pointer-events-auto flex h-11.5 w-11.5 cursor-pointer items-center justify-center rounded-full border border-line backdrop-blur-xl md:hidden dark:bg-stone-700/50 light:bg-white/70"
+      >
+        <i data-lucide="menu" class="size-5"></i>
+      </button>
+    </div>
+
+    <div>
+      <div
+        class="pointer-events-auto inline-flex gap-2 rounded-full border border-line backdrop-blur-xl dark:bg-stone-700/50 light:bg-white/70"
+      >
+        <button class="flex h-11.5 w-11.5 cursor-pointer items-center justify-center">
+          <i data-lucide="bell" class="size-5"></i>
+        </button>
+        <button class="flex h-11.5 w-11.5 cursor-pointer items-center justify-center">
+          <i data-lucide="settings" class="size-5"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="mx-auto px-5 tv:container">{{ content | safe }}</div>
+</main>
