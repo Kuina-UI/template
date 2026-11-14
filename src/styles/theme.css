@@ -12,6 +12,10 @@
     color-mix(in oklab, var(--color-white) 12%, transparent)
   );
   --color-muted: light-dark(var(--color-stone-500), color-mix(in oklab, var(--color-stone-200) 55%, transparent));
+  --color-field: light-dark(
+    color-mix(in srgb, var(--color-stone-100), var(--color-neutral-900) 5%),
+    color-mix(in srgb, var(--color-stone-900), var(--color-stone-200) 5%)
+  );
   --color-overlay: light-dark(
     color-mix(in oklab, var(--color-stone-950) 40%, transparent),
     color-mix(in oklab, var(--color-stone-950) 60%, transparent)
