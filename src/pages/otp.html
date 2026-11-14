@@ -1,0 +1,59 @@
+---
+layout: auth.html
+---
+
+<div class="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center px-4">
+  <a href="#">
+    <img src="images/kuina-logo-light.svg" alt="Logo" class="hidden h-16 w-16 light:inline-block" />
+    <img src="images/kuina-logo-dark.svg" alt="Logo" class="hidden h-16 w-16 dark:inline-block" />
+  </a>
+
+  <h2 class="mt-5 text-2xl font-semibold tracking-tight">Check your inbox</h2>
+
+  <p class="mt-2 mb-8 text-center text-sm text-muted">
+    Enter the code we sent to
+    <span class="font-medium dark:text-white light:text-stone-950">avery.collins@example.com</span>
+  </p>
+
+  <form action="#" class="w-full">
+    <div class="relative">
+      <input
+        id="otp-code"
+        name="code"
+        type="text"
+        inputmode="numeric"
+        autocomplete="one-time-code"
+        maxlength="6"
+        placeholder=" "
+        autofocus
+        class="peer h-14 w-full rounded-full border border-line px-5 outline-hidden focus:border-primary dark:bg-stone-200/5 light:bg-neutral-900/5"
+      />
+      <label
+        for="otp-code"
+        class="pointer-events-none absolute top-0 left-4 -translate-y-1/2 bg-canvas px-1 text-xs text-muted transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:bg-canvas peer-focus:text-xs peer-focus:text-primary"
+      >
+        Code
+      </label>
+    </div>
+
+    <button
+      class="mt-6 flex h-14 w-full cursor-pointer items-center justify-center rounded-full text-center dark:bg-stone-200 dark:text-stone-950 light:bg-neutral-900 light:text-white"
+    >
+      Continue
+    </button>
+  </form>
+
+  <button type="button" class="mt-6 cursor-pointer text-sm font-medium">Resend email</button>
+
+  <div
+    class="my-6 flex w-full items-center gap-x-3 text-[12px] uppercase before:h-px before:flex-1 before:bg-line after:h-px after:flex-1 after:bg-line"
+  >
+    or
+  </div>
+
+  <button
+    class="flex h-14 w-full cursor-pointer items-center justify-center rounded-full text-center dark:bg-stone-200/5 light:bg-neutral-900/5"
+  >
+    Continue with password
+  </button>
+</div>
