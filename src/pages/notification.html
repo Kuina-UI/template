@@ -2,356 +2,7 @@
 layout: dashboard.html
 ---
 
-<div class="grid grid-cols-1 gap-3 xl:grid-cols-6">
-  <div class="flex flex-col gap-3 xl:col-span-2">
-    <div class="grid grid-cols-1 gap-3 sm:auto-rows-fr sm:grid-cols-2">
-      <div class="flex flex-col overflow-hidden rounded-3xl border border-line bg-widget">
-        <!-- content -->
-        <div class="px-4 pt-4">
-          <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-            <i data-lucide="wallet" class="size-4"></i>
-            <span>Total Balance</span>
-          </div>
-          <h2 class="text-2xl font-medium">15,209.13 USD</h2>
-        </div>
-        <!-- chart -->
-
-        <div
-          id="total-balance-chart"
-          class="mt-auto h-25 text-primary"
-          role="img"
-          aria-label="Total balance over the last 30 days"
-        ></div>
-      </div>
-
-      <div class="flex flex-col overflow-hidden rounded-3xl border border-line bg-widget">
-        <!-- content -->
-        <div class="px-4 pt-4">
-          <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-            <i data-lucide="chart-pie" class="size-4"></i>
-            <span>Monthly budget</span>
-          </div>
-          <h2 class="text-2xl font-medium dark:text-red-500 light:text-red-600">679.44 USD</h2>
-          <p class="mt-0.5 text-xs text-muted">Over after plans</p>
-        </div>
-        <!-- chart -->
-
-        <div class="mt-auto px-4 pt-6 pb-4">
-          <div
-            id="monthly-budget-chart"
-            class="h-3.5"
-            role="img"
-            aria-label="4,150.00 USD spent, 710.00 USD planned within budget, 679.44 USD planned over budget"
-          ></div>
-          <p class="mt-2 text-xs text-muted">4,860.00 USD total</p>
-        </div>
-      </div>
-
-      <div class="overflow-hidden rounded-3xl border border-line bg-widget p-4">
-        <!-- content -->
-        <div>
-          <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-            <i data-lucide="calendar-minus" class="size-4"></i>
-            <span>Obligations</span>
-          </div>
-          <h2 class="text-2xl font-medium">1327.52 USD</h2>
-        </div>
-        <!-- chart -->
-
-        <div class="flex h-25 flex-col justify-end">
-          <div>
-            <p class="mt-0.5 text-xs text-muted">Expenses left this month</p>
-            <div class="mt-0.5 inline-flex w-full items-center justify-between text-xs">
-              <span class="text-muted">Scheduled:</span>
-              <span class="font-medium">250</span>
-            </div>
-            <div class="mt-0.5 inline-flex w-full items-center justify-between text-xs">
-              <span class="text-muted">Restocks:</span>
-              <span class="font-medium">1.1k</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex flex-col overflow-hidden rounded-3xl border border-line bg-widget">
-        <!-- content -->
-        <div class="px-4 pt-4">
-          <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-            <i data-lucide="clock" class="size-4"></i>
-            <span>Runway</span>
-          </div>
-          <h2 class="text-2xl font-medium">186 days</h2>
-        </div>
-        <!-- chart -->
-
-        <div class="mt-auto px-4 pt-6 pb-4">
-          <div
-            id="runway-chart"
-            class="h-3.5 [&_svg]:overflow-visible"
-            role="img"
-            aria-label="186 days of runway, past the 180-day healthy mark"
-          ></div>
-          <p class="mt-2 text-xs text-muted">Obligations covered until April 15, 2027</p>
-        </div>
-      </div>
-    </div>
-    <div class="rounded-3xl border border-line bg-widget p-4">
-      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-        <i data-lucide="wallet" class="size-4"></i>
-        <span>Oct 11 – Oct 17</span>
-      </div>
-      <h2 class="text-foreground mt-2 text-xl leading-[1.15] font-medium tracking-tight md:text-2xl">
-        Your week in review
-      </h2>
-
-      <p class="mt-2 text-xs text-muted">
-        13 transactions from October 11, 2026 to October 17, 2026. A quick pass through spending, categories, and
-        balances.
-      </p>
-
-      <a href="#" class="mt-2 inline-block text-sm text-primary">See more</a>
-    </div>
-
-    <div class="rounded-3xl border border-line bg-widget p-4">
-      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-        <i data-lucide="git-branch" class="size-4"></i>
-        <span>Money flow</span>
-      </div>
-
-      <div
-        id="money-flow-chart"
-        class="mt-3"
-        role="img"
-        aria-label="Money flow: 5,500.00 USD of income split into Housing 42.9%, Health and wellness 7.9%, Transport and fuel 4.8%, Restaurants and going out 4.5%, Clothes and shoes 4.4%, Groceries and food 3.5%, Internet and phone 2.5%, Utilities 2.4%, Others 2.9%, with 24.2% unspent"
-      ></div>
-    </div>
-  </div>
-  <div class="flex flex-col gap-3 xl:col-span-2">
-    <div class="rounded-3xl border border-line bg-widget p-4">
-      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-        <i data-lucide="list" class="size-4"></i>
-        <span>Recent Transactions</span>
-      </div>
-
-      <ul class="mt-2">
-        <li
-          class="flex items-center justify-between rounded-lg px-1 py-2 dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6"
-        >
-          <div class="flex items-center gap-3">
-            <span data-lucide="utensils" class="size-5"></span>
-            <div>
-              <div class="truncate text-sm font-medium">Drinks with friends</div>
-              <div class="truncate text-xs text-muted">Today</div>
-            </div>
-          </div>
-          <div class="font-medium">34.00 USD</div>
-        </li>
-
-        <li
-          class="flex items-center justify-between rounded-lg px-1 py-2 dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6"
-        >
-          <div class="flex items-center gap-3">
-            <span data-lucide="shopping-bag" class="size-5"></span>
-            <div>
-              <div class="truncate text-sm font-medium">Grocery store</div>
-              <div class="truncate text-xs text-muted">Yesterday</div>
-            </div>
-          </div>
-          <div class="font-medium">87.32 USD</div>
-        </li>
-
-        <li
-          class="flex items-center justify-between rounded-lg px-1 py-2 dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6"
-        >
-          <div class="flex items-center gap-3">
-            <span data-lucide="zap" class="size-5"></span>
-            <div>
-              <div class="truncate text-sm font-medium">Electricity bill</div>
-              <div class="truncate text-xs text-muted">Oct 21</div>
-            </div>
-          </div>
-          <div class="font-medium">142.50 USD</div>
-        </li>
-
-        <li
-          class="flex items-center justify-between rounded-lg px-1 py-2 dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6"
-        >
-          <div class="flex items-center gap-3">
-            <span data-lucide="train-front" class="size-5"></span>
-            <div>
-              <div class="truncate text-sm font-medium">Metro pass</div>
-              <div class="truncate text-xs text-muted">Oct 20</div>
-            </div>
-          </div>
-          <div class="font-medium">75.00 USD</div>
-        </li>
-
-        <li
-          class="flex items-center justify-between rounded-lg px-1 py-2 dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6"
-        >
-          <div class="flex items-center gap-3">
-            <span data-lucide="wifi" class="size-5"></span>
-            <div>
-              <div class="truncate text-sm font-medium">Internet subscription</div>
-              <div class="truncate text-xs text-muted">Oct 18</div>
-            </div>
-          </div>
-          <div class="font-medium">49.99 USD</div>
-        </li>
-      </ul>
-    </div>
-
-    <div class="rounded-3xl border border-line bg-widget p-4">
-      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-        <i data-lucide="pie-chart" class="size-4"></i>
-        <span>Expense Distribution</span>
-      </div>
-
-      <div
-        id="expense-distribution-chart"
-        role="img"
-        aria-label="Expense distribution: Housing 57%, Other 20%, Health and wellness 11%, Transport and fuel 6%, Restaurants and going out 6%"
-      ></div>
-
-      <ul class="mt-4 space-y-2 text-sm">
-        <li class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="size-2.5 rounded-full dark:bg-orange-400 light:bg-orange-500"></span>
-            <span>Housing</span>
-          </div>
-          <span class="font-medium">
-            2,360.00 USD
-            <span class="text-muted">(57%)</span>
-          </span>
-        </li>
-        <li class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="size-2.5 rounded-full dark:bg-violet-400 light:bg-violet-500"></span>
-            <span>Other</span>
-          </div>
-          <span class="font-medium">
-            833.10 USD
-            <span class="text-muted">(20%)</span>
-          </span>
-        </li>
-        <li class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="size-2.5 rounded-full dark:bg-blue-400 light:bg-blue-500"></span>
-            <span>Health & wellness</span>
-          </div>
-          <span class="font-medium">
-            435.00 USD
-            <span class="text-muted">(11%)</span>
-          </span>
-        </li>
-        <li class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="size-2.5 rounded-full dark:bg-green-400 light:bg-green-500"></span>
-            <span>Transport & fuel</span>
-          </div>
-          <span class="font-medium">
-            261.75 USD
-            <span class="text-muted">(6%)</span>
-          </span>
-        </li>
-        <li class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="size-2.5 rounded-full dark:bg-yellow-400 light:bg-yellow-500"></span>
-            <span>Restaurants & going out</span>
-          </div>
-          <span class="font-medium">
-            242.25 USD
-            <span class="text-muted">(6%)</span>
-          </span>
-        </li>
-      </ul>
-
-      <div class="mt-3 flex items-center justify-between border-t border-line pt-3 text-sm">
-        <span class="font-medium">Total</span>
-        <span class="font-medium">4,132.10 USD</span>
-      </div>
-    </div>
-  </div>
-  <div class="flex flex-col gap-3 xl:col-span-2">
-    <div class="rounded-3xl border border-line bg-widget p-4">
-      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-        <i data-lucide="chart-line" class="size-4"></i>
-        <span>Balance forecast</span>
-      </div>
-
-      <ul class="mt-3 space-y-2 text-sm">
-        <li class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="size-2.5 rounded-full dark:bg-purple-500 light:bg-purple-600"></span>
-            <span>Actual</span>
-          </div>
-          <span class="font-medium">15,280.88 USD</span>
-        </li>
-        <li class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="size-2.5 rounded-full dark:bg-indigo-500 light:bg-indigo-600"></span>
-            <span>Forecast</span>
-          </div>
-          <span class="font-medium dark:text-green-400 light:text-green-600">+5,650.00 USD</span>
-        </li>
-      </ul>
-
-      <div
-        id="balance-forecast-chart"
-        class="mt-2"
-        role="img"
-        aria-label="Balance in November: 15,280.88 USD on November 7, forecast to reach 20,930.88 USD by November 30"
-      ></div>
-
-      <div class="mt-3 flex items-center justify-between border-t border-line pt-3 text-sm">
-        <span class="text-muted">End of month balance</span>
-        <span class="font-medium">20,930.88 USD</span>
-      </div>
-    </div>
-
-    <div class="rounded-3xl border border-line bg-widget p-4">
-      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-        <i data-lucide="bar-chart-4" class="size-4"></i>
-        <span>Planned vs Unplanned</span>
-      </div>
-
-      <ul class="mt-3 space-y-3 text-sm">
-        <li class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="size-2.5 rounded-full dark:bg-blue-500 light:bg-blue-600"></span>
-            <span>Planned</span>
-          </div>
-          <span class="font-medium">
-            3,387.00 USD
-            <span class="ml-1 text-xs font-normal text-muted">81%</span>
-          </span>
-        </li>
-        <li class="flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="size-2.5 rounded-full dark:bg-orange-400 light:bg-orange-600"></span>
-            <span>Unplanned</span>
-          </div>
-          <span class="font-medium">
-            779.85 USD
-            <span class="ml-1 text-xs font-normal text-muted">19%</span>
-          </span>
-        </li>
-      </ul>
-
-      <div
-        id="planned-vs-unplanned-chart"
-        class="mt-2"
-        role="img"
-        aria-label="Daily expenses in November: 3,387.00 USD planned (81%) and 779.85 USD unplanned (19%), 4,166.85 USD in total"
-      ></div>
-
-      <div class="mt-3 flex items-center justify-between border-t border-line pt-3 text-sm">
-        <span class="text-muted">Total Expenses</span>
-        <span class="font-medium">4,166.85 USD</span>
-      </div>
-    </div>
-  </div>
-</div>
+{% include "overview-content.html" %}
 
 <div class="fixed inset-0 z-99 bg-overlay backdrop-blur-sm"></div>
 
@@ -389,7 +40,7 @@ layout: dashboard.html
   <ul
     class="-mr-4 -mb-4 min-h-0 flex-1 scroll-edge-fade scrollbar-thin scrollbar-thumb-line space-y-4 overflow-x-hidden overflow-y-auto pb-4 *:w-[100cqw]"
   >
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="calendar-clock" class="size-5 shrink-0 dark:text-amber-500 light:text-amber-600"></i>
       <div>
         <div class="text-sm leading-5">Overdue Transactions</div>
@@ -399,7 +50,7 @@ layout: dashboard.html
       <div class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"></div>
     </li>
 
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="chart-pie" class="size-5 shrink-0 dark:text-red-500 light:text-red-600"></i>
       <div>
         <div class="text-sm leading-5">Monthly budget exceeded</div>
@@ -409,7 +60,7 @@ layout: dashboard.html
       <div class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"></div>
     </li>
 
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="banknote-arrow-down" class="size-5 shrink-0 dark:text-green-400 light:text-green-600"></i>
       <div>
         <div class="text-sm leading-5">Salary received</div>
@@ -419,7 +70,7 @@ layout: dashboard.html
       <div class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"></div>
     </li>
 
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="repeat" class="size-5 shrink-0 dark:text-sky-400 light:text-sky-600"></i>
       <div>
         <div class="text-sm leading-5">Subscription renewal</div>
@@ -428,7 +79,7 @@ layout: dashboard.html
       </div>
     </li>
 
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="trending-up" class="size-5 shrink-0 dark:text-orange-400 light:text-orange-600"></i>
       <div>
         <div class="text-sm leading-5">Unusual spending</div>
@@ -437,7 +88,7 @@ layout: dashboard.html
       </div>
     </li>
 
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="package" class="size-5 shrink-0 dark:text-violet-400 light:text-violet-600"></i>
       <div>
         <div class="text-sm leading-5">Restock reminder</div>
@@ -446,7 +97,7 @@ layout: dashboard.html
       </div>
     </li>
 
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="file-chart-column" class="size-5 shrink-0 text-primary"></i>
       <div>
         <div class="text-sm leading-5">Your week in review is ready</div>
@@ -455,7 +106,7 @@ layout: dashboard.html
       </div>
     </li>
 
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="piggy-bank" class="size-5 shrink-0 dark:text-fuchsia-400 light:text-fuchsia-600"></i>
       <div>
         <div class="text-sm leading-5">Savings goal reached</div>
@@ -464,7 +115,7 @@ layout: dashboard.html
       </div>
     </li>
 
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="landmark" class="size-5 shrink-0 dark:text-indigo-400 light:text-indigo-600"></i>
       <div>
         <div class="text-sm leading-5">Bank account synced</div>
@@ -473,7 +124,7 @@ layout: dashboard.html
       </div>
     </li>
 
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="credit-card" class="size-5 shrink-0 dark:text-rose-400 light:text-rose-600"></i>
       <div>
         <div class="text-sm leading-5">Payment declined</div>
@@ -482,7 +133,7 @@ layout: dashboard.html
       </div>
     </li>
 
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="clock" class="size-5 shrink-0 dark:text-teal-400 light:text-teal-600"></i>
       <div>
         <div class="text-sm leading-5">Runway updated</div>
@@ -491,7 +142,7 @@ layout: dashboard.html
       </div>
     </li>
 
-    <li class="relative flex items-start gap-2.5 rounded-3xl bg-widget px-4 py-3">
+    <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="shield-check" class="size-5 shrink-0 text-muted"></i>
       <div>
         <div class="text-sm leading-5">New sign-in</div>

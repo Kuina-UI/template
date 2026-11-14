@@ -2,4 +2,5 @@
 @import "./theme.css";
 @import "./variants/light.css";
 @import "./variants/dark.css";
+@import "./variants/sidebar-expanded.css";
 @import "./utilities/scroll-edge-fade.css";

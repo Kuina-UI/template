@@ -1,0 +1,77 @@
+---
+layout: auth.html
+---
+
+<div class="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center px-4">
+  <a href="#">
+    <img src="images/kuina-logo-light.svg" alt="Logo" class="hidden h-16 w-16 light:inline-block" />
+    <img src="images/kuina-logo-dark.svg" alt="Logo" class="hidden h-16 w-16 dark:inline-block" />
+  </a>
+
+  <h2 class="mt-5 text-2xl font-semibold tracking-tight">Create a password</h2>
+
+  <p class="mt-2 mb-8 text-center text-sm text-muted">You'll use it to log in to Kuina.</p>
+
+  <form action="#" class="w-full">
+    <div class="relative">
+      <input
+        id="sign-up-email"
+        name="email"
+        type="email"
+        value="avery.collins@example.com"
+        readonly
+        placeholder=" "
+        class="peer h-14 w-full rounded-full border border-line pr-16 pl-5 outline-hidden focus:border-primary dark:bg-stone-200/5 light:bg-neutral-900/5"
+      />
+      <label
+        for="sign-up-email"
+        class="pointer-events-none absolute top-0 left-4 -translate-y-1/2 bg-canvas px-1 text-xs text-muted transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:bg-canvas peer-focus:text-xs peer-focus:text-primary"
+      >
+        Email address
+      </label>
+      <a href="#" class="absolute top-1/2 right-5 -translate-y-1/2 text-sm font-medium text-primary">Edit</a>
+    </div>
+
+    <div class="relative mt-6">
+      <input
+        id="sign-up-password"
+        name="password"
+        type="password"
+        autocomplete="new-password"
+        aria-describedby="sign-up-password-hint"
+        placeholder=" "
+        class="peer h-14 w-full rounded-full border border-line px-5 outline-hidden focus:border-primary dark:bg-stone-200/5 light:bg-neutral-900/5"
+      />
+      <label
+        for="sign-up-password"
+        class="pointer-events-none absolute top-0 left-4 -translate-y-1/2 bg-canvas px-1 text-xs text-muted transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:bg-canvas peer-focus:text-xs peer-focus:text-primary"
+      >
+        Password
+      </label>
+    </div>
+    <p id="sign-up-password-hint" class="mt-2 text-xs text-muted">At least 8 characters, including a number.</p>
+
+    <button
+      class="mt-6 flex h-14 w-full cursor-pointer items-center justify-center rounded-full text-center dark:bg-stone-200 dark:text-stone-950 light:bg-neutral-900 light:text-white"
+    >
+      Continue
+    </button>
+  </form>
+
+  <div
+    class="my-6 flex w-full items-center gap-x-3 text-[12px] uppercase before:h-px before:flex-1 before:bg-line after:h-px after:flex-1 after:bg-line"
+  >
+    or
+  </div>
+
+  <button
+    class="flex h-14 w-full cursor-pointer items-center justify-center rounded-full text-center dark:bg-stone-200/5 light:bg-neutral-900/5"
+  >
+    Sign up with a one-time code
+  </button>
+
+  <p class="mt-6 text-sm text-muted">
+    Already have an account?
+    <a href="#" class="font-medium text-primary">Log in</a>
+  </p>
+</div>
