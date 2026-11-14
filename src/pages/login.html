@@ -2,9 +2,7 @@
 layout: auth.html
 ---
 
-<div
-  class="mx-auto flex min-h-[calc(100dvh-2*var(--spacing-page-gutter))] max-w-lg flex-col items-center justify-center px-4"
->
+<div class="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center px-4">
   <a href="#">
     <img src="images/kuina-logo-light.svg" alt="Logo" class="hidden h-16 w-16 light:inline-block" />
     <img src="images/kuina-logo-dark.svg" alt="Logo" class="hidden h-16 w-16 dark:inline-block" />
@@ -12,16 +10,27 @@ layout: auth.html
 
   <h2 class="mt-5 text-2xl font-semibold tracking-tight">Login or create an account</h2>
 
-  <p class="mt-2 mb-5 text-center text-sm text-muted">
+  <p class="mt-2 mb-8 text-center text-sm text-muted">
     Welcome to Kuina. Please log in or create an account to continue.
   </p>
 
   <form action="#" class="w-full">
-    <input
-      type="email"
-      placeholder="Enter your email..."
-      class="h-14 w-full rounded-full px-4 outline-hidden focus:ring-2 focus:ring-primary dark:bg-stone-200/5 light:bg-neutral-900/5"
-    />
+    <div class="relative">
+      <input
+        id="login-email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        placeholder=" "
+        class="peer h-14 w-full rounded-full border border-line px-5 outline-hidden focus:border-primary dark:bg-stone-200/5 light:bg-neutral-900/5"
+      />
+      <label
+        for="login-email"
+        class="pointer-events-none absolute top-0 left-4 -translate-y-1/2 bg-canvas px-1 text-xs text-muted transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:bg-canvas peer-focus:text-xs peer-focus:text-primary"
+      >
+        Email address
+      </label>
+    </div>
 
     <button
       class="mt-6 flex h-14 w-full cursor-pointer items-center justify-center rounded-full text-center dark:bg-stone-200 dark:text-stone-950 light:bg-neutral-900 light:text-white"

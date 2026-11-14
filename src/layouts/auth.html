@@ -2,4 +2,12 @@
 layout: base.html
 ---
 
-{{ content | safe }}
+<div class="flex min-h-[calc(100dvh-2*var(--spacing-page-gutter))] flex-col">
+  {{ content | safe }}
+
+  <footer class="flex items-center justify-center gap-x-3 py-4 text-xs text-muted">
+    <a href="#" class="underline underline-offset-2">Terms of Service</a>
+    <span aria-hidden="true">|</span>
+    <a href="#" class="underline underline-offset-2">Privacy Policy</a>
+  </footer>
+</div>
