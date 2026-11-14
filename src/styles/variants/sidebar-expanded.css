@@ -1,0 +1,12 @@
+/** Targets the sidebar and its content while it is hovered, or pinned open with data-sidebar="opened". */
+@custom-variant sidebar-expanded {
+  &:where([data-sidebar="opened"], [data-sidebar="opened"] *) {
+    @slot;
+  }
+
+  @media (hover: hover) {
+    &:where([data-sidebar]:hover, [data-sidebar]:hover *) {
+      @slot;
+    }
+  }
+}

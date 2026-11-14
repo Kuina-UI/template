@@ -1,5 +1,6 @@
 <div
-  class="group/sidebar fixed inset-y-page-gutter left-page-gutter z-99 flex w-sidebar-collapsed-width flex-col justify-between overflow-hidden rounded-3xl border border-line px-2.5 backdrop-blur-xl transition-[width] duration-200 ease-out hover:w-64 2xl:hover:w-72 dark:bg-stone-700/50 light:bg-white/70"
+  data-sidebar="{{ 'opened' if sidebarOpened else 'collapsed' }}"
+  class="peer fixed inset-y-page-gutter left-page-gutter z-99 flex w-sidebar-collapsed-width flex-col justify-between overflow-hidden rounded-3xl border border-line px-2.5 backdrop-blur-xl transition-[width] duration-200 ease-out dark:bg-stone-700/50 light:bg-white/70 sidebar-expanded:w-64 2xl:sidebar-expanded:w-72"
 >
   <div class="shrink-0 px-2 py-5">
     <img src="images/kuina-logo-light.svg" alt="Logo" class="hidden h-7 w-7 light:block" />
@@ -9,19 +10,19 @@
   <div class="flex min-h-0 flex-1 scroll-edge-fade scrollbar-none flex-col gap-y-3 overflow-x-hidden overflow-y-auto">
     <div class="flex flex-col gap-y-1">
       <div class="relative px-2 text-xs font-medium text-muted">
-        <span class="block truncate opacity-0 transition-opacity group-hover/sidebar:opacity-100">Dashboards</span>
+        <span class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100">Dashboards</span>
       </div>
       <ul class="flex flex-col gap-y-1 text-sm leading-8 font-medium">
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="layout-grid" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">Overview</span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Overview</span>
           </a>
         </li>
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="arrow-left-right" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">
               Transactions
             </span>
           </a>
@@ -29,13 +30,13 @@
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="calendar" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">Calendar</span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Calendar</span>
           </a>
         </li>
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="clock" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">Timeline</span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Timeline</span>
           </a>
         </li>
       </ul>
@@ -45,41 +46,39 @@
       <div class="relative px-2 text-xs font-medium text-muted">
         <span
           aria-hidden="true"
-          class="absolute top-1/2 left-3 h-px w-4.5 bg-line transition-opacity group-hover/sidebar:opacity-0"
+          class="absolute top-1/2 left-3 h-px w-4.5 bg-line transition-opacity sidebar-expanded:opacity-0"
         ></span>
-        <span class="block truncate opacity-0 transition-opacity group-hover/sidebar:opacity-100">Accounts</span>
+        <span class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100">Accounts</span>
       </div>
       <ul class="flex flex-col gap-y-1 text-sm leading-8 font-medium">
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="landmark" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">Accounts</span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Accounts</span>
           </a>
         </li>
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="chart-pie" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">Budget</span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Budget</span>
           </a>
         </li>
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="arrow-down-left" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">Income</span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Income</span>
           </a>
         </li>
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="arrow-up-right" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">Expenses</span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Expenses</span>
           </a>
         </li>
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="box" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">
-              Inventory
-            </span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Inventory</span>
           </a>
         </li>
       </ul>
@@ -89,33 +88,33 @@
       <div class="relative px-2 text-xs font-medium text-muted">
         <span
           aria-hidden="true"
-          class="absolute top-1/2 left-3 h-px w-4.5 bg-line transition-opacity group-hover/sidebar:opacity-0"
+          class="absolute top-1/2 left-3 h-px w-4.5 bg-line transition-opacity sidebar-expanded:opacity-0"
         ></span>
-        <span class="block truncate opacity-0 transition-opacity group-hover/sidebar:opacity-100">Planning</span>
+        <span class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100">Planning</span>
       </div>
       <ul class="flex flex-col gap-y-1 text-sm leading-8 font-medium">
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="credit-card" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">Debts</span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Debts</span>
           </a>
         </li>
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="piggy-bank" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">Funds</span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Funds</span>
           </a>
         </li>
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="circle-percent" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">Taxes</span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Taxes</span>
           </a>
         </li>
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="chart-column" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">Reports</span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Reports</span>
           </a>
         </li>
       </ul>
@@ -125,19 +124,15 @@
       <div class="relative px-2 text-xs font-medium text-muted">
         <span
           aria-hidden="true"
-          class="absolute top-1/2 left-3 h-px w-4.5 bg-line transition-opacity group-hover/sidebar:opacity-0"
+          class="absolute top-1/2 left-3 h-px w-4.5 bg-line transition-opacity sidebar-expanded:opacity-0"
         ></span>
-        <span class="block truncate opacity-0 transition-opacity group-hover/sidebar:opacity-100">
-          Tools & Settings
-        </span>
+        <span class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100">Tools & Settings</span>
       </div>
       <ul class="flex flex-col gap-y-1 text-sm leading-8 font-medium">
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="sparkles" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
-            <span class="whitespace-nowrap opacity-0 transition-opacity group-hover/sidebar:opacity-100">
-              Assistant
-            </span>
+            <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Assistant</span>
           </a>
         </li>
       </ul>
@@ -150,10 +145,10 @@
     >
       AC
     </div>
-    <div class="min-w-0 flex-1 opacity-0 transition-opacity group-hover/sidebar:opacity-100">
+    <div class="min-w-0 flex-1 opacity-0 transition-opacity sidebar-expanded:opacity-100">
       <div class="truncate text-xs leading-4 font-medium">Avery Collins</div>
       <div class="truncate text-xs leading-4 dark:text-stone-400 light:text-stone-500">avery.collins@example.com</div>
     </div>
-    <i data-lucide="ellipsis" class="size-4 shrink-0 opacity-0 transition-opacity group-hover/sidebar:opacity-100"></i>
+    <i data-lucide="ellipsis" class="size-4 shrink-0 opacity-0 transition-opacity sidebar-expanded:opacity-100"></i>
   </div>
 </div>

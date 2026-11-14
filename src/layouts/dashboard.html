@@ -4,7 +4,7 @@ layout: base.html
 
 {% include "sidebar.html" %}
 
-<main class="ml-sidebar-collapsed-width">
+<main class="ml-sidebar-collapsed-width md:peer-data-[sidebar=opened]:ml-64 2xl:peer-data-[sidebar=opened]:ml-72">
   <nav
     class="pointer-events-none sticky top-page-gutter z-90 flex h-15 items-start justify-between px-5 before:absolute before:inset-x-0 before:-top-page-gutter before:bottom-0 before:-z-10 before:bg-linear-to-b before:from-canvas before:from-20% before:to-transparent"
   >
@@ -12,7 +12,7 @@ layout: base.html
       <button
         class="pointer-events-auto hidden h-11.5 w-11.5 cursor-pointer items-center justify-center rounded-full border border-line backdrop-blur-xl md:flex dark:bg-stone-700/50 light:bg-white/70"
       >
-        <i data-lucide="panel-left" class="size-5"></i>
+        <i data-lucide="{{ 'panel-left-close' if sidebarOpened else 'panel-left' }}" class="size-5"></i>
       </button>
       <button
         class="pointer-events-auto flex h-11.5 w-11.5 cursor-pointer items-center justify-center rounded-full border border-line backdrop-blur-xl md:hidden dark:bg-stone-700/50 light:bg-white/70"
