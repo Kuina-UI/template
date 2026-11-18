@@ -1,0 +1,37 @@
+{% macro switch(name, label = "", checked = false, description = "", labelPosition = "end", block = false, disabled = false, ariaLabel = "") %}
+  {% if disabled %}
+    {% set trackInteractionClasses = "" %}
+  {% else %}
+    {% set trackInteractionClasses = "light:not-has-checked:hover:bg-stone-300 dark:not-has-checked:hover:bg-stone-600" %}
+  {% endif %}
+
+  <label
+    class="{{ 'w-full justify-between' if block else 'w-fit' }} {{ 'flex-row-reverse' if labelPosition == 'start' }} {{ 'cursor-not-allowed opacity-50' if disabled else 'cursor-pointer' }} {{ 'gap-x-4' if block else 'gap-x-2' }} flex items-start text-sm leading-5 select-none"
+  >
+    <span
+      class="{{ trackInteractionClasses }} {{ 'top-px' if label }} relative h-4.75 w-8 shrink-0 rounded-full outline-primary transition-colors duration-250 ease-[cubic-bezier(0.65,0,0.35,1)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 dark:bg-stone-700 dark:has-checked:bg-stone-200 light:bg-stone-200 light:has-checked:bg-neutral-900"
+    >
+      <input
+        type="checkbox"
+        role="switch"
+        name="{{ name }}"
+        {% if checked %}checked{% endif %}
+        {% if disabled %}disabled{% endif %}
+        {% if ariaLabel %}aria-label="{{ ariaLabel }}"{% endif %}
+        class="peer sr-only"
+      />
+      <span
+        aria-hidden="true"
+        class="{{ 'shadow-[0_1px_2px_rgb(0_0_0/20%)]' if not disabled }} absolute top-0.75 left-0.75 size-3.25 rounded-full bg-white transition duration-250 ease-[cubic-bezier(0.65,0,0.35,1)] peer-checked:translate-x-3.25 dark:peer-checked:bg-stone-950"
+      ></span>
+    </span>
+    {% if label and description %}
+      <span class="min-w-0">
+        <span class="block font-medium">{{ label }}</span>
+        <span class="mt-0.5 block text-muted">{{ description }}</span>
+      </span>
+    {% elif label %}
+      {{ label }}
+    {% endif %}
+  </label>
+{% endmacro %}

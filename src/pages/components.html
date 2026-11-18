@@ -7,6 +7,7 @@ layout: base.html
 {% from "circular-progress.html" import circularProgress %}
 {% from "loading-dots.html" import loadingDots %}
 {% from "radio-group.html" import radioGroup %}
+{% from "switch.html" import switch %}
 {% from "text-field.html" import textField %}
 {% from "textarea.html" import textarea %}
 
@@ -217,6 +218,79 @@ layout: base.html
               ],
               direction = "col",
               errorMessage = "Choose a format to export your transactions."
+            )
+          }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Switch</h2>
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line bg-widget p-6">
+      <div>
+        <h3 class="text-sm text-muted">Labels</h3>
+        <div class="mt-4 flex flex-wrap items-start gap-x-8 gap-y-4">
+          {{ switch("hide-balances", ariaLabel = "Hide balances") }}
+          {{ switch("compact-view", ariaLabel = "Compact view", checked = true) }}
+          {{ switch("weekly-summary", "Weekly summary") }}
+          {{ switch("two-factor-authentication", "Two-factor authentication", checked = true) }}
+          {{ switch("show-cents", "Show cents", checked = true, labelPosition = "start") }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Descriptions</h3>
+        <div class="mt-4 flex max-w-md flex-col divide-y divide-line">
+          <div class="pb-4">
+            {{
+              switch(
+                "email-notifications",
+                "Email notifications",
+                checked = true,
+                description = "A summary of your spending every Monday morning.",
+                labelPosition = "start",
+                block = true
+              )
+            }}
+          </div>
+          <div class="py-4">
+            {{
+              switch(
+                "large-transaction-alerts",
+                "Large transaction alerts",
+                description = "Get notified when a payment goes over $500.",
+                labelPosition = "start",
+                block = true
+              )
+            }}
+          </div>
+          <div class="pt-4">
+            {{
+              switch(
+                "round-up-savings",
+                "Round-up savings",
+                checked = true,
+                description = "Round card payments up to the nearest dollar and move the change to savings.",
+                labelPosition = "start",
+                block = true
+              )
+            }}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">States</h3>
+        <div class="mt-4 flex flex-wrap items-start gap-x-8 gap-y-4">
+          {{ switch("biometric-login", "Biometric login", disabled = true) }}
+          {{ switch("automatic-backups", "Automatic backups", checked = true, disabled = true) }}
+          {{
+            switch(
+              "shared-budgets",
+              "Shared budgets",
+              description = "Available on the Business plan.",
+              disabled = true
             )
           }}
         </div>
