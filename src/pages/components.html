@@ -2,6 +2,7 @@
 layout: base.html
 ---
 
+{% from "button.html" import button %}
 {% from "checkbox.html" import checkbox %}
 {% from "circular-progress.html" import circularProgress %}
 {% from "loading-dots.html" import loadingDots %}
@@ -9,6 +10,73 @@ layout: base.html
 
 <main class="mx-auto w-full max-w-5xl px-4 py-10">
   <h1 class="text-2xl font-semibold tracking-tight">Components</h1>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Button</h2>
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line bg-widget p-6">
+      <div>
+        <h3 class="text-sm text-muted">Colors and variants</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          {% for buttonVariant in ["solid", "soft", "outline", "ghost"] %}
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="w-16 text-xs text-muted">{{ buttonVariant }}</span>
+              {{ button("Submit", variant = buttonVariant, color = "primary") }}
+              {{ button("Cancel", variant = buttonVariant, color = "secondary") }}
+              {{ button("Delete", variant = buttonVariant, color = "danger", startIcon = "trash-2") }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Sizes</h3>
+        <div class="mt-4 flex flex-wrap items-center gap-3">
+          {% for buttonSize in ["3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"] %}
+            {{ button(buttonSize, size = buttonSize) }}
+          {% endfor %}
+        </div>
+        <div class="mt-3 flex flex-wrap items-center gap-3">
+          {% for buttonSize in ["3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"] %}
+            {{ button(buttonSize, size = buttonSize, variant = "soft", pill = false) }}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Icons</h3>
+        <div class="mt-4 flex flex-wrap items-center gap-3">
+          {{ button("Next", variant = "outline", endIcon = "arrow-right") }}
+          {{ button("Compare", variant = "ghost", startIcon = "arrow-left-right") }}
+          {{ button("Add account", uniform = true, startIcon = "plus") }}
+          {{ button("Delete", color = "danger", uniform = true, pill = false, startIcon = "trash-2") }}
+          {{ button("Close", variant = "ghost", color = "secondary", uniform = true, startIcon = "x") }}
+          {{ button("Notifications", variant = "outline", size = "2xl", uniform = true, startIcon = "bell") }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">States</h3>
+        <div class="mt-4 flex flex-wrap items-center gap-3">
+          {{ button("Disabled", disabled = true) }}
+          {{ button("Disabled", variant = "outline", disabled = true) }}
+          {{ button("Disabled", variant = "ghost", disabled = true) }}
+          {{ button("Saving", loading = true) }}
+          {{ button("Saving", variant = "soft", loading = true) }}
+          {{ button("Selected", variant = "soft", selected = true) }}
+          {{ button("Selected", variant = "outline", selected = true) }}
+          {{ button("Selected", variant = "ghost", selected = true) }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Link and full width</h3>
+        <div class="mt-4 flex flex-col items-start gap-3">
+          {{ button("Read the guide", href = "#", variant = "outline", endIcon = "arrow-up-right") }}
+          {{ button("Continue", size = "3xl", block = true) }}
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="mt-10">
     <h2 class="font-semibold tracking-tight">Checkbox</h2>

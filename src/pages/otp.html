@@ -2,6 +2,7 @@
 layout: auth.html
 ---
 
+{% from "button.html" import button %}
 {% from "checkbox.html" import checkbox %}
 {% from "text-field.html" import textField %}
 
@@ -33,11 +34,7 @@ layout: auth.html
 
     <div class="mt-4">{{ checkbox("remember-me", "Remember me") }}</div>
 
-    <button
-      class="mt-6 flex h-14 w-full cursor-pointer items-center justify-center rounded-full text-center dark:bg-stone-200 dark:text-stone-950 light:bg-neutral-900 light:text-white"
-    >
-      Continue
-    </button>
+    <div class="mt-6">{{ button("Continue", type = "submit", size = "4xl", block = true) }}</div>
   </form>
 
   <button type="button" class="mt-6 cursor-pointer text-sm font-medium text-primary">Resend email</button>
@@ -48,9 +45,5 @@ layout: auth.html
     or
   </div>
 
-  <button
-    class="flex h-14 w-full cursor-pointer items-center justify-center rounded-full text-center dark:bg-stone-200/5 light:bg-neutral-900/5"
-  >
-    Continue with password
-  </button>
+  {{ button("Continue with password", variant = "soft", size = "4xl", block = true) }}
 </div>

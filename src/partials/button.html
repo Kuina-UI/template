@@ -1,0 +1,201 @@
+{% macro button(label, variant = "solid", color = "primary", size = "md", startIcon = "", endIcon = "", pill = true, uniform = false, block = false, disabled = false, loading = false, selected = false, type = "button", href = "") %}
+  {%
+    set buttonSizes = {
+      "3xs": { height: "h-5.5", width: "w-5.5", gutter: "px-1.5", pillGutter: "px-2", radius: "rounded-md", font: "text-xs", gap: "gap-0.75", icon: "size-3.5", startIconOffset: "-ml-px", endIconOffset: "-mr-px", spinner: "text-[11px]" },
+      "2xs": { height: "h-6", width: "w-6", gutter: "px-2", pillGutter: "px-2.75", radius: "rounded-md", font: "text-xs", gap: "gap-1", icon: "size-4", startIconOffset: "-ml-px", endIconOffset: "-mr-px", spinner: "text-xs" },
+      "xs": { height: "h-6.5", width: "w-6.5", gutter: "px-2", pillGutter: "px-2.75", radius: "rounded-md", font: "text-sm", gap: "gap-1", icon: "size-4", startIconOffset: "-ml-px", endIconOffset: "-mr-px", spinner: "text-[13px]" },
+      "sm": { height: "h-7", width: "w-7", gutter: "px-2.5", pillGutter: "px-3.25", radius: "rounded-md", font: "text-sm", gap: "gap-1", icon: "size-4.5", startIconOffset: "-ml-px", endIconOffset: "-mr-px", spinner: "text-[15px]" },
+      "md": { height: "h-8", width: "w-8", gutter: "px-3", pillGutter: "px-4", radius: "rounded-lg", font: "text-sm", gap: "gap-1.5", icon: "size-4.5", startIconOffset: "-ml-px", endIconOffset: "-mr-px", spinner: "text-base" },
+      "lg": { height: "h-9", width: "w-9", gutter: "px-3", pillGutter: "px-4", radius: "rounded-lg", font: "text-sm", gap: "gap-1.5", icon: "size-4.5", startIconOffset: "-ml-px", endIconOffset: "-mr-px", spinner: "text-base" },
+      "xl": { height: "h-10", width: "w-10", gutter: "px-3.5", pillGutter: "px-4.75", radius: "rounded-[10px]", font: "text-sm", gap: "gap-1.5", icon: "size-4.5", startIconOffset: "-ml-px", endIconOffset: "-mr-px", spinner: "text-lg" },
+      "2xl": { height: "h-11", width: "w-11", gutter: "px-3.5", pillGutter: "px-4.75", radius: "rounded-xl", font: "text-base", gap: "gap-1.5", icon: "size-5", startIconOffset: "-ml-0.5", endIconOffset: "-mr-0.5", spinner: "text-lg" },
+      "3xl": { height: "h-12", width: "w-12", gutter: "px-4", pillGutter: "px-5.25", radius: "rounded-xl", font: "text-base", gap: "gap-1.5", icon: "size-5", startIconOffset: "-ml-0.5", endIconOffset: "-mr-0.5", spinner: "text-xl" },
+      "4xl": { height: "h-14", width: "w-14", gutter: "px-4.5", pillGutter: "px-6", radius: "rounded-2xl", font: "text-base", gap: "gap-3", icon: "size-6", startIconOffset: "-ml-0.5", endIconOffset: "-mr-0.5", spinner: "text-2xl" }
+    }
+  %}
+
+  {%
+    set buttonAppearances = {
+      "solid-primary": {
+        surface: "light:before:bg-neutral-900 dark:before:bg-stone-200",
+        selectedSurface: "light:before:bg-neutral-800 dark:before:bg-stone-300",
+        text: "light:text-white dark:text-stone-950",
+        selectedText: "light:text-white dark:text-stone-950",
+        interaction: "light:hover:before:bg-neutral-800 dark:hover:before:bg-stone-300 light:active:before:bg-neutral-700"
+      },
+      "solid-secondary": {
+        surface: "light:before:bg-stone-600 dark:before:bg-stone-700",
+        selectedSurface: "light:before:bg-stone-700 dark:before:bg-stone-600",
+        text: "light:text-white dark:text-white",
+        selectedText: "light:text-white dark:text-white",
+        interaction: "light:hover:before:bg-stone-700 dark:hover:before:bg-stone-600 light:active:before:bg-stone-800"
+      },
+      "solid-danger": {
+        surface: "light:before:bg-red-600 dark:before:bg-red-600",
+        selectedSurface: "light:before:bg-red-700 dark:before:bg-red-700",
+        text: "light:text-white dark:text-white",
+        selectedText: "light:text-white dark:text-white",
+        interaction: "light:hover:before:bg-red-700 dark:hover:before:bg-red-700"
+      },
+      "soft-primary": {
+        surface: "light:before:bg-stone-950/8 dark:before:bg-stone-200/12",
+        selectedSurface: "light:before:bg-stone-950/12 dark:before:bg-stone-200/16",
+        text: "",
+        selectedText: "",
+        interaction: "light:hover:before:bg-stone-950/12 dark:hover:before:bg-stone-200/16 light:active:before:bg-stone-950/16 dark:active:before:bg-stone-200/20"
+      },
+      "soft-secondary": {
+        surface: "light:before:bg-stone-950/8 dark:before:bg-stone-200/12",
+        selectedSurface: "light:before:bg-stone-950/12 dark:before:bg-stone-200/16",
+        text: "",
+        selectedText: "",
+        interaction: "light:hover:before:bg-stone-950/12 dark:hover:before:bg-stone-200/16 light:active:before:bg-stone-950/16 dark:active:before:bg-stone-200/20"
+      },
+      "soft-danger": {
+        surface: "light:before:bg-red-500/16 dark:before:bg-red-400/16",
+        selectedSurface: "light:before:bg-red-500/30 dark:before:bg-red-400/30",
+        text: "light:text-red-600 dark:text-red-400",
+        selectedText: "light:text-red-600 dark:text-red-400",
+        interaction: "light:hover:before:bg-red-500/30 dark:hover:before:bg-red-400/30"
+      },
+      "outline-primary": {
+        surface: "before:border light:before:border-stone-950/16 dark:before:border-stone-200/25",
+        selectedSurface: "before:border light:before:border-stone-950/20 dark:before:border-stone-200/30 light:before:bg-stone-950/2 dark:before:bg-stone-200/4",
+        text: "",
+        selectedText: "",
+        interaction: "light:hover:before:border-stone-950/20 dark:hover:before:border-stone-200/30 light:hover:before:bg-stone-950/2 dark:hover:before:bg-stone-200/4 light:active:before:bg-stone-950/4 dark:active:before:bg-stone-200/6"
+      },
+      "outline-secondary": {
+        surface: "before:border light:before:border-stone-950/16 dark:before:border-stone-200/25",
+        selectedSurface: "before:border light:before:border-stone-950/20 dark:before:border-stone-200/30 light:before:bg-stone-950/2 dark:before:bg-stone-200/4",
+        text: "text-muted",
+        selectedText: "",
+        interaction: "hover:text-inherit light:hover:before:border-stone-950/20 dark:hover:before:border-stone-200/30 light:hover:before:bg-stone-950/2 dark:hover:before:bg-stone-200/4 light:active:before:bg-stone-950/4 dark:active:before:bg-stone-200/6"
+      },
+      "outline-danger": {
+        surface: "before:border light:before:border-red-600 dark:before:border-red-400",
+        selectedSurface: "before:border light:before:border-red-600 dark:before:border-red-400 light:before:bg-red-500/8 dark:before:bg-red-400/8",
+        text: "light:text-red-600 dark:text-red-400",
+        selectedText: "light:text-red-600 dark:text-red-400",
+        interaction: "light:hover:before:bg-red-500/8 dark:hover:before:bg-red-400/8"
+      },
+      "ghost-primary": {
+        surface: "before:scale-96 before:opacity-0 light:before:bg-stone-950/8 dark:before:bg-stone-200/12",
+        selectedSurface: "light:before:bg-stone-950/8 dark:before:bg-stone-200/12",
+        text: "",
+        selectedText: "",
+        interaction: "hover:before:scale-100 hover:before:opacity-100 light:active:before:bg-stone-950/12 dark:active:before:bg-stone-200/16"
+      },
+      "ghost-secondary": {
+        surface: "before:scale-96 before:opacity-0 light:before:bg-stone-950/8 dark:before:bg-stone-200/12",
+        selectedSurface: "light:before:bg-stone-950/8 dark:before:bg-stone-200/12",
+        text: "text-muted",
+        selectedText: "",
+        interaction: "hover:text-inherit hover:before:scale-100 hover:before:opacity-100 light:active:before:bg-stone-950/12 dark:active:before:bg-stone-200/16"
+      },
+      "ghost-danger": {
+        surface: "before:scale-96 before:opacity-0 light:before:bg-red-500/16 dark:before:bg-red-400/16",
+        selectedSurface: "light:before:bg-red-500/16 dark:before:bg-red-400/16",
+        text: "light:text-red-600 dark:text-red-400",
+        selectedText: "light:text-red-600 dark:text-red-400",
+        interaction: "hover:before:scale-100 hover:before:opacity-100"
+      }
+    }
+  %}
+
+  {%
+    set disabledSurfaces = {
+      solid: "light:before:bg-stone-950/5 dark:before:bg-stone-200/5",
+      soft: "light:before:bg-stone-950/5 dark:before:bg-stone-200/5",
+      outline: "before:border light:before:border-stone-950/6 dark:before:border-stone-200/6",
+      ghost: ""
+    }
+  %}
+
+  {% set sizing = buttonSizes[size] %}
+  {% set appearance = buttonAppearances[variant ~ "-" ~ color] %}
+  {% set isInteractive = not disabled and not loading %}
+
+  {% if uniform %}
+    {% set shapeClasses = sizing.width ~ " " ~ ("rounded-full" if pill else sizing.radius) %}
+  {% else %}
+    {% set shapeClasses = ("rounded-full " ~ sizing.pillGutter) if pill else (sizing.radius ~ " " ~ sizing.gutter) %}
+  {% endif %}
+
+  {% if disabled %}
+    {% set appearanceClasses = "cursor-not-allowed light:text-stone-400 dark:text-stone-500 " ~ disabledSurfaces[variant] %}
+  {% elif selected %}
+    {% set appearanceClasses = appearance.selectedSurface ~ " " ~ appearance.selectedText %}
+  {% else %}
+    {% set appearanceClasses = appearance.surface ~ " " ~ appearance.text %}
+  {% endif %}
+
+  {% if uniform %}
+    {% set pressScale = "active:before:scale-96" %}
+  {% elif block %}
+    {% set pressScale = "active:before:scale-[0.995]" %}
+  {% else %}
+    {% set pressScale = "active:before:scale-97" %}
+  {% endif %}
+
+  {%
+    set buttonClasses = [
+      "relative inline-flex shrink-0 cursor-pointer items-center justify-center font-medium leading-none whitespace-nowrap select-none outline-primary transition-colors duration-150 before:absolute before:inset-0 before:rounded-[inherit] before:transition before:duration-150 focus-visible:outline-2",
+      "focus-visible:-outline-offset-1" if variant in ["outline", "ghost"] else "focus-visible:outline-offset-2",
+      sizing.height,
+      sizing.font,
+      shapeClasses,
+      "w-full" if block else "",
+      appearanceClasses,
+      (appearance.interaction ~ " " ~ pressScale) if isInteractive else "",
+      "pointer-events-none" if loading else ""
+    ] | join(" ")
+  %}
+
+
+  {% set buttonContent %}
+    {% if loading %}
+      <span class="absolute inset-0 flex items-center justify-center">
+        <span class="{{ sizing.spinner }} loading-indicator"></span>
+      </span>
+    {% endif %}
+    <span class="{{ sizing.gap }} {{ 'opacity-0' if loading }} relative flex size-full items-center justify-center">
+      {% if caller %}
+        {{ caller() }}
+      {% elif uniform %}
+        <i data-lucide="{{ startIcon }}" class="{{ sizing.icon }} shrink-0"></i>
+      {% else %}
+        {% if startIcon %}
+          <i data-lucide="{{ startIcon }}" class="{{ sizing.icon }} {{ sizing.startIconOffset }} shrink-0"></i>
+        {% endif %}
+        {{ label }}
+        {% if endIcon %}
+          <i data-lucide="{{ endIcon }}" class="{{ sizing.icon }} {{ sizing.endIconOffset }} shrink-0"></i>
+        {% endif %}
+      {% endif %}
+    </span>
+  {% endset %}
+
+  {% if href %}
+    <a
+      {% if not disabled %}href="{{ href }}"{% endif %}
+      {% if disabled %}aria-disabled="true"{% endif %}
+      {% if uniform %}aria-label="{{ label }}"{% endif %}
+      class="{{ buttonClasses }}"
+    >
+      {{ buttonContent | safe }}
+    </a>
+  {% else %}
+    <button
+      type="{{ type }}"
+      {% if disabled or loading %}disabled{% endif %}
+      {% if disabled %}aria-disabled="true"{% endif %}
+      {% if loading %}aria-busy="true"{% endif %}
+      {% if selected %}aria-pressed="true"{% endif %}
+      {% if uniform %}aria-label="{{ label }}"{% endif %}
+      class="{{ buttonClasses }}"
+    >
+      {{ buttonContent | safe }}
+    </button>
+  {% endif %}
+{% endmacro %}
