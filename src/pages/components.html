@@ -6,6 +6,7 @@ layout: base.html
 {% from "checkbox.html" import checkbox %}
 {% from "circular-progress.html" import circularProgress %}
 {% from "loading-dots.html" import loadingDots %}
+{% from "radio-group.html" import radioGroup %}
 {% from "text-field.html" import textField %}
 
 <main class="mx-auto w-full max-w-5xl px-4 py-10">
@@ -83,6 +84,142 @@ layout: base.html
     <div class="mt-4 flex flex-col gap-y-3 rounded-3xl border border-line bg-widget p-6">
       {{ checkbox("remember-this-device", "Remember this device") }}
       {{ checkbox("sign-out-other-devices", "Sign out of all other devices", checked = true) }}
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Radio group</h2>
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line bg-widget p-6">
+      <div>
+        <h3 class="text-sm text-muted">Directions</h3>
+        <div class="mt-4 grid gap-6 sm:grid-cols-2">
+          {{
+            radioGroup(
+              "notification-frequency",
+              "Notification frequency",
+              [
+                { value: "daily", label: "Daily" },
+                { value: "weekly", label: "Weekly" },
+                { value: "monthly", label: "Monthly" },
+                { value: "never", label: "Never" }
+              ],
+              value = "daily",
+              direction = "col"
+            )
+          }}
+          {{
+            radioGroup(
+              "theme-preference",
+              "Theme",
+              [
+                { value: "light", label: "Light" },
+                { value: "dark", label: "Dark" },
+                { value: "system", label: "System" }
+              ],
+              value = "system"
+            )
+          }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Descriptions</h3>
+        <div class="mt-4 max-w-md">
+          {{
+            radioGroup(
+              "subscription-plan",
+              "Plan",
+              [
+                { value: "free", label: "Free", description: "2 linked accounts · Monthly reports · $0" },
+                { value: "plus", label: "Plus", description: "Unlimited accounts · Budgets and goals · $4.99/month" },
+                { value: "business", label: "Business", description: "Team access · Priority support · Custom pricing", disabled: true }
+              ],
+              value = "plus",
+              direction = "col"
+            )
+          }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Cards</h3>
+        <div class="mt-4 flex flex-col gap-y-6">
+          {{
+            radioGroup(
+              "billing-period",
+              "Billing period",
+              [
+                { value: "monthly", label: "Monthly", description: "$4.99 billed every month" },
+                { value: "yearly", label: "Yearly", description: "$47.90 billed every year, 2 months free" },
+                { value: "lifetime", label: "Lifetime", description: "$149 once, every future update included" }
+              ],
+              value = "yearly",
+              variant = "card"
+            )
+          }}
+          <div class="max-w-md">
+            {{
+              radioGroup(
+                "payout-account",
+                "Payout account",
+                [
+                  { value: "checking", label: "Checking ···· 4821", description: "Main account, available instantly" },
+                  { value: "savings", label: "Savings ···· 0937", description: "Available in 1 to 2 business days" }
+                ],
+                value = "checking",
+                direction = "col",
+                variant = "card"
+              )
+            }}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">States</h3>
+        <div class="mt-4 grid gap-6 sm:grid-cols-3">
+          {{
+            radioGroup(
+              "chart-range",
+              "Chart range",
+              [
+                { value: "week", label: "Week" },
+                { value: "month", label: "Month" },
+                { value: "year", label: "Year" }
+              ],
+              value = "month",
+              direction = "col",
+              disabled = true
+            )
+          }}
+          {{
+            radioGroup(
+              "default-currency",
+              "Default currency",
+              [
+                { value: "usd", label: "US dollar" },
+                { value: "eur", label: "Euro" },
+                { value: "gbp", label: "British pound", disabled: true }
+              ],
+              value = "usd",
+              direction = "col"
+            )
+          }}
+          {{
+            radioGroup(
+              "export-format",
+              "Export format",
+              [
+                { value: "csv", label: "CSV" },
+                { value: "pdf", label: "PDF" },
+                { value: "xlsx", label: "Excel" }
+              ],
+              direction = "col",
+              errorMessage = "Choose a format to export your transactions."
+            )
+          }}
+        </div>
+      </div>
     </div>
   </section>
 
