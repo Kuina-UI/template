@@ -1,6 +1,6 @@
 <div
   data-sidebar="{{ 'opened' if sidebarOpened else 'collapsed' }}"
-  class="peer fixed inset-y-page-gutter left-page-gutter z-99 flex w-sidebar-collapsed-width flex-col justify-between overflow-hidden rounded-3xl border border-line px-2.5 backdrop-blur-xl transition-[width] duration-200 ease-out dark:bg-stone-700/50 light:bg-white/70 sidebar-expanded:w-64 2xl:sidebar-expanded:w-72"
+  class="peer fixed inset-y-page-gutter left-page-gutter z-99 flex w-sidebar-collapsed-width flex-col justify-between rounded-3xl border border-line px-2.5 backdrop-blur-xl transition-[width] duration-200 ease-out dark:bg-stone-700/50 light:bg-white/70 sidebar-expanded:w-64 2xl:sidebar-expanded:w-72"
 >
   <div class="shrink-0 px-2 py-5">
     <img src="images/kuina-logo-light.svg" alt="Logo" class="hidden h-7 w-7 light:block" />
@@ -139,16 +139,19 @@
     </div>
   </div>
 
-  <div class="flex shrink-0 items-center justify-between gap-2 px-1.5 py-5">
-    <div
-      class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full uppercase dark:bg-stone-200 dark:text-stone-950 light:bg-stone-800 light:text-white"
-    >
-      AC
+  <div class="relative shrink-0 py-5">
+    {% if profileMenuOpened %}{% include "profile-menu.html" %}{% endif %}
+    <div class="flex items-center justify-between gap-2 overflow-hidden px-1.5">
+      <div
+        class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full uppercase dark:bg-stone-200 dark:text-stone-950 light:bg-stone-800 light:text-white"
+      >
+        AC
+      </div>
+      <div class="min-w-0 flex-1 opacity-0 transition-opacity sidebar-expanded:opacity-100">
+        <div class="truncate text-xs leading-4 font-medium">Avery Collins</div>
+        <div class="truncate text-xs leading-4 dark:text-stone-400 light:text-stone-500">avery.collins@example.com</div>
+      </div>
+      <i data-lucide="ellipsis" class="size-4 shrink-0 opacity-0 transition-opacity sidebar-expanded:opacity-100"></i>
     </div>
-    <div class="min-w-0 flex-1 opacity-0 transition-opacity sidebar-expanded:opacity-100">
-      <div class="truncate text-xs leading-4 font-medium">Avery Collins</div>
-      <div class="truncate text-xs leading-4 dark:text-stone-400 light:text-stone-500">avery.collins@example.com</div>
-    </div>
-    <i data-lucide="ellipsis" class="size-4 shrink-0 opacity-0 transition-opacity sidebar-expanded:opacity-100"></i>
   </div>
 </div>
