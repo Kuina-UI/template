@@ -16,6 +16,7 @@ module.exports = function (eleventyConfig) {
     return prettier.format(builtHtml, { ...prettierOptions, parser: "html" });
   });
 
+  eleventyConfig.addWatchTarget("src/styles/theme.css");
   eleventyConfig.setServerOptions({ watch: ["dist/css/kuina.css"] });
 
   return {

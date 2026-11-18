@@ -1,0 +1,105 @@
+---
+layout: base.html
+---
+
+<main class="mx-auto w-full max-w-5xl px-4 py-10">
+  <h1 class="text-2xl font-semibold tracking-tight">Design tokens</h1>
+  <p class="mt-2 text-sm text-muted">
+    Read from
+    <code class="font-mono">src/styles/theme.css</code>
+    at build time.
+  </p>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Colors</h2>
+    <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {% for colorToken in themeTokens.colorTokens %}
+        <li class="overflow-hidden rounded-3xl border border-line bg-widget">
+          <div class="grid grid-cols-2">
+            <div class="bg-canvas p-3 scheme-light">
+              <div
+                class="h-16 rounded-2xl border border-line"
+                style="background-color: var({{ colorToken.variable }})"
+              ></div>
+              <p class="mt-2 text-xs font-medium text-muted">Light</p>
+              <p class="mt-0.5 font-mono text-xs wrap-break-word text-muted">{{ colorToken.lightValue }}</p>
+            </div>
+            <div class="bg-canvas p-3 scheme-dark">
+              <div
+                class="h-16 rounded-2xl border border-line"
+                style="background-color: var({{ colorToken.variable }})"
+              ></div>
+              <p class="mt-2 text-xs font-medium text-muted">Dark</p>
+              <p class="mt-0.5 font-mono text-xs wrap-break-word text-muted">{{ colorToken.darkValue }}</p>
+            </div>
+          </div>
+          <div class="border-t border-line p-4">
+            <p class="font-mono text-sm">{{ colorToken.utilityExample or colorToken.variable }}</p>
+            {% if colorToken.utilityExample %}
+              <p class="mt-0.5 font-mono text-xs text-muted">{{ colorToken.variable }}</p>
+            {% endif %}
+            {% if colorToken.usage %}
+              <p class="mt-2 text-sm text-muted">{{ colorToken.usage }}</p>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Spacing</h2>
+    <ul class="mt-4 divide-y divide-line rounded-3xl border border-line bg-widget">
+      {% for spacingToken in themeTokens.spacingTokens %}
+        <li class="flex items-center gap-x-4 px-5 py-4">
+          <div class="w-52 shrink-0 sm:w-80">
+            <p class="font-mono text-sm break-all">{{ spacingToken.variable }}</p>
+            <p class="mt-0.5 flex gap-x-1.5 font-mono text-xs text-muted">
+              <span>{{ spacingToken.value }}</span>
+              {% if spacingToken.pixelValue %}
+                <span aria-hidden="true">·</span>
+                <span>{{ spacingToken.pixelValue }}</span>
+              {% endif %}
+            </p>
+          </div>
+          <div class="h-2 max-w-full rounded-full bg-primary" style="width: var({{ spacingToken.variable }})"></div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Breakpoints</h2>
+    <ul class="mt-4 divide-y divide-line rounded-3xl border border-line bg-widget">
+      {% for breakpointToken in themeTokens.breakpointTokens %}
+        <li class="flex items-center justify-between gap-x-4 px-5 py-4">
+          <div>
+            <p class="font-mono text-sm">{{ breakpointToken.name }}:</p>
+            <p class="mt-0.5 font-mono text-xs text-muted">{{ breakpointToken.variable }}</p>
+          </div>
+          <p class="flex gap-x-1.5 font-mono text-xs text-muted">
+            <span>{{ breakpointToken.value }}</span>
+            {% if breakpointToken.pixelValue %}
+              <span aria-hidden="true">·</span>
+              <span>{{ breakpointToken.pixelValue }}</span>
+            {% endif %}
+          </p>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {% if themeTokens.otherTokens | length %}
+    <section class="mt-10">
+      <h2 class="font-semibold tracking-tight">Other tokens</h2>
+      <ul class="mt-4 divide-y divide-line rounded-3xl border border-line bg-widget">
+        {% for otherToken in themeTokens.otherTokens %}
+          <li class="flex items-center justify-between gap-x-4 px-5 py-4">
+            <p class="font-mono text-sm">{{ otherToken.variable }}</p>
+            <p class="font-mono text-xs break-all text-muted">{{ otherToken.value }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+</main>

@@ -11,8 +11,10 @@ src/
 │   ├── base.html         document shell: <head>, stylesheet, icons and charts scripts
 │   ├── auth.html         base for sign-in pages (login…)
 │   └── dashboard.html    base + sidebar + <main>
-├── partials/         shared fragments pulled in with {% include %}
+├── partials/         shared fragments pulled in with {% include %}, or macros imported with {% from %}
 │   └── sidebar.html
+├── _data/            build-time data available to every page
+│   └── themeTokens.js    tokens read from styles/theme.css, listed on tokens.html
 ├── scripts/          page scripts, copied to dist/js/
 │   └── overview.js
 ├── styles/           design system, independent of any page
