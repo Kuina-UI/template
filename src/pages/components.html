@@ -142,6 +142,78 @@ layout: base.html
       </div>
 
       <div>
+        <h3 class="text-sm text-muted">Icons</h3>
+        <div class="mt-4 grid gap-6 sm:grid-cols-2">
+          {{ textField("text-field-search-example", "search", "Search transactions", type = "search", startIcon = "search") }}
+          {{ textField("text-field-amount-example", "amount", "Amount", value = "1,250.00", inputmode = "decimal", startIcon = "banknote") }}
+          {{
+            textField(
+              "text-field-password-reveal-example",
+              "password",
+              "Password",
+              type = "password",
+              value = "kuina-2026",
+              endIcon = "eye",
+              endIconLabel = "Show password"
+            )
+          }}
+          {{ textField("text-field-due-date-example", "due-date", "Due date", value = "Nov 30, 2026", endIcon = "calendar") }}
+          {{
+            textField(
+              "text-field-icon-error-example",
+              "email",
+              "Email address",
+              type = "email",
+              value = "avery.collins@",
+              startIcon = "mail",
+              errorMessage = "Enter a valid email address."
+            )
+          }}
+          {{ textField("text-field-category-example", "category", "Category", startIcon = "tag") }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Soft variant</h3>
+        <div class="mt-4 grid gap-6 sm:grid-cols-2">
+          {{ textField("text-field-soft-empty-example", "email", "Email address", type = "email", variant = "soft") }}
+          {{ textField("text-field-soft-filled-example", "full-name", "Full name", value = "Avery Collins", variant = "soft") }}
+          {{
+            textField(
+              "text-field-soft-search-example",
+              "search",
+              "Search transactions",
+              type = "search",
+              startIcon = "search",
+              variant = "soft"
+            )
+          }}
+          {{
+            textField(
+              "text-field-soft-hint-example",
+              "password",
+              "Password",
+              type = "password",
+              hint = "At least 8 characters, including a number.",
+              variant = "soft"
+            )
+          }}
+          {{
+            textField(
+              "text-field-soft-error-example",
+              "email",
+              "Email address",
+              type = "email",
+              value = "avery.collins@",
+              errorMessage = "Enter a valid email address.",
+              variant = "soft"
+            )
+          }}
+          {{ textField("text-field-soft-disabled-example", "workspace", "Workspace", value = "Kuina", disabled = true, variant = "soft") }}
+        </div>
+      </div>
+
+      <div>
         <h3 class="text-sm text-muted">Sizes</h3>
         <div class="mt-4 flex flex-col gap-y-5">
           {% for textFieldSize in ["md", "lg", "xl", "2xl", "3xl", "4xl"] %}
@@ -213,6 +285,7 @@ layout: base.html
                 "Email address",
                 type = "email",
                 value = "avery.collins@",
+                startIcon = "mail",
                 errorMessage = "Enter a valid email address.",
                 pill = false
               )

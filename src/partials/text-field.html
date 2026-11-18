@@ -1,41 +1,42 @@
-{% macro textField(id, name, label, type = "text", value = "", autocomplete = "", inputmode = "", maxlength = "", readonly = false, autofocus = false, hint = "", trailingActionLabel = "", trailingActionHref = "#", size = "4xl", pill = true, invalid = false, errorMessage = "", disabled = false) %}
+{% macro textField(id, name, label, type = "text", value = "", autocomplete = "", inputmode = "", maxlength = "", readonly = false, autofocus = false, hint = "", trailingActionLabel = "", trailingActionHref = "#", size = "4xl", pill = true, variant = "outline", startIcon = "", endIcon = "", endIconLabel = "", invalid = false, errorMessage = "", disabled = false) %}
   {%
     set textFieldSizes = {
       "md": {
-        height: "h-8", font: "text-sm", labelFont: "text-[11px] peer-placeholder-shown:text-sm peer-focus:text-[11px]", actionFont: "text-sm",
-        pillShape: { corners: "rounded-full", gutter: "px-4", gutterWithAction: "pr-12 pl-4", labelOffset: "left-3", actionOffset: "right-3" },
-        roundedShape: { corners: "rounded-lg", gutter: "px-3", gutterWithAction: "pr-11 pl-3", labelOffset: "left-2", actionOffset: "right-2" }
+        height: "h-8", font: "text-sm", labelFont: "text-[11px] peer-placeholder-shown:text-sm peer-focus:text-[11px]", actionFont: "text-sm", icon: "size-3",
+        pillShape: { corners: "rounded-full", startPadding: "pl-4", endPadding: "pr-4", startPaddingWithIcon: "pl-9", endPaddingWithIcon: "pr-9", endPaddingWithAction: "pr-12", labelOffset: "left-3", labelOffsetWithStartIcon: "left-3 peer-placeholder-shown:left-8 peer-focus:left-3", startIconOffset: "left-4", endIconOffset: "right-4", actionOffset: "right-3" },
+        roundedShape: { corners: "rounded-lg", startPadding: "pl-3", endPadding: "pr-3", startPaddingWithIcon: "pl-8", endPaddingWithIcon: "pr-8", endPaddingWithAction: "pr-11", labelOffset: "left-2", labelOffsetWithStartIcon: "left-2 peer-placeholder-shown:left-7 peer-focus:left-2", startIconOffset: "left-3", endIconOffset: "right-3", actionOffset: "right-2" }
       },
       "lg": {
-        height: "h-9", font: "text-sm", labelFont: "text-[11px] peer-placeholder-shown:text-sm peer-focus:text-[11px]", actionFont: "text-sm",
-        pillShape: { corners: "rounded-full", gutter: "px-4", gutterWithAction: "pr-12 pl-4", labelOffset: "left-3", actionOffset: "right-3" },
-        roundedShape: { corners: "rounded-lg", gutter: "px-3", gutterWithAction: "pr-11 pl-3", labelOffset: "left-2", actionOffset: "right-2" }
+        height: "h-9", font: "text-sm", labelFont: "text-[11px] peer-placeholder-shown:text-sm peer-focus:text-[11px]", actionFont: "text-sm", icon: "size-3",
+        pillShape: { corners: "rounded-full", startPadding: "pl-4", endPadding: "pr-4", startPaddingWithIcon: "pl-9", endPaddingWithIcon: "pr-9", endPaddingWithAction: "pr-12", labelOffset: "left-3", labelOffsetWithStartIcon: "left-3 peer-placeholder-shown:left-8 peer-focus:left-3", startIconOffset: "left-4", endIconOffset: "right-4", actionOffset: "right-3" },
+        roundedShape: { corners: "rounded-lg", startPadding: "pl-3", endPadding: "pr-3", startPaddingWithIcon: "pl-8", endPaddingWithIcon: "pr-8", endPaddingWithAction: "pr-11", labelOffset: "left-2", labelOffsetWithStartIcon: "left-2 peer-placeholder-shown:left-7 peer-focus:left-2", startIconOffset: "left-3", endIconOffset: "right-3", actionOffset: "right-2" }
       },
       "xl": {
-        height: "h-10", font: "text-base", labelFont: "text-[11px] peer-placeholder-shown:text-base peer-focus:text-[11px]", actionFont: "text-sm",
-        pillShape: { corners: "rounded-full", gutter: "px-4.75", gutterWithAction: "pr-13 pl-4.75", labelOffset: "left-3.75", actionOffset: "right-3.75" },
-        roundedShape: { corners: "rounded-[10px]", gutter: "px-3.5", gutterWithAction: "pr-12 pl-3.5", labelOffset: "left-2.5", actionOffset: "right-2.5" }
+        height: "h-10", font: "text-base", labelFont: "text-[11px] peer-placeholder-shown:text-base peer-focus:text-[11px]", actionFont: "text-sm", icon: "size-3.5",
+        pillShape: { corners: "rounded-full", startPadding: "pl-4.75", endPadding: "pr-4.75", startPaddingWithIcon: "pl-10.25", endPaddingWithIcon: "pr-10.25", endPaddingWithAction: "pr-13", labelOffset: "left-3.75", labelOffsetWithStartIcon: "left-3.75 peer-placeholder-shown:left-9.25 peer-focus:left-3.75", startIconOffset: "left-4.75", endIconOffset: "right-4.75", actionOffset: "right-3.75" },
+        roundedShape: { corners: "rounded-[10px]", startPadding: "pl-3.5", endPadding: "pr-3.5", startPaddingWithIcon: "pl-9", endPaddingWithIcon: "pr-9", endPaddingWithAction: "pr-12", labelOffset: "left-2.5", labelOffsetWithStartIcon: "left-2.5 peer-placeholder-shown:left-8 peer-focus:left-2.5", startIconOffset: "left-3.5", endIconOffset: "right-3.5", actionOffset: "right-2.5" }
       },
       "2xl": {
-        height: "h-11", font: "text-base", labelFont: "text-xs peer-placeholder-shown:text-base peer-focus:text-xs", actionFont: "text-sm",
-        pillShape: { corners: "rounded-full", gutter: "px-5.25", gutterWithAction: "pr-14 pl-5.25", labelOffset: "left-4.25", actionOffset: "right-4.25" },
-        roundedShape: { corners: "rounded-xl", gutter: "px-4", gutterWithAction: "pr-12 pl-4", labelOffset: "left-3", actionOffset: "right-3" }
+        height: "h-11", font: "text-base", labelFont: "text-xs peer-placeholder-shown:text-base peer-focus:text-xs", actionFont: "text-sm", icon: "size-4",
+        pillShape: { corners: "rounded-full", startPadding: "pl-5.25", endPadding: "pr-5.25", startPaddingWithIcon: "pl-11.25", endPaddingWithIcon: "pr-11.25", endPaddingWithAction: "pr-14", labelOffset: "left-4.25", labelOffsetWithStartIcon: "left-4.25 peer-placeholder-shown:left-10.25 peer-focus:left-4.25", startIconOffset: "left-5.25", endIconOffset: "right-5.25", actionOffset: "right-4.25" },
+        roundedShape: { corners: "rounded-xl", startPadding: "pl-4", endPadding: "pr-4", startPaddingWithIcon: "pl-10", endPaddingWithIcon: "pr-10", endPaddingWithAction: "pr-12", labelOffset: "left-3", labelOffsetWithStartIcon: "left-3 peer-placeholder-shown:left-9 peer-focus:left-3", startIconOffset: "left-4", endIconOffset: "right-4", actionOffset: "right-3" }
       },
       "3xl": {
-        height: "h-12", font: "text-base", labelFont: "text-xs peer-placeholder-shown:text-base peer-focus:text-xs", actionFont: "text-sm",
-        pillShape: { corners: "rounded-full", gutter: "px-5.25", gutterWithAction: "pr-14 pl-5.25", labelOffset: "left-4.25", actionOffset: "right-4.25" },
-        roundedShape: { corners: "rounded-xl", gutter: "px-4", gutterWithAction: "pr-12 pl-4", labelOffset: "left-3", actionOffset: "right-3" }
+        height: "h-12", font: "text-base", labelFont: "text-xs peer-placeholder-shown:text-base peer-focus:text-xs", actionFont: "text-sm", icon: "size-4",
+        pillShape: { corners: "rounded-full", startPadding: "pl-5.25", endPadding: "pr-5.25", startPaddingWithIcon: "pl-11.25", endPaddingWithIcon: "pr-11.25", endPaddingWithAction: "pr-14", labelOffset: "left-4.25", labelOffsetWithStartIcon: "left-4.25 peer-placeholder-shown:left-10.25 peer-focus:left-4.25", startIconOffset: "left-5.25", endIconOffset: "right-5.25", actionOffset: "right-4.25" },
+        roundedShape: { corners: "rounded-xl", startPadding: "pl-4", endPadding: "pr-4", startPaddingWithIcon: "pl-10", endPaddingWithIcon: "pr-10", endPaddingWithAction: "pr-12", labelOffset: "left-3", labelOffsetWithStartIcon: "left-3 peer-placeholder-shown:left-9 peer-focus:left-3", startIconOffset: "left-4", endIconOffset: "right-4", actionOffset: "right-3" }
       },
       "4xl": {
-        height: "h-14", font: "text-base", labelFont: "text-xs peer-placeholder-shown:text-base peer-focus:text-xs", actionFont: "text-sm",
-        pillShape: { corners: "rounded-full", gutter: "px-6", gutterWithAction: "pr-16 pl-6", labelOffset: "left-5", actionOffset: "right-5" },
-        roundedShape: { corners: "rounded-2xl", gutter: "px-4.5", gutterWithAction: "pr-13 pl-4.5", labelOffset: "left-3.5", actionOffset: "right-3.5" }
+        height: "h-14", font: "text-base", labelFont: "text-xs peer-placeholder-shown:text-base peer-focus:text-xs", actionFont: "text-sm", icon: "size-4",
+        pillShape: { corners: "rounded-full", startPadding: "pl-6", endPadding: "pr-6", startPaddingWithIcon: "pl-12", endPaddingWithIcon: "pr-12", endPaddingWithAction: "pr-16", labelOffset: "left-5", labelOffsetWithStartIcon: "left-5 peer-placeholder-shown:left-11 peer-focus:left-5", startIconOffset: "left-6", endIconOffset: "right-6", actionOffset: "right-5" },
+        roundedShape: { corners: "rounded-2xl", startPadding: "pl-4.5", endPadding: "pr-4.5", startPaddingWithIcon: "pl-10.5", endPaddingWithIcon: "pr-10.5", endPaddingWithAction: "pr-13", labelOffset: "left-3.5", labelOffsetWithStartIcon: "left-3.5 peer-placeholder-shown:left-9.5 peer-focus:left-3.5", startIconOffset: "left-4.5", endIconOffset: "right-4.5", actionOffset: "right-3.5" }
       }
     }
   %}
   {% set sizing = textFieldSizes[size] %}
   {% set shape = sizing.pillShape if pill else sizing.roundedShape %}
   {% set isInvalid = invalid or errorMessage %}
+  {% set showsEndIcon = endIcon and not trailingActionLabel %}
 
   {% if errorMessage %}
     {% set descriptionId = id ~ "-error" %}
@@ -45,12 +46,23 @@
     {% set descriptionId = "" %}
   {% endif %}
 
+  {% if trailingActionLabel %}
+    {% set endPadding = shape.endPaddingWithAction %}
+  {% elif showsEndIcon %}
+    {% set endPadding = shape.endPaddingWithIcon %}
+  {% else %}
+    {% set endPadding = shape.endPadding %}
+  {% endif %}
+
   {% if isInvalid %}
     {% set borderClasses = "light:border-red-600 dark:border-red-500 light:selection:bg-red-500/16 dark:selection:bg-red-400/16" %}
     {% set labelColorClasses = "light:text-red-600 dark:text-red-400" %}
   {% elif disabled %}
-    {% set borderClasses = "border-line cursor-not-allowed" %}
+    {% set borderClasses = ("border-transparent" if variant == "soft" else "border-line") ~ " cursor-not-allowed" %}
     {% set labelColorClasses = "text-muted" %}
+  {% elif variant == "soft" %}
+    {% set borderClasses = "border-transparent focus:border-primary" %}
+    {% set labelColorClasses = "text-muted peer-focus:text-primary" %}
   {% else %}
     {% set borderClasses = "border-line light:not-focus:hover:border-stone-950/20 dark:not-focus:hover:border-white/20 focus:border-primary" %}
     {% set labelColorClasses = "text-muted peer-focus:text-primary" %}
@@ -72,14 +84,21 @@
         {% if isInvalid %}aria-invalid="true"{% endif %}
         {% if autofocus %}autofocus{% endif %}
         placeholder=" "
-        class="peer {{ sizing.height }} {{ sizing.font }} {{ shape.corners }} {{ shape.gutterWithAction if trailingActionLabel else shape.gutter }} {{ borderClasses }} w-full border bg-field outline-hidden transition-colors"
+        class="peer {{ sizing.height }} {{ sizing.font }} {{ shape.corners }} {{ shape.startPaddingWithIcon if startIcon else shape.startPadding }} {{ endPadding }} {{ borderClasses }} w-full border bg-field outline-hidden transition-colors"
       />
       <label
         for="{{ id }}"
-        class="{{ shape.labelOffset }} {{ sizing.labelFont }} {{ labelColorClasses }} pointer-events-none absolute top-0 -translate-y-1/2 bg-linear-to-b from-canvas from-50% to-field to-50% px-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:bg-none peer-focus:top-0 peer-focus:bg-linear-to-b"
+        class="{{ shape.labelOffsetWithStartIcon if startIcon else shape.labelOffset }} {{ sizing.labelFont }} {{ labelColorClasses }} pointer-events-none absolute top-0 -translate-y-1/2 bg-linear-to-b from-canvas from-50% to-field to-50% px-1 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:bg-none peer-focus:top-0 peer-focus:bg-linear-to-b"
       >
         {{ label }}
       </label>
+      {% if startIcon %}
+        <i
+          data-lucide="{{ startIcon }}"
+          aria-hidden="true"
+          class="{{ shape.startIconOffset }} {{ sizing.icon }} pointer-events-none absolute top-1/2 -translate-y-1/2 text-muted"
+        ></i>
+      {% endif %}
       {% if trailingActionLabel %}
         <a
           {% if disabled %}aria-disabled="true"{% else %}href="{{ trailingActionHref }}"{% endif %}
@@ -87,6 +106,21 @@
         >
           {{ trailingActionLabel }}
         </a>
+      {% elif showsEndIcon and endIconLabel %}
+        <button
+          type="button"
+          aria-label="{{ endIconLabel }}"
+          {% if disabled %}disabled{% endif %}
+          class="{{ shape.endIconOffset }} absolute top-1/2 flex -translate-y-1/2 cursor-pointer rounded-full text-muted outline-primary transition-colors hover:text-inherit focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed"
+        >
+          <i data-lucide="{{ endIcon }}" aria-hidden="true" class="{{ sizing.icon }}"></i>
+        </button>
+      {% elif showsEndIcon %}
+        <i
+          data-lucide="{{ endIcon }}"
+          aria-hidden="true"
+          class="{{ shape.endIconOffset }} {{ sizing.icon }} pointer-events-none absolute top-1/2 -translate-y-1/2 text-muted"
+        ></i>
       {% endif %}
     </div>
     {% if errorMessage %}
