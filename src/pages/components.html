@@ -88,30 +88,149 @@ layout: base.html
 
   <section class="mt-10">
     <h2 class="font-semibold tracking-tight">Text field</h2>
-    <div class="mt-4 grid gap-6 rounded-3xl border border-line p-6 sm:grid-cols-2">
-      {{ textField("text-field-empty-example", "email", "Email address", type = "email", autocomplete = "email") }}
-      {{ textField("text-field-filled-example", "full-name", "Full name", value = "Avery Collins") }}
-      {{
-        textField(
-          "text-field-trailing-action-example",
-          "email",
-          "Email address",
-          type = "email",
-          value = "avery.collins@example.com",
-          readonly = true,
-          trailingActionLabel = "Edit"
-        )
-      }}
-      {{
-        textField(
-          "text-field-hint-example",
-          "password",
-          "Password",
-          type = "password",
-          autocomplete = "new-password",
-          hint = "At least 8 characters, including a number."
-        )
-      }}
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line p-6">
+      <div>
+        <h3 class="text-sm text-muted">States</h3>
+        <div class="mt-4 grid gap-6 sm:grid-cols-2">
+          {{ textField("text-field-empty-example", "email", "Email address", type = "email", autocomplete = "email") }}
+          {{ textField("text-field-filled-example", "full-name", "Full name", value = "Avery Collins") }}
+          {{
+            textField(
+              "text-field-trailing-action-example",
+              "email",
+              "Email address",
+              type = "email",
+              value = "avery.collins@example.com",
+              readonly = true,
+              trailingActionLabel = "Edit"
+            )
+          }}
+          {{
+            textField(
+              "text-field-hint-example",
+              "password",
+              "Password",
+              type = "password",
+              autocomplete = "new-password",
+              hint = "At least 8 characters, including a number."
+            )
+          }}
+          {{
+            textField(
+              "text-field-error-example",
+              "email",
+              "Email address",
+              type = "email",
+              value = "avery.collins@",
+              errorMessage = "Enter a valid email address."
+            )
+          }}
+          {{
+            textField(
+              "text-field-error-replacing-hint-example",
+              "password",
+              "Password",
+              type = "password",
+              value = "kuina",
+              hint = "At least 8 characters, including a number.",
+              errorMessage = "Your password needs at least 8 characters."
+            )
+          }}
+          {{ textField("text-field-disabled-example", "company", "Company", disabled = true) }}
+          {{ textField("text-field-disabled-filled-example", "workspace", "Workspace", value = "Kuina", disabled = true) }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Sizes</h3>
+        <div class="mt-4 flex flex-col gap-y-5">
+          {% for textFieldSize in ["md", "lg", "xl", "2xl", "3xl", "4xl"] %}
+            <div class="grid items-center gap-x-6 gap-y-3 sm:grid-cols-[2.5rem_1fr_1fr]">
+              <span class="text-xs text-muted">{{ textFieldSize }}</span>
+              {{
+                textField(
+                  "text-field-" ~ textFieldSize ~ "-empty-example",
+                  "email",
+                  "Email address",
+                  type = "email",
+                  size = textFieldSize
+                )
+              }}
+              {{
+                textField(
+                  "text-field-" ~ textFieldSize ~ "-filled-example",
+                  "email",
+                  "Email address",
+                  type = "email",
+                  value = "avery.collins@example.com",
+                  readonly = true,
+                  trailingActionLabel = "Edit",
+                  size = textFieldSize
+                )
+              }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Rounded corners</h3>
+        <div class="mt-4 flex flex-col gap-y-5">
+          {% for textFieldSize in ["md", "lg", "xl", "2xl", "3xl", "4xl"] %}
+            <div class="grid items-center gap-x-6 gap-y-3 sm:grid-cols-[2.5rem_1fr_1fr]">
+              <span class="text-xs text-muted">{{ textFieldSize }}</span>
+              {{
+                textField(
+                  "text-field-rounded-" ~ textFieldSize ~ "-empty-example",
+                  "email",
+                  "Email address",
+                  type = "email",
+                  size = textFieldSize,
+                  pill = false
+                )
+              }}
+              {{
+                textField(
+                  "text-field-rounded-" ~ textFieldSize ~ "-filled-example",
+                  "email",
+                  "Email address",
+                  type = "email",
+                  value = "avery.collins@example.com",
+                  readonly = true,
+                  trailingActionLabel = "Edit",
+                  size = textFieldSize,
+                  pill = false
+                )
+              }}
+            </div>
+          {% endfor %}
+          <div class="grid items-start gap-x-6 gap-y-3 sm:grid-cols-[2.5rem_1fr_1fr]">
+            <span></span>
+            {{
+              textField(
+                "text-field-rounded-error-example",
+                "email",
+                "Email address",
+                type = "email",
+                value = "avery.collins@",
+                errorMessage = "Enter a valid email address.",
+                pill = false
+              )
+            }}
+            {{
+              textField(
+                "text-field-rounded-hint-example",
+                "password",
+                "Password",
+                type = "password",
+                autocomplete = "new-password",
+                hint = "At least 8 characters, including a number.",
+                pill = false
+              )
+            }}
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
