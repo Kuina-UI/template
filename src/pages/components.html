@@ -3,6 +3,8 @@ layout: base.html
 ---
 
 {% from "checkbox.html" import checkbox %}
+{% from "circular-progress.html" import circularProgress %}
+{% from "loading-dots.html" import loadingDots %}
 {% from "text-field.html" import textField %}
 
 <main class="mx-auto w-full max-w-5xl px-4 py-10">
@@ -42,6 +44,41 @@ layout: base.html
           hint = "At least 8 characters, including a number."
         )
       }}
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Loading indicators</h2>
+    <div class="mt-4 grid gap-8 rounded-3xl border border-line bg-widget p-6 sm:grid-cols-3">
+      <div>
+        <h3 class="text-sm text-muted">Loading indicator</h3>
+        <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-4">
+          <div role="status" aria-label="Loading" class="loading-indicator"></div>
+          <div role="status" aria-label="Loading" class="loading-indicator text-2xl"></div>
+          <div role="status" class="flex items-center gap-x-2 text-sm text-primary">
+            <div class="loading-indicator"></div>
+            Syncing accounts…
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Loading dots</h3>
+        <div class="mt-4 flex items-center gap-x-6">
+          {{ loadingDots() }}
+          <div class="text-primary">{{ loadingDots() }}</div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Circular progress</h3>
+        <div class="mt-4 flex items-center gap-x-4">
+          {{ circularProgress(25, "Upload progress") }}
+          {{ circularProgress(50, "Upload progress") }}
+          {{ circularProgress(75, "Upload progress") }}
+          {{ circularProgress(100, "Upload progress") }}
+        </div>
+      </div>
     </div>
   </section>
 </main>

@@ -1,0 +1,33 @@
+@keyframes loading-indicator-rotate {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/** Spinning ring that fades along its tail, sized by the font size and drawn in the current text color. */
+@utility loading-indicator {
+  position: relative;
+  width: 1em;
+  height: 1em;
+  animation: loading-indicator-rotate 0.8s linear infinite;
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    mask-image: conic-gradient(transparent, #000);
+    content: "";
+  }
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: calc(50% - 1px);
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: currentColor;
+    content: "";
+  }
+}
