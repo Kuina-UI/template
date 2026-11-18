@@ -8,6 +8,7 @@ layout: base.html
 {% from "loading-dots.html" import loadingDots %}
 {% from "radio-group.html" import radioGroup %}
 {% from "text-field.html" import textField %}
+{% from "textarea.html" import textarea %}
 
 <main class="mx-auto w-full max-w-5xl px-4 py-10">
   <h1 class="text-2xl font-semibold tracking-tight">Components</h1>
@@ -439,6 +440,161 @@ layout: base.html
               )
             }}
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Textarea</h2>
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line p-6">
+      <div>
+        <h3 class="text-sm text-muted">States</h3>
+        <div class="mt-4 grid gap-6 sm:grid-cols-2">
+          {{ textarea("textarea-empty-example", "note", "Note") }}
+          {{
+            textarea(
+              "textarea-filled-example",
+              "note",
+              "Note",
+              value = "Team lunch with the design studio after the quarterly review, split three ways."
+            )
+          }}
+          {{
+            textarea(
+              "textarea-hint-example",
+              "transfer-reference",
+              "Transfer reference",
+              hint = "Shown to the recipient on their bank statement."
+            )
+          }}
+          {{
+            textarea(
+              "textarea-character-count-example",
+              "budget-description",
+              "Budget description",
+              value = "Groceries, fuel and small household expenses for the month.",
+              maxlength = 140,
+              hint = "Keep it short, it appears on the budget card."
+            )
+          }}
+          {{
+            textarea(
+              "textarea-error-example",
+              "dispute-reason",
+              "Reason for the dispute",
+              value = "Wrong",
+              errorMessage = "Describe the issue in at least 20 characters."
+            )
+          }}
+          {{
+            textarea(
+              "textarea-disabled-example",
+              "account-notes",
+              "Account notes",
+              value = "Joint account opened in March 2024.",
+              disabled = true
+            )
+          }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Auto resize</h3>
+        <div class="mt-4 grid gap-6 sm:grid-cols-2">
+          {{ textarea("textarea-auto-resize-empty-example", "message", "Message to support", rows = 1, autoResize = true, maxRows = 6) }}
+          {{
+            textarea(
+              "textarea-auto-resize-filled-example",
+              "message",
+              "Message to support",
+              value = "Hi, a card payment of $42.90 at the airport bookshop appears twice on my statement. The second charge is dated a day later and I only made one purchase. Could you look into it and refund the duplicate? Thanks!",
+              rows = 1,
+              autoResize = true,
+              maxRows = 6
+            )
+          }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Soft variant</h3>
+        <div class="mt-4 grid gap-6 sm:grid-cols-2">
+          {{ textarea("textarea-soft-empty-example", "note", "Note", variant = "soft") }}
+          {{
+            textarea(
+              "textarea-soft-filled-example",
+              "note",
+              "Note",
+              value = "Team lunch with the design studio after the quarterly review, split three ways.",
+              variant = "soft"
+            )
+          }}
+          {{
+            textarea(
+              "textarea-soft-error-example",
+              "dispute-reason",
+              "Reason for the dispute",
+              value = "Wrong",
+              errorMessage = "Describe the issue in at least 20 characters.",
+              variant = "soft"
+            )
+          }}
+          {{
+            textarea(
+              "textarea-soft-disabled-example",
+              "account-notes",
+              "Account notes",
+              value = "Joint account opened in March 2024.",
+              disabled = true,
+              variant = "soft"
+            )
+          }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Sizes</h3>
+        <div class="mt-4 flex flex-col gap-y-5">
+          {% for textareaSize in ["md", "lg", "xl", "2xl", "3xl", "4xl"] %}
+            <div class="grid items-start gap-x-6 gap-y-3 sm:grid-cols-[2.5rem_1fr_1fr]">
+              <span class="text-xs text-muted">{{ textareaSize }}</span>
+              {{ textarea("textarea-" ~ textareaSize ~ "-empty-example", "note", "Note", rows = 2, size = textareaSize) }}
+              {{
+                textarea(
+                  "textarea-" ~ textareaSize ~ "-filled-example",
+                  "note",
+                  "Note",
+                  value = "Team lunch with the design studio, split three ways.",
+                  rows = 2,
+                  size = textareaSize
+                )
+              }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Rounded corners</h3>
+        <div class="mt-4 flex flex-col gap-y-5">
+          {% for textareaSize in ["md", "lg", "xl", "2xl", "3xl", "4xl"] %}
+            <div class="grid items-start gap-x-6 gap-y-3 sm:grid-cols-[2.5rem_1fr_1fr]">
+              <span class="text-xs text-muted">{{ textareaSize }}</span>
+              {{ textarea("textarea-rounded-" ~ textareaSize ~ "-empty-example", "note", "Note", rows = 2, size = textareaSize, pill = false) }}
+              {{
+                textarea(
+                  "textarea-rounded-" ~ textareaSize ~ "-filled-example",
+                  "note",
+                  "Note",
+                  value = "Team lunch with the design studio, split three ways.",
+                  rows = 2,
+                  size = textareaSize,
+                  pill = false
+                )
+              }}
+            </div>
+          {% endfor %}
         </div>
       </div>
     </div>

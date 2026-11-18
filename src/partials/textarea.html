@@ -1,0 +1,108 @@
+{% macro textarea(id, name, label, value = "", rows = 3, autoResize = false, maxRows = 10, maxlength = "", readonly = false, autofocus = false, hint = "", size = "4xl", pill = true, variant = "outline", invalid = false, errorMessage = "", disabled = false) %}
+  {%
+    set textareaSizes = {
+      "md": {
+        font: "text-sm", paddingY: "py-1.25", labelFont: "text-[11px] peer-placeholder-shown:text-sm peer-focus:text-[11px]", labelRestingTop: "peer-placeholder-shown:top-4",
+        autoResizeHeights: "min-h-[calc(var(--textarea-min-rows)*1lh+12px)] max-h-[calc(var(--textarea-max-rows)*1lh+12px)]",
+        pillShape: { corners: "rounded-2xl", paddingX: "px-4", labelOffset: "left-3" },
+        roundedShape: { corners: "rounded-lg", paddingX: "px-3", labelOffset: "left-2" }
+      },
+      "lg": {
+        font: "text-sm", paddingY: "py-1.75", labelFont: "text-[11px] peer-placeholder-shown:text-sm peer-focus:text-[11px]", labelRestingTop: "peer-placeholder-shown:top-4.5",
+        autoResizeHeights: "min-h-[calc(var(--textarea-min-rows)*1lh+16px)] max-h-[calc(var(--textarea-max-rows)*1lh+16px)]",
+        pillShape: { corners: "rounded-[18px]", paddingX: "px-4", labelOffset: "left-3" },
+        roundedShape: { corners: "rounded-lg", paddingX: "px-3", labelOffset: "left-2" }
+      },
+      "xl": {
+        font: "text-base", paddingY: "py-1.75", labelFont: "text-[11px] peer-placeholder-shown:text-base peer-focus:text-[11px]", labelRestingTop: "peer-placeholder-shown:top-5",
+        autoResizeHeights: "min-h-[calc(var(--textarea-min-rows)*1lh+16px)] max-h-[calc(var(--textarea-max-rows)*1lh+16px)]",
+        pillShape: { corners: "rounded-[20px]", paddingX: "px-4.75", labelOffset: "left-3.75" },
+        roundedShape: { corners: "rounded-[10px]", paddingX: "px-3.5", labelOffset: "left-2.5" }
+      },
+      "2xl": {
+        font: "text-base", paddingY: "py-2.25", labelFont: "text-xs peer-placeholder-shown:text-base peer-focus:text-xs", labelRestingTop: "peer-placeholder-shown:top-5.5",
+        autoResizeHeights: "min-h-[calc(var(--textarea-min-rows)*1lh+20px)] max-h-[calc(var(--textarea-max-rows)*1lh+20px)]",
+        pillShape: { corners: "rounded-[22px]", paddingX: "px-5.25", labelOffset: "left-4.25" },
+        roundedShape: { corners: "rounded-xl", paddingX: "px-4", labelOffset: "left-3" }
+      },
+      "3xl": {
+        font: "text-base", paddingY: "py-2.75", labelFont: "text-xs peer-placeholder-shown:text-base peer-focus:text-xs", labelRestingTop: "peer-placeholder-shown:top-6",
+        autoResizeHeights: "min-h-[calc(var(--textarea-min-rows)*1lh+24px)] max-h-[calc(var(--textarea-max-rows)*1lh+24px)]",
+        pillShape: { corners: "rounded-3xl", paddingX: "px-5.25", labelOffset: "left-4.25" },
+        roundedShape: { corners: "rounded-xl", paddingX: "px-4", labelOffset: "left-3" }
+      },
+      "4xl": {
+        font: "text-base", paddingY: "py-3.75", labelFont: "text-xs peer-placeholder-shown:text-base peer-focus:text-xs", labelRestingTop: "peer-placeholder-shown:top-7",
+        autoResizeHeights: "min-h-[calc(var(--textarea-min-rows)*1lh+32px)] max-h-[calc(var(--textarea-max-rows)*1lh+32px)]",
+        pillShape: { corners: "rounded-[28px]", paddingX: "px-6", labelOffset: "left-5" },
+        roundedShape: { corners: "rounded-2xl", paddingX: "px-4.5", labelOffset: "left-3.5" }
+      }
+    }
+  %}
+  {% set sizing = textareaSizes[size] %}
+  {% set shape = sizing.pillShape if pill else sizing.roundedShape %}
+  {% set isInvalid = invalid or errorMessage %}
+
+  {% if errorMessage %}
+    {% set descriptionId = id ~ "-error" %}
+  {% elif hint %}
+    {% set descriptionId = id ~ "-hint" %}
+  {% else %}
+    {% set descriptionId = "" %}
+  {% endif %}
+
+  {% if isInvalid %}
+    {% set borderClasses = "light:border-red-600 dark:border-red-500 light:selection:bg-red-500/16 dark:selection:bg-red-400/16" %}
+    {% set labelColorClasses = "light:text-red-600 dark:text-red-400" %}
+  {% elif disabled %}
+    {% set borderClasses = ("border-transparent" if variant == "soft" else "border-line") ~ " cursor-not-allowed" %}
+    {% set labelColorClasses = "text-muted" %}
+  {% elif variant == "soft" %}
+    {% set borderClasses = "border-transparent focus:border-primary" %}
+    {% set labelColorClasses = "text-muted peer-focus:text-primary" %}
+  {% else %}
+    {% set borderClasses = "border-line light:not-focus:hover:border-stone-950/20 dark:not-focus:hover:border-white/20 focus:border-primary" %}
+    {% set labelColorClasses = "text-muted peer-focus:text-primary" %}
+  {% endif %}
+
+  <div>
+    <div class="{{ 'opacity-50' if disabled }} relative">
+      <textarea
+        id="{{ id }}"
+        name="{{ name }}"
+        rows="{{ rows }}"
+        {% if readonly %}readonly{% endif %}
+        {% if disabled %}disabled{% endif %}
+        {% if maxlength %}maxlength="{{ maxlength }}"{% endif %}
+        {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
+        {% if isInvalid %}aria-invalid="true"{% endif %}
+        {% if autofocus %}autofocus{% endif %}
+        {% if autoResize %}style="--textarea-min-rows: {{ rows }}; --textarea-max-rows: {{ maxRows }}"{% endif %}
+        placeholder=" "
+        class="peer {{ sizing.font }} {{ sizing.paddingY }} {{ shape.paddingX }} {{ shape.corners }} {{ borderClasses }} {{ 'field-sizing-content ' ~ sizing.autoResizeHeights if autoResize }} block w-full resize-none border bg-field outline-hidden transition-colors"
+      >
+{{ value }}</textarea>
+      <label
+        for="{{ id }}"
+        class="{{ shape.labelOffset }} {{ sizing.labelFont }} {{ sizing.labelRestingTop }} {{ labelColorClasses }} pointer-events-none absolute top-0 -translate-y-1/2 bg-linear-to-b from-canvas from-50% to-field to-50% px-1 transition-all peer-placeholder-shown:bg-none peer-focus:top-0 peer-focus:bg-linear-to-b"
+      >
+        {{ label }}
+      </label>
+    </div>
+    {% if errorMessage or hint or maxlength %}
+      <div class="mt-2 flex items-start gap-x-4 text-xs">
+        {% if errorMessage %}
+          <p id="{{ id }}-error" class="flex items-start gap-x-1.5 dark:text-red-400 light:text-red-600">
+            <i data-lucide="circle-alert" class="mt-px size-3.5 shrink-0"></i>
+            {{ errorMessage }}
+          </p>
+        {% elif hint %}
+          <p id="{{ id }}-hint" class="text-muted">{{ hint }}</p>
+        {% endif %}
+        {% if maxlength %}
+          <p class="ml-auto shrink-0 text-muted tabular-nums">{{ value | length }}/{{ maxlength }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+{% endmacro %}
