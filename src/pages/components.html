@@ -1,0 +1,17 @@
+---
+layout: base.html
+---
+
+{% from "checkbox.html" import checkbox %}
+
+<main class="mx-auto w-full max-w-5xl px-4 py-10">
+  <h1 class="text-2xl font-semibold tracking-tight">Components</h1>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Checkbox</h2>
+    <div class="mt-4 flex flex-col gap-y-3 rounded-3xl border border-line bg-widget p-6">
+      {{ checkbox("remember-this-device", "Remember this device") }}
+      {{ checkbox("sign-out-other-devices", "Sign out of all other devices", checked = true) }}
+    </div>
+  </section>
+</main>

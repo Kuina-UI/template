@@ -2,6 +2,8 @@
 layout: auth.html
 ---
 
+{% from "checkbox.html" import checkbox %}
+
 <div class="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center px-4">
   <a href="#">
     <img src="images/kuina-logo-light.svg" alt="Logo" class="hidden h-16 w-16 light:inline-block" />
@@ -36,6 +38,8 @@ layout: auth.html
       </label>
     </div>
 
+    <div class="mt-4">{{ checkbox("remember-me", "Remember me") }}</div>
+
     <button
       class="mt-6 flex h-14 w-full cursor-pointer items-center justify-center rounded-full text-center dark:bg-stone-200 dark:text-stone-950 light:bg-neutral-900 light:text-white"
     >
@@ -43,7 +47,7 @@ layout: auth.html
     </button>
   </form>
 
-  <button type="button" class="mt-6 cursor-pointer text-sm font-medium">Resend email</button>
+  <button type="button" class="mt-6 cursor-pointer text-sm font-medium text-primary">Resend email</button>
 
   <div
     class="my-6 flex w-full items-center gap-x-3 text-[12px] uppercase before:h-px before:flex-1 before:bg-line after:h-px after:flex-1 after:bg-line"

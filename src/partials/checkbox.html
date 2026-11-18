@@ -1,0 +1,14 @@
+{% macro checkbox(name, label, checked = false) %}
+  <label class="flex cursor-pointer items-start gap-x-2 text-sm leading-5">
+    <span
+      class="relative top-px size-4.5 shrink-0 rounded-sm border outline-primary transition-colors has-focus-visible:outline-2 has-focus-visible:outline-offset-2 dark:border-stone-600 dark:hover:border-stone-500 dark:has-checked:border-stone-200 dark:has-checked:bg-stone-200 light:border-stone-300 light:hover:border-stone-400 light:has-checked:border-neutral-900 light:has-checked:bg-neutral-900"
+    >
+      <input type="checkbox" name="{{ name }}" {% if checked %}checked{% endif %} class="peer sr-only" />
+      <span
+        aria-hidden="true"
+        class="checkbox-check-mark hidden peer-checked:block dark:text-stone-950 light:text-white"
+      ></span>
+    </span>
+    {{ label }}
+  </label>
+{% endmacro %}
