@@ -3,6 +3,7 @@ layout: base.html
 ---
 
 {% from "checkbox.html" import checkbox %}
+{% from "text-field.html" import textField %}
 
 <main class="mx-auto w-full max-w-5xl px-4 py-10">
   <h1 class="text-2xl font-semibold tracking-tight">Components</h1>
@@ -12,6 +13,35 @@ layout: base.html
     <div class="mt-4 flex flex-col gap-y-3 rounded-3xl border border-line bg-widget p-6">
       {{ checkbox("remember-this-device", "Remember this device") }}
       {{ checkbox("sign-out-other-devices", "Sign out of all other devices", checked = true) }}
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Text field</h2>
+    <div class="mt-4 grid gap-6 rounded-3xl border border-line p-6 sm:grid-cols-2">
+      {{ textField("text-field-empty-example", "email", "Email address", type = "email", autocomplete = "email") }}
+      {{ textField("text-field-filled-example", "full-name", "Full name", value = "Avery Collins") }}
+      {{
+        textField(
+          "text-field-trailing-action-example",
+          "email",
+          "Email address",
+          type = "email",
+          value = "avery.collins@example.com",
+          readonly = true,
+          trailingActionLabel = "Edit"
+        )
+      }}
+      {{
+        textField(
+          "text-field-hint-example",
+          "password",
+          "Password",
+          type = "password",
+          autocomplete = "new-password",
+          hint = "At least 8 characters, including a number."
+        )
+      }}
     </div>
   </section>
 </main>
