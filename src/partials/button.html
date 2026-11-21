@@ -178,8 +178,7 @@
 
   {% if href %}
     <a
-      {% if not disabled %}href="{{ href }}"{% endif %}
-      {% if disabled %}aria-disabled="true"{% endif %}
+      {% if disabled %}role="link" aria-disabled="true"{% else %}href="{{ href }}"{% endif %}
       {% if uniform %}aria-label="{{ label }}"{% endif %}
       class="{{ buttonClasses }}"
     >
@@ -189,7 +188,6 @@
     <button
       type="{{ type }}"
       {% if disabled or loading %}disabled{% endif %}
-      {% if disabled %}aria-disabled="true"{% endif %}
       {% if loading %}aria-busy="true"{% endif %}
       {% if selected %}aria-pressed="true"{% endif %}
       {% if menuId %}aria-haspopup="menu" aria-expanded="{{ 'true' if menuOpen else 'false' }}"{% endif %}

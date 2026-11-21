@@ -1,49 +1,43 @@
 ---
 layout: auth.html
+title: Check your inbox
 ---
 
 {% from "button.html" import button %}
 {% from "checkbox.html" import checkbox %}
 {% from "text-field.html" import textField %}
 
-<div class="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center px-4">
-  <a href="#">
-    <img src="images/kuina-logo-light.svg" alt="Logo" class="hidden h-16 w-16 light:inline-block" />
-    <img src="images/kuina-logo-dark.svg" alt="Logo" class="hidden h-16 w-16 dark:inline-block" />
-  </a>
+<h1 class="mt-5 text-2xl font-semibold tracking-tight">Check your inbox</h1>
 
-  <h2 class="mt-5 text-2xl font-semibold tracking-tight">Check your inbox</h2>
+<p class="mt-2 mb-8 text-center text-sm text-muted">
+  Enter the code we sent to
+  <span class="font-medium dark:text-white light:text-stone-950">avery.collins@example.com</span>
+</p>
 
-  <p class="mt-2 mb-8 text-center text-sm text-muted">
-    Enter the code we sent to
-    <span class="font-medium dark:text-white light:text-stone-950">avery.collins@example.com</span>
-  </p>
+<form action="#" class="w-full">
+  {{
+    textField(
+      "otp-code",
+      "code",
+      "Code",
+      inputmode = "numeric",
+      autocomplete = "one-time-code",
+      maxlength = 6,
+      autofocus = true
+    )
+  }}
 
-  <form action="#" class="w-full">
-    {{
-      textField(
-        "otp-code",
-        "code",
-        "Code",
-        inputmode = "numeric",
-        autocomplete = "one-time-code",
-        maxlength = 6,
-        autofocus = true
-      )
-    }}
+  <div class="mt-4">{{ checkbox("remember-me", "Remember me") }}</div>
 
-    <div class="mt-4">{{ checkbox("remember-me", "Remember me") }}</div>
+  <div class="mt-6">{{ button("Continue", type = "submit", size = "4xl", block = true) }}</div>
+</form>
 
-    <div class="mt-6">{{ button("Continue", type = "submit", size = "4xl", block = true) }}</div>
-  </form>
+<button type="button" class="mt-6 cursor-pointer text-sm font-medium text-primary">Resend email</button>
 
-  <button type="button" class="mt-6 cursor-pointer text-sm font-medium text-primary">Resend email</button>
-
-  <div
-    class="my-6 flex w-full items-center gap-x-3 text-[12px] uppercase before:h-px before:flex-1 before:bg-line after:h-px after:flex-1 after:bg-line"
-  >
-    or
-  </div>
-
-  {{ button("Continue with password", variant = "soft", size = "4xl", block = true) }}
+<div
+  class="my-6 flex w-full items-center gap-x-3 text-[12px] uppercase before:h-px before:flex-1 before:bg-line after:h-px after:flex-1 after:bg-line"
+>
+  or
 </div>
+
+{{ button("Continue with password", variant = "soft", size = "4xl", block = true) }}

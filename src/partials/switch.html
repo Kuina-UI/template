@@ -18,6 +18,7 @@
         {% if checked %}checked{% endif %}
         {% if disabled %}disabled{% endif %}
         {% if ariaLabel %}aria-label="{{ ariaLabel }}"{% endif %}
+        {% if label and description %}aria-labelledby="{{ name }}-label" aria-describedby="{{ name }}-description"{% endif %}
         class="peer sr-only"
       />
       <span
@@ -27,8 +28,8 @@
     </span>
     {% if label and description %}
       <span class="min-w-0">
-        <span class="block font-medium">{{ label }}</span>
-        <span class="mt-0.5 block text-muted">{{ description }}</span>
+        <span id="{{ name }}-label" class="block font-medium">{{ label }}</span>
+        <span id="{{ name }}-description" class="mt-0.5 block text-muted">{{ description }}</span>
       </span>
     {% elif label %}
       {{ label }}

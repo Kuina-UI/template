@@ -15,11 +15,11 @@
     class="{{ textLinkColors[color] }} {{ textLinkWeights[weight] }} {{ 'underline decoration-current/70 underline-offset-[0.1em]' if showsUnderline }} {{ 'inline-flex items-center gap-0.5' if startIcon or endIcon }} rounded-sm wrap-anywhere outline-primary transition-colors focus-visible:outline-2 focus-visible:outline-offset-1"
   >
     {%- if startIcon -%}
-      <i data-lucide="{{ startIcon }}" aria-hidden="true" class="size-[1em] shrink-0"></i>
+      <i data-lucide="{{ startIcon }}" class="size-[1em] shrink-0"></i>
     {%- endif -%}
     {{- label -}}
     {%- if endIcon -%}
-      <i data-lucide="{{ endIcon }}" aria-hidden="true" class="size-[1em] shrink-0"></i>
+      <i data-lucide="{{ endIcon }}" class="size-[1em] shrink-0"></i>
     {%- endif -%}
     {%- if opensNewTab -%}
       <span class="sr-only">(opens in a new tab)</span>

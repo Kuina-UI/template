@@ -8,7 +8,7 @@ Where things live, how a page is built and the rules every change follows. To in
 src/
 ├── pages/            one built page = one file, no subfolders
 ├── layouts/          page skeletons a page wraps itself in
-│   ├── base.html         document shell: <head>, stylesheet, icons and charts scripts
+│   ├── base.html         document shell: <head>, stylesheet, icons script, charts script when asked
 │   ├── auth.html         base for sign-in pages (login…)
 │   └── dashboard.html    base + sidebar + <main>
 ├── partials/         shared fragments pulled in with {% include %}, or macros imported with {% from %}
@@ -33,17 +33,19 @@ eleventy.config.js    Eleventy settings
 
 ## How a page is built
 
-A page only holds its own content. The front matter at the top picks the layout that wraps it:
+A page only holds its own content. The front matter at the top picks the layout that wraps it, names the page and says whether it draws charts:
 
 ```html
 ---
 layout: dashboard.html
+title: Overview
+usesCharts: true
 ---
 
 <h1>Overview</h1>
 ```
 
-`dashboard.html` places that content inside `<main>`, next to the sidebar, then hands everything to `base.html` for the `<head>` and scripts. `src/pages/overview.html` comes out as `dist/overview.html`, flat, next to `css/kuina.css`, `js/lucide.min.js`, `js/apexcharts.min.js`, `images/` and `favicon/`. Each built page is then formatted with Prettier, using the same `.prettierrc` as the sources.
+`dashboard.html` places that content inside `<main>`, next to the sidebar, then hands everything to `base.html` for the `<head>` and scripts. `title` fills the browser tab (`Overview · Kuina UI`). `usesCharts: true` loads ApexCharts; leave it out on pages without charts so they skip the library. `src/pages/overview.html` comes out as `dist/overview.html`, flat, next to `css/kuina.css`, `js/lucide.min.js`, `js/apexcharts.min.js`, `images/` and `favicon/`. Each built page is then formatted with Prettier, using the same `.prettierrc` as the sources.
 
 ## Themes
 
@@ -63,7 +65,8 @@ To add a theme (sepia…), add its variant in `src/styles/variants/`, import it 
 - **Shared markup**: when the same block appears on several pages, move it to `src/partials/` and pull it in with `{% include "name.html" %}`. Asset paths in layouts and partials are relative to `dist/` (`images/logo.svg`, not `../images/logo.svg`).
 - **Page name**: its sidebar label in kebab-case. "Overview" → `overview.html`.
 - **Sub-page or state**: parent name + qualifier. `transactions-detail.html`, `transactions-empty.html` (they sort next to their parent).
-- **Page script**: `src/scripts/<page>.js`, named after its page, loaded at the end of that page with `<script src="js/overview.js" defer></script>`, so it runs after the libraries `base.html` loads (Lucide, ApexCharts).
+- **Page script**: `src/scripts/<page>.js`, named after its page, loaded at the end of that page with `<script src="js/overview.js" defer></script>`, so it runs after the libraries `base.html` loads (Lucide, plus ApexCharts with `usesCharts: true`).
+- **Icons**: `<i data-lucide="bell"></i>`, without `aria-hidden`: Lucide adds it when it draws the icon. A button or link that only shows an icon gets an `aria-label`.
 - **Custom class**: one `@utility` per file in `src/styles/utilities/`, named after the class. `scroll-edge-fade` → `scroll-edge-fade.css`.
 - **Custom variant**: one `@custom-variant` per file in `src/styles/variants/`, named after the variant. `dark:` → `dark.css`.
 - **Vue and React repos**: copy `src/styles/` as is.

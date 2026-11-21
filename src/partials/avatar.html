@@ -76,7 +76,7 @@
     {% if imageUrl %}
       <img src="{{ imageUrl }}" alt="" class="absolute inset-0 size-full rounded-[inherit] object-cover" />
     {% elif icon %}
-      <i data-lucide="{{ icon }}" aria-hidden="true" class="size-[calc(var(--avatar-size)*0.55)] shrink-0"></i>
+      <i data-lucide="{{ icon }}" class="size-[calc(var(--avatar-size)*0.55)] shrink-0"></i>
     {% elif overflowCount %}
       <span aria-hidden="true" class="{{ textScale }} flex leading-none font-semibold">
         <span class="relative -top-[calc(var(--avatar-size)/24)] -ml-px">+</span>

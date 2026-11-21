@@ -1,17 +1,16 @@
+<h1 class="sr-only">Overview</h1>
+
 <div class="grid grid-cols-1 gap-3 xl:grid-cols-6">
   <div class="flex flex-col gap-3 xl:col-span-2">
     <div class="grid grid-cols-1 gap-3 sm:auto-rows-fr sm:grid-cols-2">
       <div class="flex flex-col overflow-hidden rounded-3xl border border-line bg-widget">
-        <!-- content -->
         <div class="px-4 pt-4">
-          <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
+          <h2 class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
             <i data-lucide="wallet" class="size-4"></i>
             <span>Total Balance</span>
-          </div>
-          <h2 class="text-2xl font-medium">15,209.13 USD</h2>
+          </h2>
+          <p class="text-2xl font-medium">15,209.13 USD</p>
         </div>
-        <!-- chart -->
-
         <div
           id="total-balance-chart"
           class="mt-auto h-25 text-primary"
@@ -21,17 +20,14 @@
       </div>
 
       <div class="flex flex-col overflow-hidden rounded-3xl border border-line bg-widget">
-        <!-- content -->
         <div class="px-4 pt-4">
-          <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
+          <h2 class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
             <i data-lucide="chart-pie" class="size-4"></i>
             <span>Monthly budget</span>
-          </div>
-          <h2 class="text-2xl font-medium dark:text-red-500 light:text-red-600">679.44 USD</h2>
+          </h2>
+          <p class="text-2xl font-medium dark:text-red-500 light:text-red-600">679.44 USD</p>
           <p class="mt-0.5 text-xs text-muted">Over after plans</p>
         </div>
-        <!-- chart -->
-
         <div class="mt-auto px-4 pt-6 pb-4">
           <div
             id="monthly-budget-chart"
@@ -44,42 +40,38 @@
       </div>
 
       <div class="overflow-hidden rounded-3xl border border-line bg-widget p-4">
-        <!-- content -->
         <div>
-          <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
+          <h2 class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
             <i data-lucide="calendar-minus" class="size-4"></i>
             <span>Obligations</span>
-          </div>
-          <h2 class="text-2xl font-medium">1327.52 USD</h2>
+          </h2>
+          <p class="text-2xl font-medium">1327.52 USD</p>
         </div>
-        <!-- chart -->
-
         <div class="flex h-25 flex-col justify-end">
           <div>
             <p class="mt-0.5 text-xs text-muted">Expenses left this month</p>
-            <div class="mt-0.5 inline-flex w-full items-center justify-between text-xs">
-              <span class="text-muted">Scheduled:</span>
-              <span class="font-medium">250</span>
-            </div>
-            <div class="mt-0.5 inline-flex w-full items-center justify-between text-xs">
-              <span class="text-muted">Restocks:</span>
-              <span class="font-medium">1.1k</span>
-            </div>
+            <dl>
+              <div class="mt-0.5 inline-flex w-full items-center justify-between text-xs">
+                <dt class="text-muted">Scheduled:</dt>
+                <dd class="font-medium">250</dd>
+              </div>
+              <div class="mt-0.5 inline-flex w-full items-center justify-between text-xs">
+                <dt class="text-muted">Restocks:</dt>
+                <dd class="font-medium">1.1k</dd>
+              </div>
+            </dl>
           </div>
         </div>
       </div>
 
       <div class="flex flex-col overflow-hidden rounded-3xl border border-line bg-widget">
-        <!-- content -->
         <div class="px-4 pt-4">
-          <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
+          <h2 class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
             <i data-lucide="clock" class="size-4"></i>
             <span>Runway</span>
-          </div>
-          <h2 class="text-2xl font-medium">186 days</h2>
+          </h2>
+          <p class="text-2xl font-medium">186 days</p>
         </div>
-        <!-- chart -->
-
         <div class="mt-auto px-4 pt-6 pb-4">
           <div
             id="runway-chart"
@@ -96,9 +88,7 @@
         <i data-lucide="wallet" class="size-4"></i>
         <span>Oct 11 – Oct 17</span>
       </div>
-      <h2 class="text-foreground mt-2 text-xl leading-[1.15] font-medium tracking-tight md:text-2xl">
-        Your week in review
-      </h2>
+      <h2 class="mt-2 text-xl leading-[1.15] font-medium tracking-tight md:text-2xl">Your week in review</h2>
 
       <p class="mt-2 text-xs text-muted">
         13 transactions from October 11, 2026 to October 17, 2026. A quick pass through spending, categories, and
@@ -109,10 +99,10 @@
     </div>
 
     <div class="rounded-3xl border border-line bg-widget p-4">
-      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
+      <h2 class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
         <i data-lucide="git-branch" class="size-4"></i>
         <span>Money flow</span>
-      </div>
+      </h2>
 
       <div
         id="money-flow-chart"
@@ -124,17 +114,17 @@
   </div>
   <div class="flex flex-col gap-3 xl:col-span-2">
     <div class="rounded-3xl border border-line bg-widget p-4">
-      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
+      <h2 class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
         <i data-lucide="list" class="size-4"></i>
         <span>Recent Transactions</span>
-      </div>
+      </h2>
 
       <ul class="mt-2">
         <li
           class="flex items-center justify-between rounded-lg px-1 py-2 dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6"
         >
           <div class="flex items-center gap-3">
-            <span data-lucide="utensils" class="size-5"></span>
+            <i data-lucide="utensils" class="size-5"></i>
             <div>
               <div class="truncate text-sm font-medium">Drinks with friends</div>
               <div class="truncate text-xs text-muted">Today</div>
@@ -147,7 +137,7 @@
           class="flex items-center justify-between rounded-lg px-1 py-2 dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6"
         >
           <div class="flex items-center gap-3">
-            <span data-lucide="shopping-bag" class="size-5"></span>
+            <i data-lucide="shopping-bag" class="size-5"></i>
             <div>
               <div class="truncate text-sm font-medium">Grocery store</div>
               <div class="truncate text-xs text-muted">Yesterday</div>
@@ -160,7 +150,7 @@
           class="flex items-center justify-between rounded-lg px-1 py-2 dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6"
         >
           <div class="flex items-center gap-3">
-            <span data-lucide="zap" class="size-5"></span>
+            <i data-lucide="zap" class="size-5"></i>
             <div>
               <div class="truncate text-sm font-medium">Electricity bill</div>
               <div class="truncate text-xs text-muted">Oct 21</div>
@@ -173,7 +163,7 @@
           class="flex items-center justify-between rounded-lg px-1 py-2 dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6"
         >
           <div class="flex items-center gap-3">
-            <span data-lucide="train-front" class="size-5"></span>
+            <i data-lucide="train-front" class="size-5"></i>
             <div>
               <div class="truncate text-sm font-medium">Metro pass</div>
               <div class="truncate text-xs text-muted">Oct 20</div>
@@ -186,7 +176,7 @@
           class="flex items-center justify-between rounded-lg px-1 py-2 dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6"
         >
           <div class="flex items-center gap-3">
-            <span data-lucide="wifi" class="size-5"></span>
+            <i data-lucide="wifi" class="size-5"></i>
             <div>
               <div class="truncate text-sm font-medium">Internet subscription</div>
               <div class="truncate text-xs text-muted">Oct 18</div>
@@ -198,10 +188,10 @@
     </div>
 
     <div class="rounded-3xl border border-line bg-widget p-4">
-      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-        <i data-lucide="pie-chart" class="size-4"></i>
+      <h2 class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
+        <i data-lucide="chart-pie" class="size-4"></i>
         <span>Expense Distribution</span>
-      </div>
+      </h2>
 
       <div
         id="expense-distribution-chart"
@@ -270,10 +260,10 @@
   </div>
   <div class="flex flex-col gap-3 xl:col-span-2">
     <div class="rounded-3xl border border-line bg-widget p-4">
-      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
+      <h2 class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
         <i data-lucide="chart-line" class="size-4"></i>
         <span>Balance forecast</span>
-      </div>
+      </h2>
 
       <ul class="mt-3 space-y-2 text-sm">
         <li class="flex items-center justify-between">
@@ -306,10 +296,10 @@
     </div>
 
     <div class="rounded-3xl border border-line bg-widget p-4">
-      <div class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
-        <i data-lucide="bar-chart-4" class="size-4"></i>
+      <h2 class="inline-flex items-center gap-x-2 text-xs text-muted uppercase">
+        <i data-lucide="chart-column-increasing" class="size-4"></i>
         <span>Planned vs Unplanned</span>
-      </div>
+      </h2>
 
       <ul class="mt-3 space-y-3 text-sm">
         <li class="flex items-center justify-between">

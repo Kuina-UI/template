@@ -1,59 +1,54 @@
 ---
 layout: auth.html
+title: Create a password
 ---
 
 {% from "button.html" import button %}
 {% from "text-field.html" import textField %}
 
-<div class="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center px-4">
-  <a href="#">
-    <img src="images/kuina-logo-light.svg" alt="Logo" class="hidden h-16 w-16 light:inline-block" />
-    <img src="images/kuina-logo-dark.svg" alt="Logo" class="hidden h-16 w-16 dark:inline-block" />
-  </a>
+<h1 class="mt-5 text-2xl font-semibold tracking-tight">Create a password</h1>
 
-  <h2 class="mt-5 text-2xl font-semibold tracking-tight">Create a password</h2>
+<p class="mt-2 mb-8 text-center text-sm text-muted">You'll use it to log in to Kuina.</p>
 
-  <p class="mt-2 mb-8 text-center text-sm text-muted">You'll use it to log in to Kuina.</p>
+<form action="#" class="w-full">
+  {{
+    textField(
+      "sign-up-email",
+      "email",
+      "Email address",
+      type = "email",
+      value = "avery.collins@example.com",
+      autocomplete = "username",
+      readonly = true,
+      trailingActionLabel = "Edit"
+    )
+  }}
 
-  <form action="#" class="w-full">
+  <div class="mt-6">
     {{
       textField(
-        "sign-up-email",
-        "email",
-        "Email address",
-        type = "email",
-        value = "avery.collins@example.com",
-        readonly = true,
-        trailingActionLabel = "Edit"
+        "sign-up-password",
+        "password",
+        "Password",
+        type = "password",
+        autocomplete = "new-password",
+        hint = "At least 8 characters, including a number."
       )
     }}
-
-    <div class="mt-6">
-      {{
-        textField(
-          "sign-up-password",
-          "password",
-          "Password",
-          type = "password",
-          autocomplete = "new-password",
-          hint = "At least 8 characters, including a number."
-        )
-      }}
-    </div>
-
-    <div class="mt-6">{{ button("Continue", type = "submit", size = "4xl", block = true) }}</div>
-  </form>
-
-  <div
-    class="my-6 flex w-full items-center gap-x-3 text-[12px] uppercase before:h-px before:flex-1 before:bg-line after:h-px after:flex-1 after:bg-line"
-  >
-    or
   </div>
 
-  {{ button("Sign up with a one-time code", variant = "soft", size = "4xl", block = true) }}
+  <div class="mt-6">{{ button("Continue", type = "submit", size = "4xl", block = true) }}</div>
+</form>
 
-  <p class="mt-6 text-sm text-muted">
-    Already have an account?
-    <a href="#" class="font-medium text-primary">Log in</a>
-  </p>
+<div
+  class="my-6 flex w-full items-center gap-x-3 text-[12px] uppercase before:h-px before:flex-1 before:bg-line after:h-px after:flex-1 after:bg-line"
+>
+  or
 </div>
+
+{{ button("Sign up with a one-time code", variant = "soft", size = "4xl", block = true) }}
+
+<p class="mt-6 text-sm text-muted">
+  Already have an account?
+  <a href="#" class="font-medium text-primary">Log in</a>
+</p>

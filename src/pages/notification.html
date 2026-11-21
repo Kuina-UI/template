@@ -1,5 +1,7 @@
 ---
 layout: dashboard.html
+title: Notifications
+usesCharts: true
 ---
 
 {% include "overview-content.html" %}
@@ -13,28 +15,41 @@ layout: dashboard.html
 >
   <div class="flex items-center justify-between">
     <button
+      type="button"
+      aria-label="Mark all as read"
       class="pointer-events-auto hidden h-11.5 w-11.5 cursor-pointer items-center justify-center rounded-full border border-line bg-linear-to-b shadow-sm inset-shadow-2xs backdrop-blur-xl md:flex dark:from-white/20 dark:to-white/12 dark:inset-shadow-white/20 light:from-white light:to-stone-50 light:inset-shadow-white"
     >
       <i data-lucide="bell-check" class="size-5"></i>
     </button>
-    <h2 class="leading-none font-semibold tracking-tight">Notifications</h2>
+    <h2 id="notifications-dialog-title" class="leading-none font-semibold tracking-tight">Notifications</h2>
     <button
+      type="button"
+      aria-label="Close"
       class="pointer-events-auto hidden h-11.5 w-11.5 cursor-pointer items-center justify-center rounded-full border border-line backdrop-blur-xl md:flex dark:bg-stone-200 dark:text-stone-950 light:bg-stone-800 light:text-white"
     >
       <i data-lucide="check" class="size-5"></i>
     </button>
   </div>
 
-  <!-- switch -->
   <div
+    role="group"
+    aria-label="Filter notifications"
     class="my-6 inline-flex gap-1 self-start rounded-full border border-line p-1 inset-shadow-2xs dark:bg-white/5 dark:inset-shadow-white/6 light:bg-stone-950/5 light:inset-shadow-stone-950/5"
   >
     <button
+      type="button"
+      aria-pressed="true"
       class="h-9 shrink-0 cursor-pointer rounded-full bg-linear-to-b px-4 text-sm font-medium shadow-sm inset-shadow-2xs dark:from-white/20 dark:to-white/12 dark:inset-shadow-white/20 light:from-white light:to-stone-50 light:inset-shadow-white"
     >
       All
     </button>
-    <button class="h-9 shrink-0 cursor-pointer rounded-full px-4 text-sm font-medium">Unread (3)</button>
+    <button
+      type="button"
+      aria-pressed="false"
+      class="h-9 shrink-0 cursor-pointer rounded-full px-4 text-sm font-medium"
+    >
+      Unread (3)
+    </button>
   </div>
 
   <ul
@@ -43,37 +58,49 @@ layout: dashboard.html
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="calendar-clock" class="size-5 shrink-0 dark:text-amber-500 light:text-amber-600"></i>
       <div>
-        <div class="text-sm leading-5">Overdue Transactions</div>
+        <h3 class="text-sm leading-5">Overdue Transactions</h3>
         <p class="text-[13px] leading-5 text-muted">You have 1 overdue transaction(s) to review.</p>
         <p class="text-[13px] leading-5 text-muted">Less than a minute ago</p>
       </div>
-      <div class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"></div>
+      <div
+        role="img"
+        aria-label="Unread"
+        class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"
+      ></div>
     </li>
 
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="chart-pie" class="size-5 shrink-0 dark:text-red-500 light:text-red-600"></i>
       <div>
-        <div class="text-sm leading-5">Monthly budget exceeded</div>
+        <h3 class="text-sm leading-5">Monthly budget exceeded</h3>
         <p class="text-[13px] leading-5 text-muted">Your plans put you 679.44 USD over budget this month.</p>
         <p class="text-[13px] leading-5 text-muted">12 minutes ago</p>
       </div>
-      <div class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"></div>
+      <div
+        role="img"
+        aria-label="Unread"
+        class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"
+      ></div>
     </li>
 
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="banknote-arrow-down" class="size-5 shrink-0 dark:text-green-400 light:text-green-600"></i>
       <div>
-        <div class="text-sm leading-5">Salary received</div>
+        <h3 class="text-sm leading-5">Salary received</h3>
         <p class="text-[13px] leading-5 text-muted">5,500.00 USD was added to your main account.</p>
         <p class="text-[13px] leading-5 text-muted">2 hours ago</p>
       </div>
-      <div class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"></div>
+      <div
+        role="img"
+        aria-label="Unread"
+        class="absolute top-3 right-4 h-2.5 w-2.5 rounded-full dark:bg-red-500 light:bg-red-600"
+      ></div>
     </li>
 
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="repeat" class="size-5 shrink-0 dark:text-sky-400 light:text-sky-600"></i>
       <div>
-        <div class="text-sm leading-5">Subscription renewal</div>
+        <h3 class="text-sm leading-5">Subscription renewal</h3>
         <p class="text-[13px] leading-5 text-muted">Your internet subscription of 49.99 USD renews tomorrow.</p>
         <p class="text-[13px] leading-5 text-muted">5 hours ago</p>
       </div>
@@ -82,7 +109,7 @@ layout: dashboard.html
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="trending-up" class="size-5 shrink-0 dark:text-orange-400 light:text-orange-600"></i>
       <div>
-        <div class="text-sm leading-5">Unusual spending</div>
+        <h3 class="text-sm leading-5">Unusual spending</h3>
         <p class="text-[13px] leading-5 text-muted">Restaurants & going out is 30% above your usual pace.</p>
         <p class="text-[13px] leading-5 text-muted">Yesterday</p>
       </div>
@@ -91,7 +118,7 @@ layout: dashboard.html
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="package" class="size-5 shrink-0 dark:text-violet-400 light:text-violet-600"></i>
       <div>
-        <div class="text-sm leading-5">Restock reminder</div>
+        <h3 class="text-sm leading-5">Restock reminder</h3>
         <p class="text-[13px] leading-5 text-muted">Groceries & food restocks are planned for this week.</p>
         <p class="text-[13px] leading-5 text-muted">Yesterday</p>
       </div>
@@ -100,7 +127,7 @@ layout: dashboard.html
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="file-chart-column" class="size-5 shrink-0 text-primary"></i>
       <div>
-        <div class="text-sm leading-5">Your week in review is ready</div>
+        <h3 class="text-sm leading-5">Your week in review is ready</h3>
         <p class="text-[13px] leading-5 text-muted">A quick pass through 13 transactions and your balances.</p>
         <p class="text-[13px] leading-5 text-muted">2 days ago</p>
       </div>
@@ -109,7 +136,7 @@ layout: dashboard.html
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="piggy-bank" class="size-5 shrink-0 dark:text-fuchsia-400 light:text-fuchsia-600"></i>
       <div>
-        <div class="text-sm leading-5">Savings goal reached</div>
+        <h3 class="text-sm leading-5">Savings goal reached</h3>
         <p class="text-[13px] leading-5 text-muted">You reached 50% of your emergency fund goal.</p>
         <p class="text-[13px] leading-5 text-muted">3 days ago</p>
       </div>
@@ -118,7 +145,7 @@ layout: dashboard.html
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="landmark" class="size-5 shrink-0 dark:text-indigo-400 light:text-indigo-600"></i>
       <div>
-        <div class="text-sm leading-5">Bank account synced</div>
+        <h3 class="text-sm leading-5">Bank account synced</h3>
         <p class="text-[13px] leading-5 text-muted">4 new transactions were imported from your main account.</p>
         <p class="text-[13px] leading-5 text-muted">4 days ago</p>
       </div>
@@ -127,7 +154,7 @@ layout: dashboard.html
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="credit-card" class="size-5 shrink-0 dark:text-rose-400 light:text-rose-600"></i>
       <div>
-        <div class="text-sm leading-5">Payment declined</div>
+        <h3 class="text-sm leading-5">Payment declined</h3>
         <p class="text-[13px] leading-5 text-muted">Your card was declined for a 62.00 USD payment.</p>
         <p class="text-[13px] leading-5 text-muted">5 days ago</p>
       </div>
@@ -136,7 +163,7 @@ layout: dashboard.html
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="clock" class="size-5 shrink-0 dark:text-teal-400 light:text-teal-600"></i>
       <div>
-        <div class="text-sm leading-5">Runway updated</div>
+        <h3 class="text-sm leading-5">Runway updated</h3>
         <p class="text-[13px] leading-5 text-muted">Your obligations are now covered until April 15, 2027.</p>
         <p class="text-[13px] leading-5 text-muted">1 week ago</p>
       </div>
@@ -145,7 +172,7 @@ layout: dashboard.html
     <li class="relative flex items-start gap-2.5 rounded-3xl border border-line bg-widget px-4 py-3">
       <i data-lucide="shield-check" class="size-5 shrink-0 text-muted"></i>
       <div>
-        <div class="text-sm leading-5">New sign-in</div>
+        <h3 class="text-sm leading-5">New sign-in</h3>
         <p class="text-[13px] leading-5 text-muted">Your account was accessed from a new device.</p>
         <p class="text-[13px] leading-5 text-muted">2 weeks ago</p>
       </div>

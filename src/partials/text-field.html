@@ -95,13 +95,12 @@
       {% if startIcon %}
         <i
           data-lucide="{{ startIcon }}"
-          aria-hidden="true"
           class="{{ shape.startIconOffset }} {{ sizing.icon }} pointer-events-none absolute top-1/2 -translate-y-1/2 text-muted"
         ></i>
       {% endif %}
       {% if trailingActionLabel %}
         <a
-          {% if disabled %}aria-disabled="true"{% else %}href="{{ trailingActionHref }}"{% endif %}
+          {% if disabled %}role="link" aria-disabled="true"{% else %}href="{{ trailingActionHref }}"{% endif %}
           class="{{ shape.actionOffset }} {{ sizing.actionFont }} absolute top-1/2 -translate-y-1/2 font-medium text-primary"
         >
           {{ trailingActionLabel }}
@@ -113,12 +112,11 @@
           {% if disabled %}disabled{% endif %}
           class="{{ shape.endIconOffset }} absolute top-1/2 flex -translate-y-1/2 cursor-pointer rounded-full text-muted outline-primary transition-colors hover:text-inherit focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed"
         >
-          <i data-lucide="{{ endIcon }}" aria-hidden="true" class="{{ sizing.icon }}"></i>
+          <i data-lucide="{{ endIcon }}" class="{{ sizing.icon }}"></i>
         </button>
       {% elif showsEndIcon %}
         <i
           data-lucide="{{ endIcon }}"
-          aria-hidden="true"
           class="{{ shape.endIconOffset }} {{ sizing.icon }} pointer-events-none absolute top-1/2 -translate-y-1/2 text-muted"
         ></i>
       {% endif %}

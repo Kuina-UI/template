@@ -124,13 +124,13 @@
         </span>
       {% elif indicatorVariant == "ghost" %}
         <span class="flex size-4.5 items-center justify-center">
-          {% if isChecked %}<i data-lucide="check" aria-hidden="true" class="size-4"></i>{% endif %}
+          {% if isChecked %}<i data-lucide="check" class="size-4"></i>{% endif %}
         </span>
       {% else %}
         <span
           class="{{ 'light:bg-neutral-900 light:text-white dark:bg-stone-200 dark:text-stone-950' if isChecked }} {{ indicatorRingClasses }} flex size-4.5 items-center justify-center rounded-full transition-shadow"
         >
-          {% if isChecked %}<i data-lucide="check" aria-hidden="true" class="size-3.5"></i>{% endif %}
+          {% if isChecked %}<i data-lucide="check" class="size-3.5"></i>{% endif %}
         </span>
       {% endif %}
     </span>
@@ -141,7 +141,7 @@
     <span class="{{ 'gap-2' if hasIndicator else 'gap-1.5' }} relative flex min-w-0 flex-1 items-start">
       {% if hasIndicator and indicatorPosition == "start" %}{{ itemIndicator | safe }}{% endif %}
       {% if item.icon %}
-        <i data-lucide="{{ item.icon }}" aria-hidden="true" class="my-px size-4.5 shrink-0 stroke-[1.5px]"></i>
+        <i data-lucide="{{ item.icon }}" class="my-px size-4.5 shrink-0 stroke-[1.5px]"></i>
       {% endif %}
       <span class="min-w-0 flex-1">
         <span class="block truncate">{{ item.label }}</span>
@@ -160,7 +160,6 @@
       {% if opensSubmenu %}
         <i
           data-lucide="chevron-right"
-          aria-hidden="true"
           class="{{ 'opacity-100' if isHighlighted else 'opacity-75' }} my-0.5 -mr-0.5 size-4 shrink-0 transition-opacity group-hover/menu-item:opacity-100"
         ></i>
       {% endif %}

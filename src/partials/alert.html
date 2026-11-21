@@ -46,11 +46,7 @@
   >
     <div class="{{ rowAlignment }} flex gap-3">
       {% if showIcon %}
-        <i
-          data-lucide="{{ icon or alertDefaultIcons[color] or 'info' }}"
-          aria-hidden="true"
-          class="size-5 shrink-0"
-        ></i>
+        <i data-lucide="{{ icon or alertDefaultIcons[color] or 'info' }}" class="size-5 shrink-0"></i>
       {% endif %}
       <div class="{{ contentLayout }} min-w-0 flex-1">
         <div class="min-w-0 flex-1">

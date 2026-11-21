@@ -21,6 +21,7 @@
     <div class="{{ optionListLayout }}">
       {% for option in options %}
         {% set isOptionDisabled = disabled or option.disabled %}
+        {% set optionId = name ~ "-" ~ option.value %}
 
         {% if errorMessage %}
           {% set indicatorBorderClasses = "light:border-red-600 dark:border-red-500" %}
@@ -52,6 +53,9 @@
                 value="{{ option.value }}"
                 {% if option.value == value %}checked{% endif %}
                 {% if option.disabled %}disabled{% endif %}
+                {% if option.description %}
+                  aria-labelledby="{{ optionId }}-label" aria-describedby="{{ optionId }}-description"
+                {% endif %}
                 class="peer sr-only"
               />
               <span
@@ -62,8 +66,8 @@
           </span>
           {% if option.description %}
             <span>
-              <span class="block font-medium">{{ option.label }}</span>
-              <span class="mt-0.5 block text-muted">{{ option.description }}</span>
+              <span id="{{ optionId }}-label" class="block font-medium">{{ option.label }}</span>
+              <span id="{{ optionId }}-description" class="mt-0.5 block text-muted">{{ option.description }}</span>
             </span>
           {% else %}
             {{ option.label }}

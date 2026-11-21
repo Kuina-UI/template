@@ -3,7 +3,14 @@ layout: base.html
 ---
 
 <div class="flex min-h-[calc(100dvh-2*var(--spacing-page-gutter))] flex-col">
-  {{ content | safe }}
+  <main class="mx-auto flex w-full max-w-lg flex-1 flex-col items-center justify-center px-4">
+    <a href="#">
+      <img src="images/kuina-logo-light.svg" alt="Kuina" class="hidden h-16 w-16 light:inline-block" />
+      <img src="images/kuina-logo-dark.svg" alt="Kuina" class="hidden h-16 w-16 dark:inline-block" />
+    </a>
+
+    {{ content | safe }}
+  </main>
 
   <footer class="flex items-center justify-center gap-x-3 py-4 text-xs text-muted">
     <a href="#" class="underline underline-offset-2">Terms of Service</a>

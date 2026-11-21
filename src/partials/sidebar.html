@@ -1,20 +1,27 @@
-<div
+<nav
+  id="sidebar"
+  aria-label="Main"
   data-sidebar="{{ 'opened' if sidebarOpened else 'collapsed' }}"
   class="peer fixed inset-y-page-gutter left-page-gutter z-99 flex w-sidebar-collapsed-width flex-col justify-between rounded-3xl border border-line px-2.5 backdrop-blur-xl transition-[width] duration-200 ease-out dark:bg-stone-700/50 light:bg-white/70 sidebar-expanded:w-64 2xl:sidebar-expanded:w-72"
 >
   <div class="shrink-0 px-2 py-5">
-    <img src="images/kuina-logo-light.svg" alt="Logo" class="hidden h-7 w-7 light:block" />
-    <img src="images/kuina-logo-dark.svg" alt="Logo" class="hidden h-7 w-7 dark:block" />
+    <img src="images/kuina-logo-light.svg" alt="Kuina" class="hidden h-7 w-7 light:block" />
+    <img src="images/kuina-logo-dark.svg" alt="Kuina" class="hidden h-7 w-7 dark:block" />
   </div>
 
   <div class="flex min-h-0 flex-1 scroll-edge-fade scrollbar-none flex-col gap-y-3 overflow-x-hidden overflow-y-auto">
     <div class="flex flex-col gap-y-1">
       <div class="relative px-2 text-xs font-medium text-muted">
-        <span class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100">Dashboards</span>
+        <span
+          id="sidebar-dashboards-label"
+          class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100"
+        >
+          Dashboards
+        </span>
       </div>
-      <ul class="flex flex-col gap-y-1 text-sm leading-8 font-medium">
+      <ul aria-labelledby="sidebar-dashboards-label" class="flex flex-col gap-y-1 text-sm leading-8 font-medium">
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
-          <a href="#" class="flex items-center gap-x-2 px-3">
+          <a href="#" aria-current="page" class="flex items-center gap-x-2 px-3">
             <i data-lucide="layout-grid" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
             <span class="whitespace-nowrap opacity-0 transition-opacity sidebar-expanded:opacity-100">Overview</span>
           </a>
@@ -48,9 +55,14 @@
           aria-hidden="true"
           class="absolute top-1/2 left-3 h-px w-4.5 bg-line transition-opacity sidebar-expanded:opacity-0"
         ></span>
-        <span class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100">Accounts</span>
+        <span
+          id="sidebar-accounts-label"
+          class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100"
+        >
+          Accounts
+        </span>
       </div>
-      <ul class="flex flex-col gap-y-1 text-sm leading-8 font-medium">
+      <ul aria-labelledby="sidebar-accounts-label" class="flex flex-col gap-y-1 text-sm leading-8 font-medium">
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="landmark" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
@@ -90,9 +102,14 @@
           aria-hidden="true"
           class="absolute top-1/2 left-3 h-px w-4.5 bg-line transition-opacity sidebar-expanded:opacity-0"
         ></span>
-        <span class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100">Planning</span>
+        <span
+          id="sidebar-planning-label"
+          class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100"
+        >
+          Planning
+        </span>
       </div>
-      <ul class="flex flex-col gap-y-1 text-sm leading-8 font-medium">
+      <ul aria-labelledby="sidebar-planning-label" class="flex flex-col gap-y-1 text-sm leading-8 font-medium">
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="credit-card" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
@@ -126,9 +143,17 @@
           aria-hidden="true"
           class="absolute top-1/2 left-3 h-px w-4.5 bg-line transition-opacity sidebar-expanded:opacity-0"
         ></span>
-        <span class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100">Tools & Settings</span>
+        <span
+          id="sidebar-tools-and-settings-label"
+          class="block truncate opacity-0 transition-opacity sidebar-expanded:opacity-100"
+        >
+          Tools & Settings
+        </span>
       </div>
-      <ul class="flex flex-col gap-y-1 text-sm leading-8 font-medium">
+      <ul
+        aria-labelledby="sidebar-tools-and-settings-label"
+        class="flex flex-col gap-y-1 text-sm leading-8 font-medium"
+      >
         <li class="rounded-lg dark:hover:bg-stone-200/12 light:hover:bg-stone-950/6">
           <a href="#" class="flex items-center gap-x-2 px-3">
             <i data-lucide="sparkles" class="size-4.5 shrink-0 stroke-[1.5px]"></i>
@@ -141,17 +166,25 @@
 
   <div class="relative shrink-0 py-5">
     {% if profileMenuOpened %}{% include "profile-menu.html" %}{% endif %}
-    <div class="flex items-center justify-between gap-2 overflow-hidden px-1.5">
-      <div
+    <button
+      type="button"
+      aria-expanded="{{ 'true' if profileMenuOpened else 'false' }}"
+      {% if profileMenuOpened %}aria-controls="profile-menu"{% endif %}
+      class="flex w-full cursor-pointer items-center justify-between gap-2 overflow-hidden rounded-full px-1.5 text-left outline-primary focus-visible:outline-2"
+    >
+      <span
+        aria-hidden="true"
         class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full uppercase dark:bg-stone-200 dark:text-stone-950 light:bg-stone-800 light:text-white"
       >
         AC
-      </div>
-      <div class="min-w-0 flex-1 opacity-0 transition-opacity sidebar-expanded:opacity-100">
-        <div class="truncate text-xs leading-4 font-medium">Avery Collins</div>
-        <div class="truncate text-xs leading-4 dark:text-stone-400 light:text-stone-500">avery.collins@example.com</div>
-      </div>
+      </span>
+      <span class="min-w-0 flex-1 opacity-0 transition-opacity sidebar-expanded:opacity-100">
+        <span class="block truncate text-xs leading-4 font-medium">Avery Collins</span>
+        <span class="block truncate text-xs leading-4 dark:text-stone-400 light:text-stone-500">
+          avery.collins@example.com
+        </span>
+      </span>
       <i data-lucide="ellipsis" class="size-4 shrink-0 opacity-0 transition-opacity sidebar-expanded:opacity-100"></i>
-    </div>
+    </button>
   </div>
-</div>
+</nav>

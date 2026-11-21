@@ -2,37 +2,55 @@
 layout: base.html
 ---
 
+<a
+  href="#main-content"
+  class="fixed top-4 left-4 z-110 rounded-full border border-line bg-widget px-4 py-2 text-sm font-medium shadow-lg outline-primary not-focus:sr-only focus-visible:outline-2"
+>
+  Skip to content
+</a>
+
 {% include "sidebar.html" %}
 
-<main class="ml-sidebar-collapsed-width md:peer-data-[sidebar=opened]:ml-64 2xl:peer-data-[sidebar=opened]:ml-72">
-  <nav
+<div class="ml-sidebar-collapsed-width md:peer-data-[sidebar=opened]:ml-64 2xl:peer-data-[sidebar=opened]:ml-72">
+  <header
     class="pointer-events-none sticky top-page-gutter z-90 flex h-15 items-start justify-between px-5 before:absolute before:inset-x-0 before:-top-page-gutter before:bottom-0 before:-z-10 before:bg-linear-to-b before:from-canvas before:from-20% before:to-transparent"
   >
     <div class="flex gap-2">
       <button
+        type="button"
+        aria-label="Toggle sidebar"
+        aria-controls="sidebar"
+        aria-expanded="{{ 'true' if sidebarOpened else 'false' }}"
         class="pointer-events-auto hidden h-11.5 w-11.5 cursor-pointer items-center justify-center rounded-full border border-line backdrop-blur-xl md:flex dark:bg-stone-700/50 light:bg-white/70"
       >
         <i data-lucide="{{ 'panel-left-close' if sidebarOpened else 'panel-left' }}" class="size-5"></i>
       </button>
       <button
+        type="button"
+        aria-label="Toggle sidebar"
+        aria-controls="sidebar"
+        aria-expanded="{{ 'true' if sidebarOpened else 'false' }}"
         class="pointer-events-auto flex h-11.5 w-11.5 cursor-pointer items-center justify-center rounded-full border border-line backdrop-blur-xl md:hidden dark:bg-stone-700/50 light:bg-white/70"
       >
         <i data-lucide="menu" class="size-5"></i>
       </button>
     </div>
 
-    <div>
-      <div
-        class="pointer-events-auto inline-flex gap-2 rounded-full border border-line backdrop-blur-xl dark:bg-stone-700/50 light:bg-white/70"
+    <div
+      class="pointer-events-auto inline-flex gap-2 rounded-full border border-line backdrop-blur-xl dark:bg-stone-700/50 light:bg-white/70"
+    >
+      <button
+        type="button"
+        aria-label="Notifications"
+        class="flex h-11.5 w-11.5 cursor-pointer items-center justify-center"
       >
-        <button class="flex h-11.5 w-11.5 cursor-pointer items-center justify-center">
-          <i data-lucide="bell" class="size-5"></i>
-        </button>
-        <button class="flex h-11.5 w-11.5 cursor-pointer items-center justify-center">
-          <i data-lucide="settings" class="size-5"></i>
-        </button>
-      </div>
+        <i data-lucide="bell" class="size-5"></i>
+      </button>
+      <button type="button" aria-label="Settings" class="flex h-11.5 w-11.5 cursor-pointer items-center justify-center">
+        <i data-lucide="settings" class="size-5"></i>
+      </button>
     </div>
-  </nav>
-  <div class="mx-auto px-5 tv:container">{{ content | safe }}</div>
-</main>
+  </header>
+
+  <main id="main-content" class="mx-auto px-5 tv:container">{{ content | safe }}</main>
+</div>
