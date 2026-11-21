@@ -2,6 +2,7 @@
 layout: base.html
 ---
 
+{% from "avatar.html" import avatar, avatarGroup %}
 {% from "button.html" import button %}
 {% from "checkbox.html" import checkbox %}
 {% from "circular-progress.html" import circularProgress %}
@@ -704,6 +705,119 @@ layout: base.html
           {{ circularProgress(50, "Upload progress") }}
           {{ circularProgress(75, "Upload progress") }}
           {{ circularProgress(100, "Upload progress") }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Avatar</h2>
+    {%
+      set avatarPeople = [
+        { name: "Avery Collins", imageUrl: "images/avatars/avery-collins.webp" },
+        { name: "Jordan Reyes", imageUrl: "images/avatars/jordan-reyes.webp" },
+        { name: "Riley Brooks", imageUrl: "images/avatars/riley-brooks.webp" },
+        { name: "Kai Mensah", imageUrl: "images/avatars/kai-mensah.webp" },
+        { name: "Sam Lin", imageUrl: "images/avatars/sam-lin.webp" },
+        { name: "Morgan Ellis", imageUrl: "images/avatars/morgan-ellis.webp" }
+      ]
+    %}
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line bg-widget p-6">
+      <div>
+        <h3 class="text-sm text-muted">Colors and variants</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          {% for avatarVariant in ["soft", "solid"] %}
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="w-16 text-xs text-muted">{{ avatarVariant }}</span>
+              {% for avatarColor in ["primary", "secondary", "success", "info", "discovery", "danger"] %}
+                {{ avatar(name = ["Avery", "Blake", "Casey", "Drew", "Emery", "Finley"][loop.index0], color = avatarColor, variant = avatarVariant, size = "2xl") }}
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Images, initials and icons</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          <div class="flex flex-wrap items-center gap-3">
+            {% for person in avatarPeople %}
+              {{ avatar(name = person.name, imageUrl = person.imageUrl, size = "2xl") }}
+            {% endfor %}
+            {{ avatar(name = "Avery Collins", imageUrl = "images/avatars/avery-collins.webp", size = "2xl", href = "#") }}
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            {{ avatar(name = "Avery Collins", initials = "AC", size = "2xl") }}
+            {{ avatar(name = "Jordan Reyes", initials = "JR", color = "primary", variant = "solid", size = "2xl") }}
+            {{ avatar(name = "Riley Brooks", initials = "RB", color = "info", size = "2xl") }}
+            {{ avatar(name = "Kai Mensah", initials = "KM", color = "discovery", variant = "solid", size = "2xl") }}
+            {{ avatar(overflowCount = 5, size = "2xl") }}
+            {{ avatar(overflowCount = 24, size = "2xl") }}
+            {{ avatar(overflowCount = 1200, size = "2xl") }}
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            {{ avatar(name = "Shopping", icon = "shopping-bag", color = "discovery", size = "2xl") }}
+            {{ avatar(name = "Dining", icon = "utensils", color = "danger", size = "2xl") }}
+            {{ avatar(name = "Travel", icon = "plane", color = "info", size = "2xl") }}
+            {{ avatar(name = "Salary", icon = "banknote", color = "success", size = "2xl") }}
+            {{ avatar(name = "Bank transfer", icon = "landmark", size = "2xl") }}
+            {{ avatar(name = "Assistant", icon = "sparkles", color = "primary", variant = "solid", size = "2xl") }}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Sizes</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          <div class="flex flex-wrap items-end gap-3">
+            {% for avatarSize in ["3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"] %}
+              {{ avatar(name = "Avery Collins", imageUrl = "images/avatars/avery-collins.webp", size = avatarSize) }}
+            {% endfor %}
+          </div>
+          <div class="flex flex-wrap items-end gap-3">
+            {% for avatarSize in ["3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"] %}
+              {{ avatar(name = "Avery Collins", size = avatarSize) }}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Rounded corners</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          <div class="flex flex-wrap items-end gap-3">
+            {% for avatarSize in ["3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"] %}
+              {{ avatar(name = "Northwind Bank", icon = "landmark", color = "info", size = avatarSize, pill = false) }}
+            {% endfor %}
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            {{ avatar(name = "Acme", color = "primary", variant = "solid", size = "2xl", pill = false) }}
+            {{ avatar(name = "Northwind Bank", initials = "NB", color = "success", size = "2xl", pill = false) }}
+            {{ avatar(name = "Kai Mensah", imageUrl = "images/avatars/kai-mensah.webp", size = "2xl", pill = false) }}
+            {{ avatar(name = "Subscriptions", icon = "repeat", color = "discovery", variant = "solid", size = "2xl", pill = false) }}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Groups</h3>
+        <div class="mt-4 flex flex-col items-start gap-y-4">
+          {{ avatarGroup(avatarPeople.slice(0, 4), label = "Shared with", overflowCount = 5) }}
+          {{ avatarGroup(avatarPeople.slice(0, 4), label = "Shared with", overflowCount = 5, stack = "end") }}
+          {{
+            avatarGroup(
+              [
+                { name: "Avery Collins", initials: "AC", color: "info" },
+                { name: "Jordan Reyes", initials: "JR", color: "discovery" },
+                { name: "Riley Brooks", initials: "RB", color: "success" },
+                { name: "Assistant", icon: "sparkles", color: "primary", variant: "solid" }
+              ],
+              label = "Budget members",
+              size = "xl"
+            )
+          }}
+          {{ avatarGroup(avatarPeople, label = "Team", overflowCount = 12, size = "3xl") }}
+          {{ avatarGroup(avatarPeople.slice(0, 3), label = "Reviewers", size = "sm") }}
         </div>
       </div>
     </div>

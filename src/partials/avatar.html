@@ -1,0 +1,138 @@
+{% macro avatar(name = "", imageUrl = "", icon = "", initials = "", overflowCount = 0, size = "md", color = "secondary", variant = "soft", pill = true, href = "") %}
+  {%
+    set avatarSizes = {
+      "3xs": { sizeVariable: "[--avatar-size:22px]", roundedCorners: "rounded-md" },
+      "2xs": { sizeVariable: "[--avatar-size:24px]", roundedCorners: "rounded-md" },
+      "xs": { sizeVariable: "[--avatar-size:26px]", roundedCorners: "rounded-md" },
+      "sm": { sizeVariable: "[--avatar-size:28px]", roundedCorners: "rounded-md" },
+      "md": { sizeVariable: "[--avatar-size:32px]", roundedCorners: "rounded-lg" },
+      "lg": { sizeVariable: "[--avatar-size:36px]", roundedCorners: "rounded-lg" },
+      "xl": { sizeVariable: "[--avatar-size:40px]", roundedCorners: "rounded-[10px]" },
+      "2xl": { sizeVariable: "[--avatar-size:44px]", roundedCorners: "rounded-xl" },
+      "3xl": { sizeVariable: "[--avatar-size:48px]", roundedCorners: "rounded-xl" },
+      "4xl": { sizeVariable: "[--avatar-size:56px]", roundedCorners: "rounded-2xl" },
+      "5xl": { sizeVariable: "[--avatar-size:64px]", roundedCorners: "rounded-2xl" },
+      "6xl": { sizeVariable: "[--avatar-size:80px]", roundedCorners: "rounded-3xl" }
+    }
+  %}
+
+  {%
+    set avatarColors = {
+      "soft-primary": "light:bg-stone-200 dark:bg-stone-700",
+      "soft-secondary": "light:bg-stone-200 dark:bg-stone-700",
+      "soft-success": "light:bg-green-100 light:text-green-700 dark:bg-green-950 dark:text-green-400",
+      "soft-info": "light:bg-blue-100 light:text-blue-700 dark:bg-blue-950 dark:text-blue-300",
+      "soft-discovery": "light:bg-purple-100 light:text-purple-700 dark:bg-purple-950 dark:text-purple-300",
+      "soft-danger": "light:bg-red-100 light:text-red-700 dark:bg-red-950 dark:text-red-400",
+      "solid-primary": "light:bg-neutral-900 light:text-white dark:bg-stone-200 dark:text-stone-950",
+      "solid-secondary": "light:bg-stone-600 light:text-white dark:bg-stone-600 dark:text-white",
+      "solid-success": "light:bg-green-600 light:text-white dark:bg-green-600 dark:text-white",
+      "solid-info": "light:bg-blue-600 light:text-white dark:bg-blue-500 dark:text-white",
+      "solid-discovery": "light:bg-purple-600 light:text-white dark:bg-purple-500 dark:text-white",
+      "solid-danger": "light:bg-red-600 light:text-white dark:bg-red-600 dark:text-white"
+    }
+  %}
+  {% set sizing = avatarSizes[size] %}
+
+  {% if overflowCount >= 1000000 %}
+    {% set overflowLabel = ((overflowCount / 1000000) | round | int) ~ "m" %}
+  {% elif overflowCount >= 1000 %}
+    {% set overflowLabel = ((overflowCount / 1000) | round | int) ~ "k" %}
+  {% else %}
+    {% set overflowLabel = overflowCount ~ "" %}
+  {% endif %}
+  {% set initialsLabel = initials or (name | first | upper) %}
+  {% set accessibleName = name or (overflowCount ~ " more" if overflowCount else "") %}
+
+  {% if overflowCount %}
+    {% if overflowLabel | length == 1 %}
+      {% set textScale = "text-[length:calc(var(--avatar-size)*0.45)]" %}
+    {% elif overflowLabel | length == 2 %}
+      {% set textScale = "text-[length:calc(var(--avatar-size)*0.37)]" %}
+    {% else %}
+      {% set textScale = "text-[length:calc(var(--avatar-size)*0.3)]" %}
+    {% endif %}
+  {% elif initialsLabel | length == 1 %}
+    {% set textScale = "text-[length:calc(var(--avatar-size)*0.5)]" %}
+  {% elif initialsLabel | length == 2 %}
+    {% set textScale = "text-[length:calc(var(--avatar-size)*0.4)]" %}
+  {% else %}
+    {% set textScale = "text-[length:calc(var(--avatar-size)*0.3)]" %}
+  {% endif %}
+
+  {%
+    set avatarClasses = [
+      "relative inline-flex size-(--avatar-size) shrink-0 items-center justify-center overflow-hidden select-none",
+      sizing.sizeVariable,
+      "rounded-full" if pill else sizing.roundedCorners,
+      avatarColors[variant ~ "-" ~ color],
+      "after:absolute after:inset-0 after:rounded-[inherit] after:border light:after:border-black/4 dark:after:border-white/15" if imageUrl else "",
+      "outline-primary focus-visible:outline-2 focus-visible:outline-offset-2" if href else ""
+    ] | join(" ")
+  %}
+
+
+  {% set avatarContent %}
+    {% if imageUrl %}
+      <img src="{{ imageUrl }}" alt="" class="absolute inset-0 size-full rounded-[inherit] object-cover" />
+    {% elif icon %}
+      <i data-lucide="{{ icon }}" aria-hidden="true" class="size-[calc(var(--avatar-size)*0.55)] shrink-0"></i>
+    {% elif overflowCount %}
+      <span aria-hidden="true" class="{{ textScale }} flex leading-none font-semibold">
+        <span class="relative -top-[calc(var(--avatar-size)/24)] -ml-px">+</span>
+        {{ overflowLabel }}
+      </span>
+    {% else %}
+      <span aria-hidden="true" class="{{ textScale }} leading-none font-semibold">{{ initialsLabel }}</span>
+    {% endif %}
+  {% endset %}
+
+  {% if href %}
+    <a
+      href="{{ href }}"
+      {% if accessibleName %}aria-label="{{ accessibleName }}"{% endif %}
+      class="{{ avatarClasses }}"
+    >
+      {{ avatarContent | safe }}
+    </a>
+  {% else %}
+    <span
+      {% if accessibleName %}role="img" aria-label="{{ accessibleName }}"{% else %}aria-hidden="true"{% endif %}
+      class="{{ avatarClasses }}"
+    >
+      {{ avatarContent | safe }}
+    </span>
+  {% endif %}
+{% endmacro %}
+
+{% macro avatarGroup(avatars, label = "", size = "md", stack = "start", overflowCount = 0, surface = "widget") %}
+  {% set groupEntries = avatars.concat([{ overflowCount: overflowCount }]) if overflowCount else avatars %}
+
+  {% if stack == "start" %}
+    {% set orderedEntries = groupEntries | reverse %}
+    {% set stackClasses = "flex-row-reverse justify-end *:not-first:-me-[calc(var(--avatar-size)/4)] " ~ ("*:first:z-10" if overflowCount else "") %}
+  {% else %}
+    {% set orderedEntries = groupEntries %}
+    {% set stackClasses = "*:not-first:-ms-[calc(var(--avatar-size)/4)]" %}
+  {% endif %}
+
+  <div
+    {% if label %}role="group" aria-label="{{ label }}"{% endif %}
+    class="{{ stackClasses }} {{ '*:ring-canvas' if surface == 'canvas' else '*:ring-widget' }} flex *:ring-3"
+  >
+    {% for entry in orderedEntries %}
+      {{
+        avatar(
+          name = entry.name or "",
+          imageUrl = entry.imageUrl or "",
+          icon = entry.icon or "",
+          initials = entry.initials or "",
+          overflowCount = entry.overflowCount or 0,
+          size = size,
+          color = entry.color or "secondary",
+          variant = entry.variant or "soft"
+        )
+      }}
+    {% endfor %}
+  </div>
+{% endmacro %}
