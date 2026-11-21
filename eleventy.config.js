@@ -13,7 +13,7 @@ module.exports = function (eleventyConfig) {
     if (!this.page.outputPath?.endsWith(".html")) return builtHtml;
 
     const prettierOptions = await prettier.resolveConfig(this.page.outputPath);
-    return prettier.format(builtHtml, { ...prettierOptions, parser: "html" });
+    return prettier.format(builtHtml, { ...prettierOptions, parser: "html", htmlWhitespaceSensitivity: "css" });
   });
 
   eleventyConfig.addWatchTarget("src/styles/theme.css");
