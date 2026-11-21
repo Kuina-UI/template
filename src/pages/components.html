@@ -11,6 +11,7 @@ layout: base.html
 {% from "empty-message.html" import emptyMessage %}
 {% from "image.html" import image %}
 {% from "loading-dots.html" import loadingDots %}
+{% from "menu.html" import menu %}
 {% from "radio-group.html" import radioGroup %}
 {% from "select.html" import select, selectField %}
 {% from "switch.html" import switch %}
@@ -1005,6 +1006,192 @@ layout: base.html
                 actions = [{ label: "Link an account", icon: "plus" }]
               )
             }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Menu</h2>
+    {%
+      set accountMenuItems = [
+        { label: "Avery Collins", description: "avery.collins@example.com", readOnly: true },
+        { separator: true },
+        { label: "Your profile", icon: "circle-user", href: "#" },
+        { label: "Terms & policies", icon: "file-text", href: "https://example.com/terms" },
+        { label: "Feature flags", icon: "flag", disabled: true },
+        { separator: true },
+        { label: "Log out", icon: "log-out", color: "danger" }
+      ]
+    %}
+    {%
+      set toolMenuItems = [
+        { label: "Function", icon: "square-function" },
+        { label: "File search", icon: "file-search" },
+        { label: "Web search", icon: "globe", highlighted: true },
+        { label: "Code interpreter", icon: "code" },
+        { label: "Image generation", icon: "image" }
+      ]
+    %}
+    {%
+      set savedReportMenuItems = [
+        { label: "Monthly spending", actions: [{ label: "Delete report", icon: "trash-2" }] },
+        { label: "Subscriptions audit", highlighted: true, actions: [{ label: "Rename report", icon: "pencil" }, { label: "Delete report", icon: "trash-2" }] },
+        { label: "Travel expenses from the last quarter, grouped by trip", actions: [{ label: "Delete report", icon: "trash-2" }] }
+      ]
+    %}
+    {%
+      set transactionMenuItems = [
+        { label: "Edit", icon: "pencil", shortcut: "⌘E" },
+        { label: "Duplicate", icon: "copy", shortcut: "⌘D" },
+        { separator: true },
+        {
+          label: "Move to",
+          icon: "folder-input",
+          submenuOpen: true,
+          submenu: [
+            { label: "Household", icon: "house" },
+            { label: "Business", icon: "briefcase", highlighted: true },
+            { separator: true },
+            { label: "New category…", icon: "plus" }
+          ]
+        },
+        { label: "Split transaction", icon: "split" },
+        { separator: true },
+        { label: "Share", icon: "share-2" },
+        { label: "Add to favorites", icon: "star" },
+        { separator: true },
+        { label: "Delete", icon: "trash-2", shortcut: "⌘⌫", color: "danger" }
+      ]
+    %}
+    {%
+      set chartOptionMenuItems = [
+        { label: "Show grid lines", type: "checkbox", checked: true },
+        { label: "Display labels", type: "checkbox", highlighted: true },
+        { label: "Enable shadows", type: "checkbox", checked: true },
+        { label: "Compare to last year", type: "checkbox", disabled: true }
+      ]
+    %}
+    {%
+      set periodMenuItems = [
+        { label: "Any time", type: "radio", checked: true },
+        { label: "Today", type: "radio", disabled: true },
+        { label: "Last 7 days", type: "radio", highlighted: true },
+        { label: "Last 30 days", type: "radio" },
+        { label: "Last 3 months", type: "radio" }
+      ]
+    %}
+    {%
+      set transactionViewMenuItems = [
+        {
+          label: "Sort by",
+          items: [
+            { label: "Newest first", type: "radio", checked: true },
+            { label: "Oldest first", type: "radio" },
+            { label: "Largest amount", type: "radio" }
+          ]
+        },
+        { separator: true },
+        {
+          label: "Show",
+          items: [
+            { label: "Pending", type: "checkbox", checked: true },
+            { label: "Transfers", type: "checkbox" },
+            { label: "Hidden transactions", type: "checkbox" }
+          ]
+        }
+      ]
+    %}
+    {%
+      set rowActionMenuItems = [
+        { label: "View details", icon: "eye" },
+        { label: "Download receipt", icon: "download" },
+        { separator: true },
+        { label: "Report a problem", icon: "flag" }
+      ]
+    %}
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line bg-widget p-6">
+      <div>
+        <h3 class="text-sm text-muted">Items</h3>
+        <div class="mt-4 grid items-start gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="h-68">
+            {{ menu("account-menu-example", "Avery Collins", accountMenuItems, trigger = { variant: "ghost", color: "secondary", endIcon: "chevron-down" }, open = true) }}
+          </div>
+          <div class="h-56">
+            {{ menu("tool-menu-example", "Tools", toolMenuItems, trigger = { variant: "ghost", startIcon: "wrench" }, open = true, width = "auto") }}
+          </div>
+          <div class="h-40">
+            {{ menu("saved-report-menu-example", "Saved reports", savedReportMenuItems, trigger = { variant: "outline", startIcon: "history" }, open = true, width = "lg") }}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Shortcuts and submenus</h3>
+        <div class="mt-4 h-84">
+          {{ menu("transaction-menu-example", "Options", transactionMenuItems, trigger = { variant: "outline", endIcon: "chevron-down" }, open = true) }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Checkbox and radio items</h3>
+        <div class="mt-4 grid items-start gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="h-48">
+            {{ menu("chart-option-menu-example", "Chart options", chartOptionMenuItems, trigger = { variant: "soft", endIcon: "chevron-down" }, open = true) }}
+          </div>
+          <div class="h-48">
+            {{
+              menu(
+                "chart-option-ghost-menu-example",
+                "Chart options",
+                chartOptionMenuItems,
+                trigger = { variant: "soft", endIcon: "chevron-down" },
+                open = true,
+                indicatorPosition = "start",
+                indicatorVariant = "ghost"
+              )
+            }}
+          </div>
+          <div class="h-56">
+            {{ menu("period-menu-example", "Any time", periodMenuItems, trigger = { variant: "soft", endIcon: "chevron-down" }, open = true, width = "auto") }}
+          </div>
+          <div class="h-84">
+            {{
+              menu(
+                "transaction-view-menu-example",
+                "View",
+                transactionViewMenuItems,
+                trigger = { variant: "outline", startIcon: "sliders-horizontal" },
+                open = true,
+                indicatorPosition = "start"
+              )
+            }}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Triggers and placement</h3>
+        <div class="mt-4 grid items-start gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="flex h-48 justify-end">
+            {{
+              menu(
+                "row-action-menu-example",
+                "More actions",
+                rowActionMenuItems,
+                trigger = { variant: "ghost", color: "secondary", startIcon: "ellipsis", uniform: true },
+                open = true,
+                align = "end",
+                width = "sm"
+              )
+            }}
+          </div>
+          <div class="flex h-48 justify-center">
+            {{ menu("centered-menu-example", "Export", [{ label: "CSV", icon: "file-spreadsheet" }, { label: "PDF", icon: "file-text" }, { label: "Excel", icon: "sheet" }], trigger = { endIcon: "chevron-down" }, open = true, align = "center", width = "sm") }}
+          </div>
+          <div class="flex h-48 items-end">
+            {{ menu("upward-menu-example", "Workspace", [{ label: "Personal", type: "radio", checked: true }, { label: "Northwind Family", type: "radio" }, { separator: true }, { label: "New workspace", icon: "plus" }], trigger = { variant: "outline", startIcon: "building-2", endIcon: "chevrons-up-down" }, open = true, side = "top") }}
           </div>
         </div>
       </div>

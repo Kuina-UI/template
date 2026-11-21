@@ -1,0 +1,210 @@
+{% from "button.html" import button %}
+
+{% macro menu(id, label, items, trigger = {}, open = false, side = "bottom", align = "start", width = "md", indicatorPosition = "end", indicatorVariant = "solid") %}
+  {%
+    set menuPlacements = {
+      "bottom-start": "top-full left-0 mt-1.5 origin-top-left",
+      "bottom-center": "top-full left-1/2 mt-1.5 -translate-x-1/2 origin-top",
+      "bottom-end": "top-full right-0 mt-1.5 origin-top-right",
+      "top-start": "bottom-full left-0 mb-1.5 origin-bottom-left",
+      "top-center": "bottom-full left-1/2 mb-1.5 -translate-x-1/2 origin-bottom",
+      "top-end": "bottom-full right-0 mb-1.5 origin-bottom-right"
+    }
+  %}
+  <div class="relative inline-flex h-fit">
+    {% if caller %}
+      {{ caller() }}
+    {% else %}
+      {{
+        button(
+          label,
+          variant = trigger.variant or "solid",
+          color = trigger.color or "primary",
+          size = trigger.size or "md",
+          startIcon = trigger.startIcon or "",
+          endIcon = trigger.endIcon or "",
+          pill = trigger.pill if trigger.pill is defined else true,
+          uniform = trigger.uniform or false,
+          disabled = trigger.disabled or false,
+          menuId = id,
+          menuOpen = open
+        )
+      }}
+    {% endif %}
+    {% if open %}
+      {{ menuPanel(id, label, items, menuPlacements[side ~ "-" ~ align], width, indicatorPosition, indicatorVariant) }}
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro menuPanel(id, label, items, placementClasses, width, indicatorPosition, indicatorVariant) %}
+  {% set menuWidths = { "auto": "w-max max-w-80", "sm": "w-48", "md": "w-56", "lg": "w-64", "xl": "w-72" } %}
+  <div
+    id="{{ id }}"
+    role="menu"
+    aria-label="{{ label }}"
+    class="{{ placementClasses }} {{ menuWidths[width] }} absolute z-10 rounded-xl border border-line bg-widget p-1.5 text-left text-sm leading-5 font-normal shadow-lg transition duration-350 ease-[cubic-bezier(0.19,1,0.22,1)] starting:scale-95 starting:opacity-0"
+  >
+    {% for entry in items %}
+      {% if entry.separator %}
+        <div role="separator" class="-mx-1.5 my-1.5 h-px bg-line"></div>
+      {% elif entry.items %}
+        {% set groupIndex = loop.index %}
+        <div role="group" aria-label="{{ entry.label }}">
+          <div aria-hidden="true" class="px-2 py-1.5 text-muted">{{ entry.label }}</div>
+          {% for groupItem in entry.items %}
+            {{ menuItem(id ~ "-item-" ~ groupIndex ~ "-" ~ loop.index, groupItem, indicatorPosition, indicatorVariant) }}
+          {% endfor %}
+        </div>
+      {% elif entry.readOnly %}
+        <div class="px-2 py-1.5">
+          <div class="truncate font-medium">{{ entry.label }}</div>
+          {% if entry.description %}<div class="truncate text-muted">{{ entry.description }}</div>{% endif %}
+        </div>
+      {% else %}
+        {{ menuItem(id ~ "-item-" ~ loop.index, entry, indicatorPosition, indicatorVariant) }}
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro menuItem(itemId, item, indicatorPosition, indicatorVariant) %}
+  {% set isChecked = item.checked %}
+  {% set opensSubmenu = item.submenu | length %}
+  {% set hasActions = item.actions | length %}
+  {% set hasIndicator = item.type in ["checkbox", "radio"] %}
+  {% set isHighlighted = (item.highlighted or item.submenuOpen) and not item.disabled %}
+
+  {% if item.type == "checkbox" %}
+    {% set itemRole = "menuitemcheckbox" %}
+  {% elif item.type == "radio" %}
+    {% set itemRole = "menuitemradio" %}
+  {% else %}
+    {% set itemRole = "menuitem" %}
+  {% endif %}
+
+  {% if isChecked %}
+    {% set indicatorRingClasses = "" %}
+  {% elif isHighlighted %}
+    {% set indicatorRingClasses = "inset-ring light:inset-ring-stone-950/25 dark:inset-ring-stone-200/25" %}
+  {% else %}
+    {% set indicatorRingClasses = "inset-ring light:inset-ring-stone-950/16 dark:inset-ring-stone-200/25 light:group-hover/menu-item:inset-ring-stone-950/25" %}
+  {% endif %}
+
+  {% if isHighlighted %}
+    {% set highlightClasses = "before:scale-100 before:opacity-100" %}
+  {% elif item.disabled %}
+    {% set highlightClasses = "before:hidden" %}
+  {% else %}
+    {% set highlightClasses = "before:scale-98 before:opacity-0 hover:before:scale-100 hover:before:opacity-100 focus-visible:before:scale-100 focus-visible:before:opacity-100" %}
+  {% endif %}
+
+  {%
+    set itemClasses = [
+      "group/menu-item relative flex w-full rounded-md px-2 py-1.5 outline-hidden select-none before:absolute before:inset-0 before:rounded-md before:transition before:duration-150 before:ease-[cubic-bezier(0.19,1,0.22,1)]",
+      "light:text-red-600 dark:text-red-400 light:before:bg-red-600/8 dark:before:bg-red-400/12" if item.color == "danger" else "light:before:bg-stone-950/8 dark:before:bg-stone-200/10",
+      "cursor-not-allowed opacity-50" if item.disabled else "cursor-pointer active:before:scale-98",
+      "has-[button:hover]:before:opacity-40" if hasActions else "",
+      highlightClasses
+    ] | join(" ")
+  %}
+
+
+  {% set itemIndicator %}
+    <span class="flex h-5 shrink-0 items-center">
+      {% if item.type == "radio" %}
+        <span
+          class="{{ 'light:bg-neutral-900 dark:bg-stone-200' if isChecked }} {{ indicatorRingClasses }} flex size-4.5 items-center justify-center rounded-full transition-shadow"
+        >
+          {% if isChecked %}
+            <span
+              class="size-2 rounded-full transition-transform duration-400 ease-[cubic-bezier(0.19,1,0.22,1)] dark:bg-stone-950 starting:scale-0 light:bg-white"
+            ></span>
+          {% endif %}
+        </span>
+      {% elif indicatorVariant == "ghost" %}
+        <span class="flex size-4.5 items-center justify-center">
+          {% if isChecked %}<i data-lucide="check" aria-hidden="true" class="size-4"></i>{% endif %}
+        </span>
+      {% else %}
+        <span
+          class="{{ 'light:bg-neutral-900 light:text-white dark:bg-stone-200 dark:text-stone-950' if isChecked }} {{ indicatorRingClasses }} flex size-4.5 items-center justify-center rounded-full transition-shadow"
+        >
+          {% if isChecked %}<i data-lucide="check" aria-hidden="true" class="size-3.5"></i>{% endif %}
+        </span>
+      {% endif %}
+    </span>
+  {% endset %}
+
+
+  {% set itemContent %}
+    <span class="{{ 'gap-2' if hasIndicator else 'gap-1.5' }} relative flex min-w-0 flex-1 items-start">
+      {% if hasIndicator and indicatorPosition == "start" %}{{ itemIndicator | safe }}{% endif %}
+      {% if item.icon %}
+        <i data-lucide="{{ item.icon }}" aria-hidden="true" class="my-px size-4.5 shrink-0 stroke-[1.5px]"></i>
+      {% endif %}
+      <span class="min-w-0 flex-1">
+        <span class="block truncate">{{ item.label }}</span>
+        {% if item.description %}<span class="block truncate text-muted">{{ item.description }}</span>{% endif %}
+      </span>
+      {% if item.shortcut %}<kbd class="shrink-0 pl-2 font-sans text-muted">{{ item.shortcut }}</kbd>{% endif %}
+      {% if hasActions %}
+        <span
+          class="{{ 'opacity-100' if isHighlighted else 'opacity-0' }} -mr-1.25 flex h-5 shrink-0 items-center gap-0.5 transition-opacity duration-150 group-hover/menu-item:opacity-100"
+        >
+          {% for action in item.actions %}
+            {{ button(action.label, variant = "ghost", color = "secondary", size = "xs", uniform = true, startIcon = action.icon, pill = false) }}
+          {% endfor %}
+        </span>
+      {% endif %}
+      {% if opensSubmenu %}
+        <i
+          data-lucide="chevron-right"
+          aria-hidden="true"
+          class="{{ 'opacity-100' if isHighlighted else 'opacity-75' }} my-0.5 -mr-0.5 size-4 shrink-0 transition-opacity group-hover/menu-item:opacity-100"
+        ></i>
+      {% endif %}
+      {% if hasIndicator and indicatorPosition == "end" %}{{ itemIndicator | safe }}{% endif %}
+    </span>
+  {% endset %}
+
+
+  {% set itemElement %}
+    {% if item.href and not item.type and not hasActions and not opensSubmenu %}
+      <a
+        role="menuitem"
+        tabindex="-1"
+        {% if item.disabled %}aria-disabled="true"{% else %}href="{{ item.href }}"{% endif %}
+        {% if item.href.startsWith("http") %}target="_blank" rel="noopener noreferrer"{% endif %}
+        class="{{ itemClasses }}"
+      >
+        {{ itemContent | safe }}
+        {% if item.href.startsWith("http") %}<span class="sr-only">(opens in a new tab)</span>{% endif %}
+      </a>
+    {% else %}
+      <div
+        id="{{ itemId }}"
+        role="{{ itemRole }}"
+        tabindex="-1"
+        {% if hasIndicator %}aria-checked="{{ 'true' if isChecked else 'false' }}"{% endif %}
+        {% if item.disabled %}aria-disabled="true"{% endif %}
+        {% if opensSubmenu %}aria-haspopup="menu" aria-expanded="{{ 'true' if item.submenuOpen else 'false' }}"{% endif %}
+        {% if item.submenuOpen %}aria-controls="{{ itemId }}-submenu"{% endif %}
+        class="{{ itemClasses }}"
+      >
+        {{ itemContent | safe }}
+      </div>
+    {% endif %}
+  {% endset %}
+
+  {% if opensSubmenu %}
+    <div role="none" class="relative">
+      {{ itemElement | safe }}
+      {% if item.submenuOpen %}
+        {{ menuPanel(itemId ~ "-submenu", item.label, item.submenu, "-top-1.75 left-full ml-1 origin-top-left", "auto", indicatorPosition, indicatorVariant) }}
+      {% endif %}
+    </div>
+  {% else %}
+    {{ itemElement | safe }}
+  {% endif %}
+{% endmacro %}

@@ -1,4 +1,4 @@
-{% macro button(label, variant = "solid", color = "primary", size = "md", startIcon = "", endIcon = "", pill = true, uniform = false, block = false, disabled = false, loading = false, selected = false, type = "button", href = "") %}
+{% macro button(label, variant = "solid", color = "primary", size = "md", startIcon = "", endIcon = "", pill = true, uniform = false, block = false, disabled = false, loading = false, selected = false, type = "button", href = "", menuId = "", menuOpen = false) %}
   {%
     set buttonSizes = {
       "3xs": { height: "h-5.5", width: "w-5.5", gutter: "px-1.5", pillGutter: "px-2", radius: "rounded-md", font: "text-xs", gap: "gap-0.75", icon: "size-3.5", startIconOffset: "-ml-px", endIconOffset: "-mr-px", spinner: "text-[11px]" },
@@ -124,7 +124,7 @@
 
   {% if disabled %}
     {% set appearanceClasses = "cursor-not-allowed light:text-stone-400 dark:text-stone-500 " ~ disabledSurfaces[variant] %}
-  {% elif selected %}
+  {% elif selected or menuOpen %}
     {% set appearanceClasses = appearance.selectedSurface ~ " " ~ appearance.selectedText %}
   {% else %}
     {% set appearanceClasses = appearance.surface ~ " " ~ appearance.text %}
@@ -192,6 +192,8 @@
       {% if disabled %}aria-disabled="true"{% endif %}
       {% if loading %}aria-busy="true"{% endif %}
       {% if selected %}aria-pressed="true"{% endif %}
+      {% if menuId %}aria-haspopup="menu" aria-expanded="{{ 'true' if menuOpen else 'false' }}"{% endif %}
+      {% if menuId and menuOpen %}aria-controls="{{ menuId }}"{% endif %}
       {% if uniform %}aria-label="{{ label }}"{% endif %}
       class="{{ buttonClasses }}"
     >
