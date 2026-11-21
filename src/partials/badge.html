@@ -1,0 +1,48 @@
+{% macro badge(label, color = "secondary", variant = "soft", size = "sm", pill = false, startIcon = "", endIcon = "", dot = false) %}
+  {%
+    set badgeSizes = {
+      "sm": { height: "h-5", font: "text-xs tracking-wide", gutter: "px-1.25", pillGutter: "px-1.75", corners: "rounded-sm", icon: "size-3", dot: "size-1.5" },
+      "md": { height: "h-5.5", font: "text-sm", gutter: "px-1.5", pillGutter: "px-2", corners: "rounded-sm", icon: "size-4", dot: "size-1.5" },
+      "lg": { height: "h-6", font: "text-sm", gutter: "px-2", pillGutter: "px-2.75", corners: "rounded-md", icon: "size-4", dot: "size-2" }
+    }
+  %}
+
+  {%
+    set badgeColors = {
+      "soft-secondary": "light:bg-stone-950/8 dark:bg-stone-200/12",
+      "soft-success": "light:bg-green-500/16 light:text-green-700 dark:bg-green-400/16 dark:text-green-400",
+      "soft-warning": "light:bg-orange-500/16 light:text-orange-700 dark:bg-orange-400/16 dark:text-orange-400",
+      "soft-danger": "light:bg-red-500/16 light:text-red-600 dark:bg-red-400/16 dark:text-red-400",
+      "soft-info": "light:bg-blue-500/16 light:text-blue-600 dark:bg-blue-400/16 dark:text-blue-300",
+      "soft-discovery": "light:bg-purple-500/16 light:text-purple-600 dark:bg-purple-400/16 dark:text-purple-300",
+      "solid-secondary": "light:bg-stone-600 light:text-white dark:bg-stone-600 dark:text-white",
+      "solid-success": "light:bg-green-600 light:text-white dark:bg-green-600 dark:text-white",
+      "solid-warning": "light:bg-orange-600 light:text-white dark:bg-orange-600 dark:text-white",
+      "solid-danger": "light:bg-red-600 light:text-white dark:bg-red-600 dark:text-white",
+      "solid-info": "light:bg-blue-600 light:text-white dark:bg-blue-500 dark:text-white",
+      "solid-discovery": "light:bg-purple-600 light:text-white dark:bg-purple-500 dark:text-white",
+      "outline-secondary": "inset-ring text-muted light:inset-ring-stone-950/16 dark:inset-ring-stone-200/25",
+      "outline-success": "inset-ring light:inset-ring-green-600 light:text-green-700 dark:inset-ring-green-500 dark:text-green-400",
+      "outline-warning": "inset-ring light:inset-ring-orange-600 light:text-orange-700 dark:inset-ring-orange-500 dark:text-orange-400",
+      "outline-danger": "inset-ring light:inset-ring-red-600 light:text-red-600 dark:inset-ring-red-500 dark:text-red-400",
+      "outline-info": "inset-ring light:inset-ring-blue-600 light:text-blue-600 dark:inset-ring-blue-400 dark:text-blue-300",
+      "outline-discovery": "inset-ring light:inset-ring-purple-600 light:text-purple-600 dark:inset-ring-purple-400 dark:text-purple-300"
+    }
+  %}
+  {% set sizing = badgeSizes[size] %}
+
+  <span
+    class="{{ sizing.height }} {{ sizing.font }} {{ sizing.pillGutter if pill else sizing.gutter }} {{ 'rounded-full' if pill else sizing.corners }} {{ badgeColors[variant ~ '-' ~ color] }} inline-flex shrink-0 items-center gap-1 leading-none font-semibold whitespace-nowrap"
+  >
+    {% if dot %}
+      <span aria-hidden="true" class="{{ sizing.dot }} shrink-0 rounded-full bg-current"></span>
+    {% endif %}
+    {% if startIcon %}
+      <i data-lucide="{{ startIcon }}" aria-hidden="true" class="{{ sizing.icon }} -ml-px shrink-0"></i>
+    {% endif %}
+    {{ label }}
+    {% if endIcon %}
+      <i data-lucide="{{ endIcon }}" aria-hidden="true" class="{{ sizing.icon }} -mr-px shrink-0"></i>
+    {% endif %}
+  </span>
+{% endmacro %}

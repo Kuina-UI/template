@@ -1,0 +1,28 @@
+{% macro textLink(label, href = "#", color = "inherit", underline = "auto", weight = "inherit", startIcon = "", endIcon = "", external = "auto") -%}
+  {%-
+    set textLinkColors = {
+      "inherit": "hover:text-current/80",
+      "muted": "text-muted light:hover:text-stone-950 dark:hover:text-white",
+      "primary": "text-primary light:hover:text-[color-mix(in_oklab,var(--color-primary),black_25%)] dark:hover:text-[color-mix(in_oklab,var(--color-primary),white_25%)]"
+    }
+  -%}
+  {%- set textLinkWeights = { "inherit": "", "medium": "font-medium", "semibold": "font-semibold" } -%}
+  {%- set showsUnderline = (color != "primary") if underline == "auto" else underline -%}
+  {%- set opensNewTab = (href.startsWith("http://") or href.startsWith("https://")) if external == "auto" else external -%}
+  <a
+    href="{{ href }}"
+    {% if opensNewTab %}target="_blank" rel="noopener noreferrer"{% endif %}
+    class="{{ textLinkColors[color] }} {{ textLinkWeights[weight] }} {{ 'underline decoration-current/70 underline-offset-[0.1em]' if showsUnderline }} {{ 'inline-flex items-center gap-0.5' if startIcon or endIcon }} rounded-sm wrap-anywhere outline-primary transition-colors focus-visible:outline-2 focus-visible:outline-offset-1"
+  >
+    {%- if startIcon -%}
+      <i data-lucide="{{ startIcon }}" aria-hidden="true" class="size-[1em] shrink-0"></i>
+    {%- endif -%}
+    {{- label -}}
+    {%- if endIcon -%}
+      <i data-lucide="{{ endIcon }}" aria-hidden="true" class="size-[1em] shrink-0"></i>
+    {%- endif -%}
+    {%- if opensNewTab -%}
+      <span class="sr-only">(opens in a new tab)</span>
+    {%- endif -%}
+  </a>
+{%- endmacro %}

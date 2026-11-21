@@ -1,0 +1,51 @@
+{% macro image(src, alt, ratio = "auto", fit = "cover", corners = "xl", bordered = true, caption = "", width = "", height = "", lazy = true) %}
+  {%
+    set imageRatios = {
+      "auto": "",
+      "square": "aspect-square",
+      "video": "aspect-video",
+      "4/3": "aspect-4/3",
+      "3/2": "aspect-3/2",
+      "3/4": "aspect-3/4",
+      "21/9": "aspect-21/9"
+    }
+  %}
+  {%
+    set imageCorners = {
+      "none": "",
+      "md": "rounded-md",
+      "lg": "rounded-lg",
+      "xl": "rounded-xl",
+      "2xl": "rounded-2xl",
+      "3xl": "rounded-3xl",
+      "full": "rounded-full"
+    }
+  %}
+
+
+  {% set imageFrame %}
+    <div
+      class="{{ imageRatios[ratio] }} {{ imageCorners[corners] }} {{ 'after:pointer-events-none after:absolute after:inset-0 after:rounded-[inherit] after:border light:after:border-black/6 dark:after:border-white/12' if bordered }} relative overflow-hidden dark:bg-white/4 light:bg-stone-950/4"
+    >
+      <img
+        src="{{ src }}"
+        alt="{{ alt }}"
+        {% if width %}width="{{ width }}"{% endif %}
+        {% if height %}height="{{ height }}"{% endif %}
+        {% if lazy %}loading="lazy"{% endif %}
+        decoding="async"
+        draggable="false"
+        class="{{ 'block h-auto w-full' if ratio == 'auto' else 'absolute inset-0 size-full' }} {{ 'object-contain' if fit == 'contain' else 'object-cover' }}"
+      />
+    </div>
+  {% endset %}
+
+  {% if caption %}
+    <figure class="min-w-0">
+      {{ imageFrame | safe }}
+      <figcaption class="mt-2 text-xs text-muted">{{ caption }}</figcaption>
+    </figure>
+  {% else %}
+    {{ imageFrame | safe }}
+  {% endif %}
+{% endmacro %}

@@ -2,14 +2,19 @@
 layout: base.html
 ---
 
+{% from "alert.html" import alert %}
 {% from "avatar.html" import avatar, avatarGroup %}
+{% from "badge.html" import badge %}
 {% from "button.html" import button %}
 {% from "checkbox.html" import checkbox %}
 {% from "circular-progress.html" import circularProgress %}
+{% from "empty-message.html" import emptyMessage %}
+{% from "image.html" import image %}
 {% from "loading-dots.html" import loadingDots %}
 {% from "radio-group.html" import radioGroup %}
 {% from "switch.html" import switch %}
 {% from "text-field.html" import textField %}
+{% from "text-link.html" import textLink %}
 {% from "textarea.html" import textarea %}
 
 <main class="mx-auto w-full max-w-5xl px-4 py-10">
@@ -711,6 +716,64 @@ layout: base.html
   </section>
 
   <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Badge</h2>
+    {%
+      set badgeExamples = [
+        { color: "secondary", label: "Pending" },
+        { color: "success", label: "Paid" },
+        { color: "warning", label: "Due soon" },
+        { color: "danger", label: "Overdue" },
+        { color: "info", label: "New" },
+        { color: "discovery", label: "Beta" }
+      ]
+    %}
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line bg-widget p-6">
+      <div>
+        <h3 class="text-sm text-muted">Colors and variants</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          {% for badgeVariant in ["soft", "solid", "outline"] %}
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="w-16 text-xs text-muted">{{ badgeVariant }}</span>
+              {% for badgeExample in badgeExamples %}
+                {{ badge(badgeExample.label, color = badgeExample.color, variant = badgeVariant) }}
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Sizes and pills</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          {% for badgeSize in ["sm", "md", "lg"] %}
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="w-16 text-xs text-muted">{{ badgeSize }}</span>
+              {{ badge("Paid", color = "success", size = badgeSize) }}
+              {{ badge("Paid", color = "success", size = badgeSize, pill = true) }}
+              {{ badge("Overdue", color = "danger", variant = "outline", size = badgeSize) }}
+              {{ badge("Overdue", color = "danger", variant = "outline", size = badgeSize, pill = true) }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Dots and icons</h3>
+        <div class="mt-4 flex flex-wrap items-center gap-3">
+          {{ badge("Active", color = "success", size = "md", pill = true, dot = true) }}
+          {{ badge("Paused", size = "md", pill = true, dot = true) }}
+          {{ badge("Failed", color = "danger", size = "md", pill = true, dot = true) }}
+          {{ badge("12.5%", color = "success", size = "md", pill = true, startIcon = "trending-up") }}
+          {{ badge("3.2%", color = "danger", size = "md", pill = true, startIcon = "trending-down") }}
+          {{ badge("Verified", color = "info", size = "md", startIcon = "badge-check") }}
+          {{ badge("Recurring", variant = "outline", size = "md", startIcon = "repeat") }}
+          {{ badge("Pro", color = "discovery", variant = "solid", size = "md", endIcon = "sparkles") }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
     <h2 class="font-semibold tracking-tight">Avatar</h2>
     {%
       set avatarPeople = [
@@ -818,6 +881,213 @@ layout: base.html
           }}
           {{ avatarGroup(avatarPeople, label = "Team", overflowCount = 12, size = "3xl") }}
           {{ avatarGroup(avatarPeople.slice(0, 3), label = "Reviewers", size = "sm") }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Alert</h2>
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line bg-widget p-6">
+      <div>
+        <h3 class="text-sm text-muted">Variants</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          {% for alertVariant in ["outline", "soft", "solid"] %}
+            {{
+              alert(
+                "Your monthly statement is ready",
+                "October 2026 is available to download as a PDF or CSV.",
+                variant = alertVariant
+              )
+            }}
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Colors</h3>
+        <div class="mt-4 grid gap-3 lg:grid-cols-2">
+          {{ alert("Payment sent", "$1,250.00 is on its way to Jordan Reyes.", color = "success", variant = "soft") }}
+          {{ alert("Card expires soon", "Your Visa ending in 4821 expires at the end of the month.", color = "warning", variant = "soft") }}
+          {{ alert("Unusual activity", "We noticed a sign-in from a new device in Lisbon.", color = "caution", variant = "soft") }}
+          {{ alert("Payment failed", "Your bank declined the transfer. No money left your account.", color = "danger", variant = "soft") }}
+          {{ alert("Exchange rates updated", "Balances in other currencies now use today's rates.", color = "info", variant = "soft") }}
+          {{ alert("New: budget insights", "See where your money goes with weekly spending summaries.", color = "discovery", variant = "soft", icon = "sparkles") }}
+          {{ alert("Payment sent", "$1,250.00 is on its way to Jordan Reyes.", color = "success") }}
+          {{ alert("Payment failed", "Your bank declined the transfer. No money left your account.", color = "danger") }}
+          {{ alert("Payment sent", "$1,250.00 is on its way to Jordan Reyes.", color = "success", variant = "solid") }}
+          {{ alert("Payment failed", "Your bank declined the transfer. No money left your account.", color = "danger", variant = "solid") }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Actions</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          {% call alert("Card expires soon", "Your Visa ending in 4821 expires at the end of the month.", color = "warning", variant = "soft") %}
+            {{ button("Update card", size = "sm", variant = "outline", color = "secondary") }}
+          {% endcall %}
+          {% call alert("Two-factor authentication is off", "Add a second step at sign-in to keep your accounts safe.") %}
+            {{ button("Later", size = "sm", variant = "ghost", color = "secondary") }}
+            {{ button("Turn on", size = "sm") }}
+          {% endcall %}
+          {%
+            call alert(
+              "Payment failed",
+              "Your bank declined the transfer of $1,250.00 to Jordan Reyes. No money left your account, and you can try again or pay with another card.",
+              color = "danger",
+              variant = "soft",
+              actionsPlacement = "bottom"
+            )
+          %}
+            {{ button("Try again", size = "sm", color = "danger") }}
+            {{ button("Use another card", size = "sm", variant = "outline", color = "secondary") }}
+          {% endcall %}
+          {% call alert(description = "Balances are refreshed every 15 minutes.", color = "info", variant = "soft") %}
+            {{ button("Dismiss", size = "xs", variant = "ghost", color = "secondary", uniform = true, startIcon = "x") }}
+          {% endcall %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Title only, description only, no icon</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          {{ alert("Your savings goal is 80% complete.", color = "success", variant = "soft") }}
+          {{ alert(description = "Scheduled transfers run at 9:00 AM in your local time zone.") }}
+          {{ alert("Maintenance on November 30", "Transfers may be delayed between 2:00 and 4:00 AM.", variant = "soft", showIcon = false) }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Text link</h2>
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line bg-widget p-6">
+      <div>
+        <h3 class="text-sm text-muted">Colors</h3>
+        <div class="mt-4 flex max-w-2xl flex-col gap-y-3 text-sm leading-6">
+          <p>
+            Read the {{ textLink("fee schedule") }} before your first international transfer, or
+            {{ textLink("contact support") }} if a payment looks wrong.
+          </p>
+          <p class="text-muted">
+            By continuing, you agree to the {{ textLink("Terms of Service", color = "muted") }} and the
+            {{ textLink("Privacy Policy", color = "muted") }}.
+          </p>
+          <p>Don't have an account? {{ textLink("Sign up", color = "primary", weight = "medium") }}</p>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Underline, weight and icons</h3>
+        <div class="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+          {{ textLink("Forgot password?", color = "primary", weight = "medium") }}
+          {{ textLink("Underlined primary", color = "primary", underline = true) }}
+          {{ textLink("No underline", underline = false) }}
+          {{ textLink("Contact support", weight = "semibold", underline = false, endIcon = "arrow-right") }}
+          {{ textLink("Back to log in", color = "muted", underline = false, startIcon = "arrow-left") }}
+          {{ textLink("Bank website", href = "https://example.com", color = "primary", underline = true, endIcon = "arrow-up-right") }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Empty message</h2>
+    <div class="mt-4 grid gap-4 rounded-3xl border border-line bg-widget p-6 sm:grid-cols-2">
+      <div class="h-72 rounded-2xl border border-dashed border-line p-6">
+        {%
+          call emptyMessage(
+            "No transactions yet",
+            "Transactions from your linked accounts will show up here.",
+            icon = "receipt"
+          )
+        %}
+          {{ button("Link an account", startIcon = "plus") }}
+        {% endcall %}
+      </div>
+      <div class="h-72 rounded-2xl border border-dashed border-line p-6">
+        {%
+          call emptyMessage(
+            "No results",
+            "Try another search term or clear the filters.",
+            icon = "search-x",
+            iconSize = "sm"
+          )
+        %}
+          {{ button("Clear filters", variant = "outline", color = "secondary") }}
+        {% endcall %}
+      </div>
+      <div class="h-72 rounded-2xl border border-dashed border-line p-6">
+        {%
+          call emptyMessage(
+            "Couldn't load your accounts",
+            "Something went wrong on our side. Your money is safe.",
+            icon = "triangle-alert",
+            color = "danger"
+          )
+        %}
+          {{ button("Try again", variant = "soft", color = "secondary", startIcon = "rotate-cw") }}
+        {% endcall %}
+      </div>
+      <div class="h-72 rounded-2xl border border-dashed border-line p-6">
+        {{
+          emptyMessage(
+            "Sync paused",
+            "Northwind Bank needs you to sign in again before new transactions can be imported.",
+            icon = "refresh-cw-off",
+            color = "warning"
+          )
+        }}
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Image</h2>
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line bg-widget p-6">
+      <div>
+        <h3 class="text-sm text-muted">Ratios and captions</h3>
+        <div class="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {{ image("images/photos/mountain-lake-trip.webp", "Boats on a turquoise mountain lake", ratio = "video", caption = "Summer trip savings goal") }}
+          {{ image("images/photos/tax-documents.webp", "Tax forms, a calculator and a pen on a desk", ratio = "4/3", caption = "Tax documents, 2026") }}
+          {{ image("images/photos/coins-savings-plant.webp", "A seedling growing out of a pile of coins", ratio = "square", caption = "Round-up savings") }}
+          {{ image("images/photos/online-card-payment.webp", "Paying online with a card on a laptop", ratio = "3/4", caption = "Online card payment") }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Corners and fit</h3>
+        <div class="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {{ image("images/photos/stock-market-chart.webp", "A falling stock market candlestick chart", ratio = "3/2", corners = "none") }}
+          {{ image("images/photos/stock-market-chart.webp", "A falling stock market candlestick chart", ratio = "3/2", corners = "md") }}
+          {{ image("images/photos/stock-market-chart.webp", "A falling stock market candlestick chart", ratio = "3/2", corners = "3xl") }}
+          {{ image("images/photos/stock-market-chart.webp", "A falling stock market candlestick chart", ratio = "square", fit = "contain") }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">In a card</h3>
+        <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="rounded-3xl border border-line p-2">
+            {{ image("images/photos/mountain-lake-trip.webp", "Boats on a turquoise mountain lake", ratio = "video", corners = "2xl") }}
+            <div class="flex items-start justify-between gap-3 px-2 pt-3 pb-1">
+              <div class="min-w-0">
+                <h4 class="truncate text-sm font-semibold">Summer trip</h4>
+                <p class="mt-0.5 text-sm text-muted">$2,480 of $3,000 saved</p>
+              </div>
+              {{ badge("83%", color = "success", size = "md", pill = true) }}
+            </div>
+          </article>
+          <article class="rounded-3xl border border-line p-2">
+            {{ image("images/photos/coins-savings-plant.webp", "A seedling growing out of a pile of coins", ratio = "video", corners = "2xl") }}
+            <div class="flex items-start justify-between gap-3 px-2 pt-3 pb-1">
+              <div class="min-w-0">
+                <h4 class="truncate text-sm font-semibold">Emergency fund</h4>
+                <p class="mt-0.5 text-sm text-muted">$6,200 of $10,000 saved</p>
+              </div>
+              {{ badge("62%", color = "info", size = "md", pill = true) }}
+            </div>
+          </article>
         </div>
       </div>
     </div>

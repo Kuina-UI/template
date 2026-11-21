@@ -1,0 +1,70 @@
+{% macro alert(title = "", description = "", color = "primary", variant = "outline", icon = "", showIcon = true, actionsPlacement = "end") %}
+  {%
+    set alertColors = {
+      "outline-primary": "inset-ring inset-ring-line",
+      "outline-success": "inset-ring light:inset-ring-green-600 light:text-green-700 dark:inset-ring-green-500 dark:text-green-400",
+      "outline-warning": "inset-ring light:inset-ring-orange-600 light:text-orange-700 dark:inset-ring-orange-500 dark:text-orange-400",
+      "outline-caution": "inset-ring light:inset-ring-yellow-600 light:text-yellow-700 dark:inset-ring-yellow-500 dark:text-yellow-400",
+      "outline-danger": "inset-ring light:inset-ring-red-600 light:text-red-600 dark:inset-ring-red-500 dark:text-red-400",
+      "outline-info": "inset-ring light:inset-ring-blue-600 light:text-blue-600 dark:inset-ring-blue-400 dark:text-blue-300",
+      "outline-discovery": "inset-ring light:inset-ring-purple-600 light:text-purple-600 dark:inset-ring-purple-400 dark:text-purple-300",
+      "soft-primary": "inset-ring light:bg-stone-950/4 light:inset-ring-stone-950/6 dark:bg-white/6 dark:inset-ring-white/8",
+      "soft-success": "inset-ring light:bg-green-500/6 light:inset-ring-green-500/16 light:text-green-700 dark:bg-green-400/10 dark:inset-ring-green-400/20 dark:text-green-400",
+      "soft-warning": "inset-ring light:bg-orange-500/6 light:inset-ring-orange-500/16 light:text-orange-700 dark:bg-orange-400/10 dark:inset-ring-orange-400/20 dark:text-orange-400",
+      "soft-caution": "inset-ring light:bg-yellow-500/8 light:inset-ring-yellow-500/20 light:text-yellow-800 dark:bg-yellow-400/10 dark:inset-ring-yellow-400/20 dark:text-yellow-400",
+      "soft-danger": "inset-ring light:bg-red-500/6 light:inset-ring-red-500/16 light:text-red-600 dark:bg-red-400/10 dark:inset-ring-red-400/20 dark:text-red-400",
+      "soft-info": "inset-ring light:bg-blue-500/6 light:inset-ring-blue-500/16 light:text-blue-600 dark:bg-blue-400/10 dark:inset-ring-blue-400/20 dark:text-blue-300",
+      "soft-discovery": "inset-ring light:bg-purple-500/6 light:inset-ring-purple-500/16 light:text-purple-600 dark:bg-purple-400/10 dark:inset-ring-purple-400/20 dark:text-purple-300",
+      "solid-primary": "light:bg-neutral-900 light:text-white dark:bg-stone-200 dark:text-stone-950",
+      "solid-success": "light:bg-green-600 light:text-white dark:bg-green-600 dark:text-white",
+      "solid-warning": "light:bg-orange-600 light:text-white dark:bg-orange-600 dark:text-white",
+      "solid-caution": "light:bg-yellow-700 light:text-white dark:bg-yellow-700 dark:text-white",
+      "solid-danger": "light:bg-red-600 light:text-white dark:bg-red-600 dark:text-white",
+      "solid-info": "light:bg-blue-600 light:text-white dark:bg-blue-500 dark:text-white",
+      "solid-discovery": "light:bg-purple-600 light:text-white dark:bg-purple-500 dark:text-white"
+    }
+  %}
+  {% set alertDefaultIcons = { "warning": "triangle-alert", "caution": "triangle-alert", "danger": "triangle-alert", "success": "circle-check" } %}
+
+  {% if caller and actionsPlacement == "end" %}
+    {% set rowAlignment = "items-start @md:items-center" %}
+    {% set contentLayout = "@md:flex @md:items-center @md:justify-between" %}
+    {% set actionsSpacing = "mt-4 @md:mt-0 @md:ml-4" %}
+  {% elif caller %}
+    {% set rowAlignment = "items-start" %}
+    {% set contentLayout = "" %}
+    {% set actionsSpacing = "mt-4" %}
+  {% else %}
+    {% set rowAlignment = "items-center" %}
+    {% set contentLayout = "" %}
+    {% set actionsSpacing = "" %}
+  {% endif %}
+
+  <div
+    {% if color == "danger" %}role="alert"{% endif %}
+    class="{{ alertColors[variant ~ '-' ~ color] }} @container w-full rounded-xl p-4 text-sm leading-5"
+  >
+    <div class="{{ rowAlignment }} flex gap-3">
+      {% if showIcon %}
+        <i
+          data-lucide="{{ icon or alertDefaultIcons[color] or 'info' }}"
+          aria-hidden="true"
+          class="size-5 shrink-0"
+        ></i>
+      {% endif %}
+      <div class="{{ contentLayout }} min-w-0 flex-1">
+        <div class="min-w-0 flex-1">
+          {% if title %}
+            <div class="font-semibold text-pretty">{{ title }}</div>
+          {% endif %}
+          {% if description %}
+            <div class="{{ 'mt-0.5' if title }} text-pretty">{{ description }}</div>
+          {% endif %}
+        </div>
+        {% if caller %}
+          <div class="{{ actionsSpacing }} flex shrink-0 gap-2">{{ caller() }}</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endmacro %}

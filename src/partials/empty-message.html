@@ -1,0 +1,34 @@
+{% macro emptyMessage(title, description = "", icon = "", iconSize = "md", color = "secondary", fill = "static") %}
+  {%
+    set emptyMessageIconSizes = {
+      "sm": { badge: "size-8", icon: "size-5" },
+      "md": { badge: "size-10", icon: "size-6" }
+    }
+  %}
+  {%
+    set emptyMessageColors = {
+      "secondary": { iconBadge: "light:bg-stone-950/8 dark:bg-stone-200/12", title: "" },
+      "warning": { iconBadge: "light:bg-orange-500/16 light:text-orange-700 dark:bg-orange-400/16 dark:text-orange-400", title: "light:text-orange-700 dark:text-orange-500" },
+      "danger": { iconBadge: "light:bg-red-500/16 light:text-red-600 dark:bg-red-400/16 dark:text-red-400", title: "light:text-red-700 dark:text-red-500" }
+    }
+  %}
+  {% set emptyMessageFills = { "static": "size-full", "absolute": "absolute inset-0", "none": "" } %}
+  {% set appearance = emptyMessageColors[color] %}
+
+  <div class="{{ emptyMessageFills[fill] }} flex flex-col items-center justify-center">
+    {% if icon %}
+      <div
+        class="{{ emptyMessageIconSizes[iconSize].badge }} {{ appearance.iconBadge }} mb-3 flex items-center justify-center rounded-lg"
+      >
+        <i data-lucide="{{ icon }}" aria-hidden="true" class="{{ emptyMessageIconSizes[iconSize].icon }}"></i>
+      </div>
+    {% endif %}
+    <div class="{{ appearance.title }} max-w-[90%] text-center text-base font-semibold text-balance">{{ title }}</div>
+    {% if description %}
+      <div class="mt-1.5 max-w-[90%] text-center text-sm leading-[1.45] text-balance text-muted">{{ description }}</div>
+    {% endif %}
+    {% if caller %}
+      <div class="mt-4 flex flex-wrap justify-center gap-2">{{ caller() }}</div>
+    {% endif %}
+  </div>
+{% endmacro %}
