@@ -1,0 +1,372 @@
+{% macro selectOption(option, selectedValues, highlightedValue) %}
+  {% set isSelected = option.value in selectedValues %}
+  <div
+    role="option"
+    aria-selected="{{ 'true' if isSelected else 'false' }}"
+    {% if option.disabled %}aria-disabled="true"{% endif %}
+    class="{{ 'font-semibold' if isSelected }} {{ 'cursor-not-allowed opacity-50' if option.disabled else 'cursor-pointer dark:hover:bg-stone-200/10 light:hover:bg-stone-950/8' }} {{ 'dark:bg-stone-200/10 light:bg-stone-950/8' if option.value == highlightedValue and not option.disabled }} flex items-start gap-1 rounded-md px-2 py-1.5 wrap-anywhere"
+  >
+    <span class="flex h-5 w-4 shrink-0 items-center">
+      {% if isSelected %}<i data-lucide="check" aria-hidden="true" class="size-4"></i>{% endif %}
+    </span>
+    <span class="min-w-0">
+      <span class="block">{{ option.label }}</span>
+      {% if option.description %}
+        <span class="block font-normal text-muted">{{ option.description }}</span>
+      {% endif %}
+    </span>
+  </div>
+{% endmacro %}
+
+{% macro select(id, name, label, options, value = "", placeholder = "Select...", size = "md", variant = "outline", pill = true, block = true, startIcon = "", dropdownIcon = "dropdown", clearable = false, loading = false, loadingPlaceholder = "Loading...", disabled = false, invalid = false, multiple = false, open = false, highlightedValue = "", searchPlaceholder = "", searchQuery = "", actions = []) %}
+  {%
+    set selectSizes = {
+      "3xs": { height: "h-5.5", gutter: "px-1.5", pillGutter: "px-2", corners: "rounded-md", font: "text-xs", gap: "gap-1", startIcon: "size-3.5", startIconPillOffset: "", dropdownIcon: "size-3", dropdownIconPillOffset: "", spinner: "text-[11px]", clearButton: "size-3.5", clearIcon: "size-3" },
+      "2xs": { height: "h-6", gutter: "px-2", pillGutter: "px-2.75", corners: "rounded-md", font: "text-xs", gap: "gap-1.5", startIcon: "size-4", startIconPillOffset: "-ml-px", dropdownIcon: "size-3", dropdownIconPillOffset: "", spinner: "text-xs", clearButton: "size-4", clearIcon: "size-3" },
+      "xs": { height: "h-6.5", gutter: "px-2", pillGutter: "px-2.75", corners: "rounded-md", font: "text-sm", gap: "gap-1.5", startIcon: "size-4", startIconPillOffset: "-ml-px", dropdownIcon: "size-3.5", dropdownIconPillOffset: "", spinner: "text-[13px]", clearButton: "size-4.5", clearIcon: "size-3.5" },
+      "sm": { height: "h-7", gutter: "px-2.5", pillGutter: "px-3.25", corners: "rounded-md", font: "text-sm", gap: "gap-2", startIcon: "size-4", startIconPillOffset: "-ml-0.5", dropdownIcon: "size-3.5", dropdownIconPillOffset: "-mr-0.5", spinner: "text-[15px]", clearButton: "size-4.5", clearIcon: "size-3.5" },
+      "md": { height: "h-8", gutter: "px-3", pillGutter: "px-4", corners: "rounded-lg", font: "text-sm", gap: "gap-2", startIcon: "size-4.5", startIconPillOffset: "-ml-1", dropdownIcon: "size-4", dropdownIconPillOffset: "-mr-0.5", spinner: "text-base", clearButton: "size-5.5", clearIcon: "size-3.5" },
+      "lg": { height: "h-9", gutter: "px-3", pillGutter: "px-4", corners: "rounded-lg", font: "text-sm", gap: "gap-2", startIcon: "size-4.5", startIconPillOffset: "-ml-1", dropdownIcon: "size-4", dropdownIconPillOffset: "-mr-0.5", spinner: "text-base", clearButton: "size-5.5", clearIcon: "size-3.5" },
+      "xl": { height: "h-10", gutter: "px-3.5", pillGutter: "px-4.75", corners: "rounded-[10px]", font: "text-sm", gap: "gap-2", startIcon: "size-4.5", startIconPillOffset: "-ml-1", dropdownIcon: "size-4", dropdownIconPillOffset: "-mr-0.5", spinner: "text-lg", clearButton: "size-6", clearIcon: "size-4" },
+      "2xl": { height: "h-11", gutter: "px-3.5", pillGutter: "px-4.75", corners: "rounded-xl", font: "text-base", gap: "gap-2.5", startIcon: "size-5", startIconPillOffset: "-ml-1", dropdownIcon: "size-4", dropdownIconPillOffset: "-mr-0.5", spinner: "text-lg", clearButton: "size-6", clearIcon: "size-4" },
+      "3xl": { height: "h-12", gutter: "px-4", pillGutter: "px-5.25", corners: "rounded-xl", font: "text-base", gap: "gap-2.5", startIcon: "size-5", startIconPillOffset: "-ml-1", dropdownIcon: "size-4.5", dropdownIconPillOffset: "-mr-0.75", spinner: "text-xl", clearButton: "size-6", clearIcon: "size-4" },
+      "4xl": { height: "h-14", gutter: "px-4.5", pillGutter: "px-6", corners: "rounded-2xl", font: "text-base", gap: "gap-3", startIcon: "size-5", startIconPillOffset: "-ml-1", dropdownIcon: "size-5", dropdownIconPillOffset: "-mr-1", spinner: "text-2xl", clearButton: "size-7", clearIcon: "size-4.5" }
+    }
+  %}
+  {%
+    set selectVariants = {
+      "outline": {
+        surface: "border border-line",
+        interaction: "light:hover:border-stone-950/20 dark:hover:border-white/20",
+        open: "light:border-stone-950/20 dark:border-white/20",
+        invalid: "border light:border-red-600 dark:border-red-500",
+        focusOffset: "focus-visible:-outline-offset-1"
+      },
+      "soft": {
+        surface: "light:bg-stone-950/8 dark:bg-stone-200/12",
+        interaction: "light:hover:bg-stone-950/12 dark:hover:bg-stone-200/16",
+        open: "light:bg-stone-950/12 dark:bg-stone-200/16",
+        invalid: "inset-ring light:bg-stone-950/8 light:inset-ring-red-600 dark:bg-stone-200/12 dark:inset-ring-red-500",
+        focusOffset: "focus-visible:outline-offset-2"
+      },
+      "ghost": {
+        surface: "",
+        interaction: "light:hover:bg-stone-950/8 dark:hover:bg-stone-200/12",
+        open: "light:bg-stone-950/5 dark:bg-stone-200/7",
+        invalid: "inset-ring light:inset-ring-red-600 dark:inset-ring-red-500",
+        focusOffset: "focus-visible:-outline-offset-1"
+      }
+    }
+  %}
+  {% set sizing = selectSizes[size] %}
+  {% set appearance = selectVariants[variant] %}
+  {% set selectedValues = value if multiple else [value] %}
+  {% set isInteractive = not disabled and not loading %}
+
+  {% set selectedLabels = [] %}
+  {% for entry in options %}
+    {% for option in (entry.options if entry.options else [entry]) %}
+      {% if option.value in selectedValues %}
+        {% set selectedLabelCount = selectedLabels.push(option.label) %}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+
+  {% if selectedLabels | length %}
+    {% set triggerText = selectedLabels | join(", ") %}
+  {% elif loading %}
+    {% set triggerText = loadingPlaceholder %}
+  {% else %}
+    {% set triggerText = placeholder %}
+  {% endif %}
+
+  {% if invalid %}
+    {% set surfaceClasses = appearance.invalid ~ " light:outline-red-600 dark:outline-red-500" %}
+  {% elif open %}
+    {% set surfaceClasses = appearance.surface ~ " " ~ appearance.open ~ " outline-primary" %}
+  {% else %}
+    {% set surfaceClasses = appearance.surface ~ " outline-primary " ~ (appearance.interaction if isInteractive else "") %}
+  {% endif %}
+
+  {% set showsClear = clearable and selectedLabels | length and isInteractive %}
+  {% set showsDropdownIcon = dropdownIcon != "none" and not loading %}
+
+  <div class="{{ 'w-full' if block else 'inline-block max-w-full' }} relative">
+    {% if name %}
+      <input type="hidden" name="{{ name }}" value="{{ selectedValues | join(',') }}" />
+    {% endif %}
+    <div
+      id="{{ id }}"
+      role="combobox"
+      tabindex="{{ '-1' if disabled else '0' }}"
+      aria-label="{{ label }}"
+      aria-haspopup="listbox"
+      aria-expanded="{{ 'true' if open else 'false' }}"
+      {% if open %}aria-controls="{{ id }}-listbox"{% endif %}
+      {% if disabled %}aria-disabled="true"{% endif %}
+      {% if invalid %}aria-invalid="true"{% endif %}
+      {% if loading %}aria-busy="true"{% endif %}
+      class="{{ sizing.height }} {{ sizing.font }} {{ sizing.gap }} {{ sizing.pillGutter if pill else sizing.gutter }} {{ 'rounded-full' if pill else sizing.corners }} {{ surfaceClasses }} {{ appearance.focusOffset }} {{ 'text-muted' if not selectedLabels | length }} {{ 'cursor-not-allowed opacity-50' if disabled else 'cursor-pointer' }} group flex w-full items-center justify-between leading-6 font-medium whitespace-nowrap transition-colors select-none focus-visible:outline-2"
+    >
+      {% if startIcon %}
+        <i
+          data-lucide="{{ startIcon }}"
+          aria-hidden="true"
+          class="{{ sizing.startIcon }} {{ sizing.startIconPillOffset if pill else '-ml-px' }} shrink-0"
+        ></i>
+      {% endif %}
+      <span class="min-w-0 flex-1 truncate text-left">{{ triggerText }}</span>
+      {% if showsClear or loading or showsDropdownIcon %}
+        <span class="flex shrink-0 items-center gap-1">
+          {% if showsClear %}
+            <button
+              type="button"
+              aria-label="Clear current value"
+              class="{{ sizing.clearButton }} {{ 'text-muted opacity-75 hover:opacity-100 light:hover:bg-stone-950/8 dark:hover:bg-stone-200/12' if showsDropdownIcon else 'light:bg-stone-600 light:text-white dark:bg-stone-600 dark:text-white' }} flex cursor-pointer items-center justify-center rounded-full outline-primary transition focus-visible:outline-2"
+            >
+              <i data-lucide="x" aria-hidden="true" class="{{ sizing.clearIcon }}"></i>
+            </button>
+          {% endif %}
+          {% if loading %}
+            <span class="{{ sizing.spinner }} loading-indicator"></span>
+          {% elif showsDropdownIcon %}
+            <i
+              data-lucide="{{ 'chevron-down' if dropdownIcon == 'chevronDown' else 'chevrons-up-down' }}"
+              aria-hidden="true"
+              class="{{ sizing.dropdownIcon }} {{ sizing.dropdownIconPillOffset if pill }} {{ 'opacity-100' if open else 'opacity-75' }} shrink-0 text-muted transition-opacity group-hover:opacity-100"
+            ></i>
+          {% endif %}
+        </span>
+      {% endif %}
+    </div>
+
+    {% if open %}
+      {{ selectListbox(id, label, options, selectedValues, multiple, highlightedValue, searchPlaceholder, searchQuery, actions) }}
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro selectField(id, name, label, options, value = "", size = "4xl", pill = true, variant = "outline", startIcon = "", dropdownIcon = "dropdown", clearable = false, loading = false, hint = "", invalid = false, errorMessage = "", disabled = false, multiple = false, open = false, highlightedValue = "", searchPlaceholder = "", searchQuery = "", actions = []) %}
+  {%
+    set selectFieldSizes = {
+      "md": {
+        height: "h-8", font: "text-sm", icon: "size-3", dropdownIcon: "size-4", spinner: "text-base", clearButton: "size-5.5", clearIcon: "size-3.5",
+        floatingLabelFont: "text-[11px]", restingLabelFont: "text-sm peer-focus:text-[11px]",
+        pillShape: { corners: "rounded-full", gutter: "px-4", labelOffset: "left-3", restingLabelOffsetWithStartIcon: "left-8 peer-focus:left-3" },
+        roundedShape: { corners: "rounded-lg", gutter: "px-3", labelOffset: "left-2", restingLabelOffsetWithStartIcon: "left-7 peer-focus:left-2" }
+      },
+      "lg": {
+        height: "h-9", font: "text-sm", icon: "size-3", dropdownIcon: "size-4", spinner: "text-base", clearButton: "size-5.5", clearIcon: "size-3.5",
+        floatingLabelFont: "text-[11px]", restingLabelFont: "text-sm peer-focus:text-[11px]",
+        pillShape: { corners: "rounded-full", gutter: "px-4", labelOffset: "left-3", restingLabelOffsetWithStartIcon: "left-8 peer-focus:left-3" },
+        roundedShape: { corners: "rounded-lg", gutter: "px-3", labelOffset: "left-2", restingLabelOffsetWithStartIcon: "left-7 peer-focus:left-2" }
+      },
+      "xl": {
+        height: "h-10", font: "text-base", icon: "size-3.5", dropdownIcon: "size-4", spinner: "text-lg", clearButton: "size-6", clearIcon: "size-4",
+        floatingLabelFont: "text-[11px]", restingLabelFont: "text-base peer-focus:text-[11px]",
+        pillShape: { corners: "rounded-full", gutter: "px-4.75", labelOffset: "left-3.75", restingLabelOffsetWithStartIcon: "left-9.25 peer-focus:left-3.75" },
+        roundedShape: { corners: "rounded-[10px]", gutter: "px-3.5", labelOffset: "left-2.5", restingLabelOffsetWithStartIcon: "left-8 peer-focus:left-2.5" }
+      },
+      "2xl": {
+        height: "h-11", font: "text-base", icon: "size-4", dropdownIcon: "size-4", spinner: "text-lg", clearButton: "size-6", clearIcon: "size-4",
+        floatingLabelFont: "text-xs", restingLabelFont: "text-base peer-focus:text-xs",
+        pillShape: { corners: "rounded-full", gutter: "px-5.25", labelOffset: "left-4.25", restingLabelOffsetWithStartIcon: "left-10.25 peer-focus:left-4.25" },
+        roundedShape: { corners: "rounded-xl", gutter: "px-4", labelOffset: "left-3", restingLabelOffsetWithStartIcon: "left-9 peer-focus:left-3" }
+      },
+      "3xl": {
+        height: "h-12", font: "text-base", icon: "size-4", dropdownIcon: "size-4.5", spinner: "text-xl", clearButton: "size-6", clearIcon: "size-4",
+        floatingLabelFont: "text-xs", restingLabelFont: "text-base peer-focus:text-xs",
+        pillShape: { corners: "rounded-full", gutter: "px-5.25", labelOffset: "left-4.25", restingLabelOffsetWithStartIcon: "left-10.25 peer-focus:left-4.25" },
+        roundedShape: { corners: "rounded-xl", gutter: "px-4", labelOffset: "left-3", restingLabelOffsetWithStartIcon: "left-9 peer-focus:left-3" }
+      },
+      "4xl": {
+        height: "h-14", font: "text-base", icon: "size-4", dropdownIcon: "size-5", spinner: "text-2xl", clearButton: "size-7", clearIcon: "size-4.5",
+        floatingLabelFont: "text-xs", restingLabelFont: "text-base peer-focus:text-xs",
+        pillShape: { corners: "rounded-full", gutter: "px-6", labelOffset: "left-5", restingLabelOffsetWithStartIcon: "left-11 peer-focus:left-5" },
+        roundedShape: { corners: "rounded-2xl", gutter: "px-4.5", labelOffset: "left-3.5", restingLabelOffsetWithStartIcon: "left-9.5 peer-focus:left-3.5" }
+      }
+    }
+  %}
+  {% set sizing = selectFieldSizes[size] %}
+  {% set shape = sizing.pillShape if pill else sizing.roundedShape %}
+  {% set isInvalid = invalid or errorMessage %}
+  {% set selectedValues = value if multiple else [value] %}
+  {% set isInteractive = not disabled and not loading %}
+
+  {% set selectedLabels = [] %}
+  {% for entry in options %}
+    {% for option in (entry.options if entry.options else [entry]) %}
+      {% if option.value in selectedValues %}
+        {% set selectedLabelCount = selectedLabels.push(option.label) %}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+
+  {% set showsClear = clearable and selectedLabels | length and isInteractive %}
+  {% set showsDropdownIcon = dropdownIcon != "none" and not loading %}
+
+  {% if errorMessage %}
+    {% set descriptionId = id ~ "-error" %}
+  {% elif hint %}
+    {% set descriptionId = id ~ "-hint" %}
+  {% else %}
+    {% set descriptionId = "" %}
+  {% endif %}
+
+  {% if isInvalid %}
+    {% set borderClasses = "light:border-red-600 dark:border-red-500" %}
+    {% set labelColorClasses = "light:text-red-600 dark:text-red-400" %}
+  {% elif disabled %}
+    {% set borderClasses = "border-transparent" if variant == "soft" else "border-line" %}
+    {% set labelColorClasses = "text-muted" %}
+  {% elif open %}
+    {% set borderClasses = "border-primary" %}
+    {% set labelColorClasses = "text-primary" %}
+  {% elif variant == "soft" %}
+    {% set borderClasses = "border-transparent focus:border-primary" %}
+    {% set labelColorClasses = "text-muted peer-focus:text-primary" %}
+  {% else %}
+    {% set borderClasses = "border-line light:not-focus:hover:border-stone-950/20 dark:not-focus:hover:border-white/20 focus:border-primary" %}
+    {% set labelColorClasses = "text-muted peer-focus:text-primary" %}
+  {% endif %}
+
+  {% if selectedLabels | length or open %}
+    {% set labelPlacementClasses = shape.labelOffset ~ " " ~ sizing.floatingLabelFont ~ " top-0 bg-linear-to-b" %}
+  {% else %}
+    {% set labelPlacementClasses = (shape.restingLabelOffsetWithStartIcon if startIcon else shape.labelOffset) ~ " " ~ sizing.restingLabelFont ~ " top-1/2 peer-focus:top-0 peer-focus:bg-linear-to-b" %}
+  {% endif %}
+
+  <div>
+    <div class="{{ 'opacity-50' if disabled }} relative">
+      {% if name %}
+        <input type="hidden" name="{{ name }}" value="{{ selectedValues | join(',') }}" />
+      {% endif %}
+      <div
+        id="{{ id }}"
+        role="combobox"
+        tabindex="{{ '-1' if disabled else '0' }}"
+        aria-labelledby="{{ id }}-label"
+        aria-haspopup="listbox"
+        aria-expanded="{{ 'true' if open else 'false' }}"
+        {% if open %}aria-controls="{{ id }}-listbox"{% endif %}
+        {% if descriptionId %}aria-describedby="{{ descriptionId }}"{% endif %}
+        {% if disabled %}aria-disabled="true"{% endif %}
+        {% if isInvalid %}aria-invalid="true"{% endif %}
+        {% if loading %}aria-busy="true"{% endif %}
+        class="peer {{ sizing.height }} {{ sizing.font }} {{ shape.corners }} {{ shape.gutter }} {{ borderClasses }} {{ 'cursor-not-allowed' if disabled else 'cursor-pointer' }} group flex w-full items-center gap-2 border bg-field whitespace-nowrap outline-hidden transition-colors select-none"
+      >
+        {% if startIcon %}
+          <i data-lucide="{{ startIcon }}" aria-hidden="true" class="{{ sizing.icon }} shrink-0 text-muted"></i>
+        {% endif %}
+        <span class="min-w-0 flex-1 truncate">{{ selectedLabels | join(", ") }}</span>
+        {% if showsClear or loading or showsDropdownIcon %}
+          <span class="flex shrink-0 items-center gap-1">
+            {% if showsClear %}
+              <button
+                type="button"
+                aria-label="Clear current value"
+                class="{{ sizing.clearButton }} {{ 'text-muted opacity-75 hover:opacity-100 light:hover:bg-stone-950/8 dark:hover:bg-stone-200/12' if showsDropdownIcon else 'light:bg-stone-600 light:text-white dark:bg-stone-600 dark:text-white' }} flex cursor-pointer items-center justify-center rounded-full outline-primary transition focus-visible:outline-2"
+              >
+                <i data-lucide="x" aria-hidden="true" class="{{ sizing.clearIcon }}"></i>
+              </button>
+            {% endif %}
+            {% if loading %}
+              <span class="{{ sizing.spinner }} loading-indicator"></span>
+            {% elif showsDropdownIcon %}
+              <i
+                data-lucide="{{ 'chevron-down' if dropdownIcon == 'chevronDown' else 'chevrons-up-down' }}"
+                aria-hidden="true"
+                class="{{ sizing.dropdownIcon }} {{ 'opacity-100' if open else 'opacity-75' }} shrink-0 text-muted transition-opacity group-hover:opacity-100"
+              ></i>
+            {% endif %}
+          </span>
+        {% endif %}
+      </div>
+      <span
+        id="{{ id }}-label"
+        class="{{ labelPlacementClasses }} {{ labelColorClasses }} pointer-events-none absolute -translate-y-1/2 from-canvas from-50% to-field to-50% px-1 whitespace-nowrap transition-all"
+      >
+        {{ label }}
+      </span>
+      {% if open %}
+        {{ selectListbox(id, label, options, selectedValues, multiple, highlightedValue, searchPlaceholder, searchQuery, actions) }}
+      {% endif %}
+    </div>
+    {% if errorMessage %}
+      <p id="{{ id }}-error" class="mt-2 flex items-start gap-x-1.5 text-xs dark:text-red-400 light:text-red-600">
+        <i data-lucide="circle-alert" aria-hidden="true" class="mt-px size-3.5 shrink-0"></i>
+        {{ errorMessage }}
+      </p>
+    {% elif hint %}
+      <p id="{{ id }}-hint" class="mt-2 text-xs text-muted">{{ hint }}</p>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+{% macro selectListbox(id, label, options, selectedValues, multiple, highlightedValue, searchPlaceholder, searchQuery, actions) %}
+  <div
+    id="{{ id }}-listbox"
+    role="listbox"
+    aria-label="{{ label }}"
+    {% if multiple %}aria-multiselectable="true"{% endif %}
+    class="absolute top-full left-0 z-10 mt-1.5 flex max-h-100 w-full min-w-64 flex-col rounded-xl border border-line bg-widget text-sm leading-5 shadow-lg"
+  >
+    {% if searchPlaceholder %}
+      <div class="relative px-1.5 pt-1.5">
+        <i
+          data-lucide="search"
+          aria-hidden="true"
+          class="pointer-events-none absolute top-1/2 left-4 mt-0.75 size-4 -translate-y-1/2 text-muted"
+        ></i>
+        <input
+          type="search"
+          aria-label="{{ searchPlaceholder }}"
+          placeholder="{{ searchPlaceholder }}"
+          value="{{ searchQuery }}"
+          autocomplete="off"
+          spellcheck="false"
+          class="h-8 w-full rounded-lg bg-field pr-2.5 pl-8 outline-hidden placeholder:text-muted"
+        />
+      </div>
+    {% endif %}
+
+    {% set visibleOptionValues = [] %}
+    <div class="flex-1 overflow-auto p-1.5">
+      {% for entry in options %}
+        {% if entry.options %}
+          <div role="group" aria-label="{{ entry.label }}" class="not-first:mt-1.5">
+            <div aria-hidden="true" class="px-2 py-1.5 text-muted">{{ entry.label }}</div>
+            {% for option in entry.options %}
+              {% if not searchQuery or searchQuery | lower in option.label | lower %}
+                {% set visibleOptionValueCount = visibleOptionValues.push(option.value) %}
+                {{ selectOption(option, selectedValues, highlightedValue) }}
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% elif not searchQuery or searchQuery | lower in entry.label | lower %}
+          {% set visibleOptionValueCount = visibleOptionValues.push(entry.value) %}
+          {{ selectOption(entry, selectedValues, highlightedValue) }}
+        {% endif %}
+      {% endfor %}
+      {% if not visibleOptionValues | length %}
+        <div class="my-4 px-2 py-1.5 text-center text-muted">No results for “{{ searchQuery }}”</div>
+      {% endif %}
+    </div>
+
+    {% if actions | length %}
+      <div class="border-t border-line p-1.5">
+        {% for action in actions %}
+          <button
+            type="button"
+            class="flex w-full cursor-pointer items-center gap-1.5 rounded-md px-2 py-1.5 text-left outline-primary focus-visible:outline-2 dark:hover:bg-stone-200/10 light:hover:bg-stone-950/8"
+          >
+            {% if action.icon %}
+              <i data-lucide="{{ action.icon }}" aria-hidden="true" class="size-4 shrink-0"></i>
+            {% endif %}
+            {{ action.label }}
+          </button>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endmacro %}

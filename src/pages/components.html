@@ -12,6 +12,7 @@ layout: base.html
 {% from "image.html" import image %}
 {% from "loading-dots.html" import loadingDots %}
 {% from "radio-group.html" import radioGroup %}
+{% from "select.html" import select, selectField %}
 {% from "switch.html" import switch %}
 {% from "text-field.html" import textField %}
 {% from "text-link.html" import textLink %}
@@ -675,6 +676,336 @@ layout: base.html
               }}
             </div>
           {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Select</h2>
+    {%
+      set dateRangeOptions = [
+        { value: "7-days", label: "Last 7 days" },
+        { value: "30-days", label: "Last 30 days" },
+        { value: "90-days", label: "Last 90 days" },
+        { value: "year", label: "This year" },
+        { value: "all-time", label: "All time", disabled: true }
+      ]
+    %}
+    {%
+      set accountOptions = [
+        {
+          label: "Northwind Bank",
+          options: [
+            { value: "checking", label: "Checking ···· 4821", description: "$12,480.20 available" },
+            { value: "savings", label: "Savings ···· 0937", description: "$31,200.00 available" }
+          ]
+        },
+        {
+          label: "Contoso Card",
+          options: [{ value: "credit-card", label: "Visa ···· 7712", description: "$2,140.65 spent this month" }]
+        }
+      ]
+    %}
+    {%
+      set categoryOptions = [
+        { value: "groceries", label: "Groceries" },
+        { value: "dining", label: "Dining" },
+        { value: "transport", label: "Transport" },
+        { value: "travel", label: "Travel" },
+        { value: "subscriptions", label: "Subscriptions" },
+        { value: "utilities", label: "Utilities" }
+      ]
+    %}
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line bg-widget p-6">
+      <div>
+        <h3 class="text-sm text-muted">Variants</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          {% for selectVariant in ["outline", "soft", "ghost"] %}
+            <div class="flex flex-wrap items-center gap-3">
+              <span class="w-16 text-xs text-muted">{{ selectVariant }}</span>
+              {{ select("select-" ~ selectVariant ~ "-placeholder-example", "", "Date range", dateRangeOptions, variant = selectVariant, block = false) }}
+              {{ select("select-" ~ selectVariant ~ "-selected-example", "", "Date range", dateRangeOptions, value = "30-days", variant = selectVariant, block = false) }}
+              {{
+                select(
+                  "select-" ~ selectVariant ~ "-rounded-example",
+                  "",
+                  "Date range",
+                  dateRangeOptions,
+                  value = "30-days",
+                  variant = selectVariant,
+                  pill = false,
+                  block = false
+                )
+              }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Sizes</h3>
+        <div class="mt-4 flex flex-col gap-y-3">
+          <div class="flex flex-wrap items-center gap-3">
+            {% for selectSize in ["3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"] %}
+              {{ select("select-" ~ selectSize ~ "-example", "", "Date range", dateRangeOptions, value = "30-days", size = selectSize, block = false) }}
+            {% endfor %}
+          </div>
+          <div class="flex flex-wrap items-center gap-3">
+            {% for selectSize in ["3xs", "2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl"] %}
+              {{
+                select(
+                  "select-rounded-" ~ selectSize ~ "-example",
+                  "",
+                  "Date range",
+                  dateRangeOptions,
+                  value = "30-days",
+                  size = selectSize,
+                  variant = "soft",
+                  pill = false,
+                  block = false
+                )
+              }}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Icons and states</h3>
+        <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {{ select("select-start-icon-example", "date-range", "Date range", dateRangeOptions, value = "30-days", startIcon = "calendar") }}
+          {{ select("select-chevron-example", "account", "Account", accountOptions, value = "checking", startIcon = "wallet", dropdownIcon = "chevronDown") }}
+          {{ select("select-clearable-example", "category", "Category", categoryOptions, value = "dining", startIcon = "tag", clearable = true) }}
+          {{ select("select-clearable-only-example", "category", "Category", categoryOptions, value = "travel", dropdownIcon = "none", clearable = true) }}
+          {{ select("select-loading-example", "account", "Account", accountOptions, loading = true, loadingPlaceholder = "Loading accounts…") }}
+          {{ select("select-invalid-example", "category", "Category", categoryOptions, placeholder = "Choose a category", invalid = true) }}
+          {{ select("select-disabled-example", "date-range", "Date range", dateRangeOptions, value = "30-days", disabled = true) }}
+          {{ select("select-multiple-example", "categories", "Categories", categoryOptions, value = ["groceries", "dining", "transport"], multiple = true) }}
+          {{ select("select-large-form-example", "currency", "Currency", [{ value: "usd", label: "US dollar (USD)" }, { value: "eur", label: "Euro (EUR)" }], value = "usd", size = "4xl", variant = "soft") }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Open</h3>
+        <div class="mt-4 grid items-start gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div class="h-64">
+            {{ select("select-open-example", "", "Date range", dateRangeOptions, value = "30-days", highlightedValue = "90-days", open = true) }}
+          </div>
+          <div class="h-80">
+            {{
+              select(
+                "select-open-groups-example",
+                "",
+                "Account",
+                accountOptions,
+                value = "checking",
+                startIcon = "wallet",
+                open = true,
+                actions = [{ label: "Link an account", icon: "plus" }]
+              )
+            }}
+          </div>
+          <div class="h-64">
+            {{
+              select(
+                "select-open-search-example",
+                "",
+                "Category",
+                categoryOptions,
+                startIcon = "tag",
+                open = true,
+                searchPlaceholder = "Search categories",
+                searchQuery = "tr",
+                highlightedValue = "transport"
+              )
+            }}
+          </div>
+          <div class="h-80">
+            {{
+              select(
+                "select-open-multiple-example",
+                "",
+                "Categories",
+                categoryOptions,
+                value = ["groceries", "dining"],
+                multiple = true,
+                open = true
+              )
+            }}
+          </div>
+          <div class="h-56">
+            {{
+              select(
+                "select-open-empty-search-example",
+                "",
+                "Category",
+                categoryOptions,
+                open = true,
+                searchPlaceholder = "Search categories",
+                searchQuery = "rent"
+              )
+            }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <h2 class="font-semibold tracking-tight">Select field</h2>
+    {%
+      set countryOptions = [
+        { value: "ca", label: "Canada" },
+        { value: "fr", label: "France" },
+        { value: "de", label: "Germany" },
+        { value: "jp", label: "Japan" },
+        { value: "gb", label: "United Kingdom" },
+        { value: "us", label: "United States" }
+      ]
+    %}
+    <div class="mt-4 flex flex-col gap-y-8 rounded-3xl border border-line p-6">
+      <div>
+        <h3 class="text-sm text-muted">States</h3>
+        <div class="mt-4 grid gap-6 sm:grid-cols-2">
+          {{ selectField("select-field-empty-example", "country", "Country", countryOptions) }}
+          {{ selectField("select-field-filled-example", "country", "Country", countryOptions, value = "fr") }}
+          {{
+            selectField(
+              "select-field-hint-example",
+              "currency",
+              "Default currency",
+              [{ value: "usd", label: "US dollar (USD)" }, { value: "eur", label: "Euro (EUR)" }],
+              hint = "Used for new accounts and reports."
+            )
+          }}
+          {{ selectField("select-field-error-example", "country", "Country", countryOptions, errorMessage = "Choose your country of residence.") }}
+          {{ selectField("select-field-clearable-example", "category", "Category", categoryOptions, value = "dining", clearable = true) }}
+          {{ selectField("select-field-multiple-example", "categories", "Categories", categoryOptions, value = ["groceries", "dining", "transport"], multiple = true) }}
+          {{ selectField("select-field-loading-example", "account", "Account", accountOptions, loading = true) }}
+          {{ selectField("select-field-chevron-example", "date-range", "Date range", dateRangeOptions, value = "30-days", dropdownIcon = "chevronDown") }}
+          {{ selectField("select-field-disabled-example", "country", "Country", countryOptions, disabled = true) }}
+          {{ selectField("select-field-disabled-filled-example", "country", "Country", countryOptions, value = "fr", disabled = true) }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Icons</h3>
+        <div class="mt-4 grid gap-6 sm:grid-cols-2">
+          {{ selectField("select-field-icon-empty-example", "country", "Country", countryOptions, startIcon = "globe") }}
+          {{ selectField("select-field-icon-filled-example", "account", "Account", accountOptions, value = "savings", startIcon = "wallet") }}
+          {{
+            selectField(
+              "select-field-icon-error-example",
+              "category",
+              "Category",
+              categoryOptions,
+              startIcon = "tag",
+              errorMessage = "Pick a category for this transaction."
+            )
+          }}
+          {{ selectField("select-field-icon-clearable-example", "date-range", "Date range", dateRangeOptions, value = "90-days", startIcon = "calendar", clearable = true) }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Soft variant</h3>
+        <div class="mt-4 grid gap-6 sm:grid-cols-2">
+          {{ selectField("select-field-soft-empty-example", "country", "Country", countryOptions, variant = "soft") }}
+          {{ selectField("select-field-soft-filled-example", "country", "Country", countryOptions, value = "fr", variant = "soft") }}
+          {{ selectField("select-field-soft-icon-example", "account", "Account", accountOptions, startIcon = "wallet", variant = "soft") }}
+          {{
+            selectField(
+              "select-field-soft-error-example",
+              "country",
+              "Country",
+              countryOptions,
+              errorMessage = "Choose your country of residence.",
+              variant = "soft"
+            )
+          }}
+          {{
+            selectField(
+              "select-field-soft-hint-example",
+              "currency",
+              "Default currency",
+              [{ value: "usd", label: "US dollar (USD)" }, { value: "eur", label: "Euro (EUR)" }],
+              value = "usd",
+              hint = "Used for new accounts and reports.",
+              variant = "soft"
+            )
+          }}
+          {{ selectField("select-field-soft-disabled-example", "country", "Country", countryOptions, value = "fr", disabled = true, variant = "soft") }}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Sizes</h3>
+        <div class="mt-4 flex flex-col gap-y-5">
+          {% for selectFieldSize in ["md", "lg", "xl", "2xl", "3xl", "4xl"] %}
+            <div class="grid items-center gap-x-6 gap-y-3 sm:grid-cols-[2.5rem_1fr_1fr]">
+              <span class="text-xs text-muted">{{ selectFieldSize }}</span>
+              {{ selectField("select-field-" ~ selectFieldSize ~ "-empty-example", "country", "Country", countryOptions, startIcon = "globe", size = selectFieldSize) }}
+              {{ selectField("select-field-" ~ selectFieldSize ~ "-filled-example", "country", "Country", countryOptions, value = "fr", clearable = true, size = selectFieldSize) }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Rounded corners</h3>
+        <div class="mt-4 flex flex-col gap-y-5">
+          {% for selectFieldSize in ["md", "lg", "xl", "2xl", "3xl", "4xl"] %}
+            <div class="grid items-center gap-x-6 gap-y-3 sm:grid-cols-[2.5rem_1fr_1fr]">
+              <span class="text-xs text-muted">{{ selectFieldSize }}</span>
+              {{
+                selectField(
+                  "select-field-rounded-" ~ selectFieldSize ~ "-empty-example",
+                  "country",
+                  "Country",
+                  countryOptions,
+                  startIcon = "globe",
+                  size = selectFieldSize,
+                  pill = false
+                )
+              }}
+              {{
+                selectField(
+                  "select-field-rounded-" ~ selectFieldSize ~ "-filled-example",
+                  "country",
+                  "Country",
+                  countryOptions,
+                  value = "fr",
+                  clearable = true,
+                  size = selectFieldSize,
+                  pill = false
+                )
+              }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm text-muted">Open</h3>
+        <div class="mt-4 grid items-start gap-6 sm:grid-cols-2">
+          <div class="h-80">
+            {{ selectField("select-field-open-example", "", "Country", countryOptions, value = "fr", highlightedValue = "de", open = true) }}
+          </div>
+          <div class="h-108">
+            {{
+              selectField(
+                "select-field-open-search-example",
+                "",
+                "Account",
+                accountOptions,
+                startIcon = "wallet",
+                open = true,
+                searchPlaceholder = "Search accounts",
+                actions = [{ label: "Link an account", icon: "plus" }]
+              )
+            }}
+          </div>
         </div>
       </div>
     </div>
